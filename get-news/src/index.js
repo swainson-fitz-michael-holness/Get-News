@@ -24,18 +24,21 @@ const reqSearch = new Request(urlSearch);
 fetch(reqSearch).then(function (response) {
     return response.json();
 }).then(function (data) {
-    console.log(data)
+    console.log(data);
+
 
     class NewsCard extends React.Component {
         render() {
             return (
-                <div>
-                   <img src={data.articles[this.props.name].urlToImage} alt="test"/>
-                    <h1>{data.articles[this.props.name].title}</h1>
-                    <h3>{data.articles[this.props.name].source.name}</h3>
-                    <p>{data.articles[this.props.name].description}</p>
-                    <a href={data.articles[this.props.name].url} target="_blank">more</a>
-                    <hr/>
+                <div className="media dimention-news-card">
+                   <img className="mr-3 img-size" src={data.articles[this.props.name].urlToImage } alt="test"/>
+                   <div className="media-body">
+                       <h3 className="mt-0">{data.articles[this.props.name].title }</h3>
+                       <p className="mt-1">{data.articles[this.props.name].description}</p>
+                       <h5>{data.articles[this.props.name].source.name}</h5>
+                       <a  href={data.articles[this.props.name].url} target="_blank">source</a>
+                   </div>
+
                 </div>
             )
         }
