@@ -12,48 +12,41 @@ const req = new Request(url('https://newsapi.org/v2/top-headlines?', 'country=us
 
 
 
-//fetch(req).then(function (response) {
-//    return response.json();
-//}).then(function (data) {
-//
-//    class App extends React.Component {
-//        constructor(props) {
-//            super(props);
-//            this.state = data;
-//        }
-//this.state.articles[0].title
-//        render(){
-//            return (
-//                <div>
-//                    <h1>{}</h1>
-//                </div>
-//            )
-//        };
-//    }
-//});
+fetch(req).then(function (response) {
+    return response.json();
+}).then(function (data) {
+    console.log(data)
 
-class RepeatMe extends React.Component {
-    render() {
-        return (
-            <div>h</div>
-        )
-    }
- };
+    class NewsCard extends React.Component {
+        render() {
+            return (
+                <div>
+                   <img src={data.articles[0].urlToImage} alt="test"/>
+                    <h1>{data.articles[0].title}</h1>
+                    <h3>{data.articles[0].source.name}</h3>
+                    <p>{data.articles[0].description}</p>
+                    <a href={data.articles[0].url} target="_blank">more</a>
+                </div>
+            )
+        }
+     };
 
 
-let arr = [<RepeatMe key="1" />,<RepeatMe key="13" />,<RepeatMe key="145" />];
+    let arr = [<NewsCard key="1" />,<NewsCard key="13" />,<NewsCard key="145" />];
 
-class Lesson1 extends React.Component {
-    render() {
-        return (
-            <div>{
-                   arr.map(function(comp){
-                       return comp
-                   })
-                }</div>
-        )
-    }
-};
+    class Lesson1 extends React.Component {
 
-ReactDOM.render( < Lesson1 / > , document.getElementById('root'));
-registerServiceWorker();
+        render() {
+            return (
+                <div>
+                      {arr.map(function(comp){
+                           return comp
+                       })}
+                </div>
+            )
+        }
+    };
+
+    ReactDOM.render( < NewsCard / > , document.getElementById('root'));
+    registerServiceWorker();
+});
