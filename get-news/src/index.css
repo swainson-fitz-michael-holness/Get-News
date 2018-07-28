@@ -12,7 +12,7 @@ body {
 }
 
 .dimention-news-card {
-    margin: 18px 0px;
+    margin: 10px 0px;
 /*    display: block;*/
 /*    width: 80%;*/
 /*    height: auto;*/
@@ -25,7 +25,6 @@ body {
 .inner-container {
     background-color: white;
     padding: 18px 18px 30px 18px;
-
 
     -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.15);

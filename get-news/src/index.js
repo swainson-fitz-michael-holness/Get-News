@@ -11,7 +11,7 @@ const url = function (endpoint, country, key) {
 const req = new Request(url('https://newsapi.org/v2/top-headlines?', 'country=us&', key));
 
 const urlSearch = 'https://newsapi.org/v2/everything?' +
-          'q=bitcoin&' +
+          'q=prince+harry&' +
           'from=2018-07-28&' +
           'language=en&' +
           'sortBy=popularity&' +
