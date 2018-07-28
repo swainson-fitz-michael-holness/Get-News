@@ -21,18 +21,25 @@ fetch(req).then(function (response) {
         render() {
             return (
                 <div>
-                   <img src={data.articles[0].urlToImage} alt="test"/>
-                    <h1>{data.articles[0].title}</h1>
-                    <h3>{data.articles[0].source.name}</h3>
-                    <p>{data.articles[0].description}</p>
-                    <a href={data.articles[0].url} target="_blank">more</a>
+                   <img src={data.articles[this.props.name].urlToImage} alt="test"/>
+                    <h1>{data.articles[this.props.name].title}</h1>
+                    <h3>{data.articles[this.props.name].source.name}</h3>
+                    <p>{data.articles[this.props.name].description}</p>
+                    <a href={data.articles[this.props.name].url} target="_blank">more</a>
                 </div>
             )
         }
      };
 
+    let arrFunc = function(){
+        let temp = [];
+        for(var i = 0; i < data.articles.length; i++) {
+           temp.push(<NewsCard name={i} key ={i} />)
+        }
+        return temp;
+    };
 
-    let arr = [<NewsCard key="1" />,<NewsCard key="13" />,<NewsCard key="145" />];
+    const arr = arrFunc()
 
     class Lesson1 extends React.Component {
 
@@ -47,6 +54,6 @@ fetch(req).then(function (response) {
         }
     };
 
-    ReactDOM.render( < NewsCard / > , document.getElementById('root'));
+    ReactDOM.render( < Lesson1 / > , document.getElementById('root'));
     registerServiceWorker();
 });
