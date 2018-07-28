@@ -32,10 +32,25 @@ const req = new Request(url('https://newsapi.org/v2/top-headlines?', 'country=us
 //    }
 //});
 
+class RepeatMe extends React.Component {
+    render() {
+        return (
+            <div>h</div>
+        )
+    }
+ };
+
+
+let arr = [<RepeatMe key="1" />,<RepeatMe key="13" />,<RepeatMe key="145" />];
+
 class Lesson1 extends React.Component {
     render() {
         return (
-            <div>H</div>
+            <div>{
+                   arr.map(function(comp){
+                       return comp
+                   })
+                }</div>
         )
     }
 };
