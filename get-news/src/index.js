@@ -10,36 +10,35 @@ const url = function (endpoint, country, key) {
 };
 const req = new Request(url('https://newsapi.org/v2/top-headlines?', 'country=us&', key));
 
-class Run extends React.Component {
-        render() {
-            return ( < h1 > {
-                    this.props.author
-                } < /h1>);
-            }
-        }
 
-        fetch(req).then(function (response) {
-            return response.json();
-        }).then(function (data) {
 
-            class App extends React.Component {
-                constructor(props) {
-                    super(props);
-                    this.state = {
-                        title: data.articles[0].title
-                    }
-                }
+//fetch(req).then(function (response) {
+//    return response.json();
+//}).then(function (data) {
+//
+//    class App extends React.Component {
+//        constructor(props) {
+//            super(props);
+//            this.state = data;
+//        }
+//this.state.articles[0].title
+//        render(){
+//            return (
+//                <div>
+//                    <h1>{}</h1>
+//                </div>
+//            )
+//        };
+//    }
+//});
 
-                render(){
-                    return (
-                        <div>
-                            <h1>{this.state.title}</h1>
-                        </div>
-                    )
-                };
-            }
+class Lesson1 extends React.Component {
+    render() {
+        return (
+            <div>H</div>
+        )
+    }
+};
 
-            ReactDOM.render( < App / > , document.getElementById('root'));
-            registerServiceWorker();
-            console.log(data);
-        });
+ReactDOM.render( < Lesson1 / > , document.getElementById('root'));
+registerServiceWorker();
