@@ -30,14 +30,15 @@ fetch(reqSearch).then(function (response) {
     class NewsCard extends React.Component {
         render() {
             return (
-                <div className="media dimention-news-card">
-                   <img className="mr-3 img-size" src={data.articles[this.props.name].urlToImage } alt="test"/>
+                <div className="dimention-news-card media col-lg-6 ">
+                  <div className="inner-container">
+                      <img className="mr-3 img-size" src={data.articles[this.props.name].urlToImage } alt="test"/>
                    <div className="media-body">
-                       <h3 className="mt-0">{data.articles[this.props.name].title }</h3>
+                       <h4 className="mt-0 card-title">{data.articles[this.props.name].title }</h4>
                        <p className="mt-1">{data.articles[this.props.name].description}</p>
-                       <h5>{data.articles[this.props.name].source.name}</h5>
-                       <a  href={data.articles[this.props.name].url} target="_blank">source</a>
+                       <a className="btn btn-primary" href={data.articles[this.props.name].url} target="_blank">{data.articles[this.props.name].source.name}</a>
                    </div>
+                  </div>
 
                 </div>
             )
@@ -58,10 +59,13 @@ fetch(reqSearch).then(function (response) {
 
         render() {
             return (
-                <div>
-                      {arr.map(function(comp){
-                           return comp
-                       })}
+                <div className="container">
+                     <div className="row">
+                            {arr.map(function(comp){
+                                return comp
+                            })}
+                     </div>
+
                 </div>
             )
         }
