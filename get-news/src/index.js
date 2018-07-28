@@ -10,9 +10,18 @@ const url = function (endpoint, country, key) {
 };
 const req = new Request(url('https://newsapi.org/v2/top-headlines?', 'country=us&', key));
 
+const urlSearch = 'https://newsapi.org/v2/everything?' +
+          'q=bitcoin&' +
+          'from=2018-07-28&' +
+          'language=en&' +
+          'sortBy=popularity&' +
+          key;
+
+const reqSearch = new Request(urlSearch);
 
 
-fetch(req).then(function (response) {
+
+fetch(reqSearch).then(function (response) {
     return response.json();
 }).then(function (data) {
     console.log(data)
@@ -26,6 +35,7 @@ fetch(req).then(function (response) {
                     <h3>{data.articles[this.props.name].source.name}</h3>
                     <p>{data.articles[this.props.name].description}</p>
                     <a href={data.articles[this.props.name].url} target="_blank">more</a>
+                    <hr/>
                 </div>
             )
         }
