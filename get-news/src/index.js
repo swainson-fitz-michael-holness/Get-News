@@ -25,9 +25,11 @@ const urlSearch = function(val) {
   );
 };
 
-//const reqSearch = new Request(urlSearch);
 
-fetch(req)
+
+//Create component for initial fetch
+function initialFetch(request) {
+    fetch(request)
   .then(function(response) {
     return response.json();
   })
@@ -99,6 +101,16 @@ fetch(req)
     ReactDOM.render(<RunApp />, document.getElementById("root"));
     registerServiceWorker();
   });
+}
+initialFetch(req);
+
+
+
+
+
+
+
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -114,78 +126,8 @@ class Search extends React.Component {
   }
 
   handleSubmit(e) {
-    let reqSearch = new Request(urlSearch(this.state.value));
-
-    fetch(reqSearch)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        class NewsCard extends React.Component {
-          render() {
-            return (
-              <div className="dimention-news-card media col-lg-6 ">
-                <div className="inner-container">
-                  <img
-                    className="mr-3 img-size"
-                    src={data.articles[this.props.name].urlToImage}
-                    alt="test"
-                  />
-                  <div className="media-body">
-                    <h4 className="mt-0 card-title">
-                      {data.articles[this.props.name].title}
-                    </h4>
-                    <p className="mt-1">
-                      {data.articles[this.props.name].description}
-                    </p>
-                    <a
-                      className="btn btn-primary"
-                      href={data.articles[this.props.name].url}
-                      target="_blank"
-                    >
-                      {data.articles[this.props.name].source.name}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-        }
-
-        let arrFunc = function() {
-          let temp = [];
-          for (var i = 0; i < data.articles.length; i++) {
-            temp.push(<NewsCard name={i} key={i} />);
-          }
-          return temp;
-        };
-
-        let arr = arrFunc();
-
-        function News() {
-          return (
-            <div className="row">
-              {arr.map(function(comp) {
-                return comp;
-              })}
-            </div>
-          );
-        }
-
-        class RunApp extends React.Component {
-          render() {
-            return (
-              <div className="container">
-                <Search />
-                <News />
-              </div>
-            );
-          }
-        }
-
-        ReactDOM.render(<RunApp />, document.getElementById("root"));
-        registerServiceWorker();
-      });
+    let reqSearch = new Request(urlSearch(this.state.value))
+    initialFetch(reqSearch);
     e.preventDefault();
   }
 
