@@ -1,9 +1,15 @@
+// I apologize for this terrible code but it works... for now
+// The problem is I'm not using states or life cycles so the entire
+// page rereshes instead of updating select elements
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
+//===========================================
+// Code for dynamically writing search to fetch -1 ApiCall
+//===========================================
 const key = "apiKey=6c6b71cbab324fbd82b11f2c79e14456";
 const url = function(endpoint, country, key) {
   return endpoint + country + key;
@@ -24,10 +30,14 @@ const urlSearch = function(val) {
     key
   );
 };
+//end
 
 
+//===========================================
+//Grabs top 5 articles from news Api - the code needs refactoring
+//===========================================
 
-//Create component for initial fetch
+// Async Api Grab.
 function initialFetch(request) {
     fetch(request)
   .then(function(response) {
@@ -36,6 +46,7 @@ function initialFetch(request) {
   .then(function(data) {
     console.log(data);
 
+    // Builds UI based on data object Grabbed from Api.
     class NewsCard extends React.Component {
       render() {
         return (
@@ -103,10 +114,6 @@ function initialFetch(request) {
   });
 }
 initialFetch(req);
-
-
-
-
 
 
 
