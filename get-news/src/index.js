@@ -28,30 +28,60 @@ const urlSearch = function(el) {
     );
 };
 
-function ActionAnalyze(props) {
-    function handleClick(e) {
-        e.preventDefault();
-        console.log(props.cardInfo);
+class ActionAnalyze extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isActive: false,
+            element: "",
+        }
 
-        //Fetch analysis from AI
-
-        $.post(
-          'https://apiv2.indico.io/texttags',
-          JSON.stringify({
-            'api_key': "1fd3f7fee7efe92f194cf184a5b7bfc4",
-            'data': props.cardInfo,
-              'top_n': 20,
-          })
-        ).then(function(res) { console.log(res) });
-
+        this.handleClick = this.handleClick.bind(this)
 
     }
 
-    return (
-        <button className="btn btn-primary" onClick={handleClick}>
-            Analyze
-        </button>
-    );
+    handleClick(e) {
+        e.preventDefault();
+
+        if(this.state.isActive === false){
+            //Fetch analysis from AI
+            $.post(
+              'https://apiv2.indico.io/texttags',
+              JSON.stringify({
+                'api_key': "1fd3f7fee7efe92f194cf184a5b7bfc4",
+                'data': this.props.cardInfo,
+                  'top_n': 20,
+              })
+            ).then(res => {
+                console.log(JSON.parse(res))
+                this.setState({
+                    isActive: true,
+                    element: JSON.parse(res),
+                              })
+            });
+
+        }
+
+    }
+
+    render(){
+        let stats;
+        if(this.state.isActive){
+            stats = <div>{this.state.element.results.right_politics}</div>
+        } else {
+
+        }
+        return (
+            <div>
+                            <button className="btn btn-primary" onClick={this.handleClick}>
+                Analyze
+            </button>
+            {stats}
+            </div>
+
+
+        );
+    }
 }
 //end
 //===========================================
@@ -182,7 +212,7 @@ class MainFrame extends React.Component {
                                                 {val.source.name}
                                             </a>
 
-                                            <ActionAnalyze name={info.articles.indexOf(val)} cardInfo={val.url}/>
+                                            <ActionAnalyze cardInfo={val.url}/>
                                         </div>
                                     </div>
                                 </div>
