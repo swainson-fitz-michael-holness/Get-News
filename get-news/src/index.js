@@ -53,7 +53,6 @@ class ActionAnalyze extends React.Component {
                   'top_n': 20,
               })
             ).then(res => {
-                console.log(JSON.parse(res))
                 this.setState({
                     isActive: true,
                     element: JSON.parse(res),
@@ -65,18 +64,27 @@ class ActionAnalyze extends React.Component {
     }
 
     render(){
-        let stats;
+        let stats = [];
+        const statContent = this.state.element.results;
         if(this.state.isActive){
-            stats = <div>{this.state.element.results.right_politics}</div>
-        } else {
+            console.log(statContent)
+            for (let key in statContent) {
+//                console.log(statContent[key]);
+                stats.push(statContent[key]);
+            }
 
         }
         return (
-            <div>
+            <div className="analyze">
                             <button className="btn btn-primary" onClick={this.handleClick}>
                 Analyze
             </button>
-            {stats}
+            <div>
+                {stats.map(el => (
+                    <div>{el}</div>
+                ))}
+            </div>
+
             </div>
 
 

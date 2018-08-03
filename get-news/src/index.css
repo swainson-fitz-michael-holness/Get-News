@@ -17,9 +17,11 @@ body {
 /*    width: 80%;*/
 /*    height: auto;*/
     padding: 20px;
+}
 
-
-
+.analyze {
+    display: inline-block;
+    margin-left: 20px;
 }
 
 .inner-container {
