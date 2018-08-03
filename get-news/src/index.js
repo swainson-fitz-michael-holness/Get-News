@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
-
+import $ from "jquery";
 //===========================================
 // Code for dynamically writing search to fetch -1 ApiCall
 //===========================================
@@ -27,8 +27,33 @@ const urlSearch = function(el) {
         key
     );
 };
-//end
 
+function ActionAnalyze(props) {
+    function handleClick(e) {
+        e.preventDefault();
+        console.log(props.cardInfo);
+
+        //Fetch analysis from AI
+
+        $.post(
+          'https://apiv2.indico.io/texttags',
+          JSON.stringify({
+            'api_key': "1fd3f7fee7efe92f194cf184a5b7bfc4",
+            'data': props.cardInfo,
+              'top_n': 20,
+          })
+        ).then(function(res) { console.log(res) });
+
+
+    }
+
+    return (
+        <button className="btn btn-primary" onClick={handleClick}>
+            Analyze
+        </button>
+    );
+}
+//end
 //===========================================
 // Code for dynamically writing search to fetch -1 ApiCall
 //===========================================
@@ -40,7 +65,7 @@ class MainFrame extends React.Component {
             value: "",
             isLoaded: false,
             getData: null,
-            error: null
+            error: null,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -98,9 +123,7 @@ class MainFrame extends React.Component {
 
     }
 
-    RunMe() {
-        return <div>hi</div>
-    }
+
 
     render() {
         if (this.state.isLoaded === false) {
@@ -138,7 +161,6 @@ class MainFrame extends React.Component {
                                     key={info.articles.indexOf(val)}
                                     className="dimention-news-card media col-lg-6 "
                                 >
-                                    {console.log()}
                                     <div className="inner-container">
                                         <img
                                             className="mr-3 img-size"
@@ -159,6 +181,8 @@ class MainFrame extends React.Component {
                                             >
                                                 {val.source.name}
                                             </a>
+
+                                            <ActionAnalyze name={info.articles.indexOf(val)} cardInfo={val.url}/>
                                         </div>
                                     </div>
                                 </div>
