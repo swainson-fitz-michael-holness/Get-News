@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 import $ from "jquery";
+import Chart from "chart.js";
 //===========================================
 // Code for dynamically writing search to fetch -1 ApiCall
 //===========================================
@@ -28,69 +29,112 @@ const urlSearch = function(el) {
     );
 };
 
+//Analyze button
 class ActionAnalyze extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isActive: false,
             element: "",
-        }
+            drawChart: "",
+            widthChart: "0",
+            heightChart: "0",
+        };
 
-        this.handleClick = this.handleClick.bind(this)
-
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick(e) {
         e.preventDefault();
-
-        if(this.state.isActive === false){
+        console.log(e)
+        if (this.state.isActive === false) {
             //Fetch analysis from AI
             $.post(
-              'https://apiv2.indico.io/texttags',
-              JSON.stringify({
-                'api_key': "1fd3f7fee7efe92f194cf184a5b7bfc4",
-                'data': this.props.cardInfo,
-                  'top_n': 20,
-              })
+                "https://apiv2.indico.io/texttags",
+                JSON.stringify({
+                    api_key: "1fd3f7fee7efe92f194cf184a5b7bfc4",
+                    data: this.props.cardInfo,
+                    top_n: 20
+                })
             ).then(res => {
                 this.setState({
-                    isActive: true,
+                    isActive: !this.state.isActive,
                     element: JSON.parse(res),
-                              })
+                    widthChart: "100",
+                    heightChart: "200",
+                    drawChart: new Chart(
+                        document.getElementById("doughnut-chart"),
+                        {
+                            type: "doughnut",
+                            data: {
+                                labels: [
+                                    "Africa",
+                                    "Asia",
+                                    "Europe",
+                                    "Latin America",
+                                    "North America"
+                                ],
+                                datasets: [
+                                    {
+                                        label: "Population (millions)",
+                                        backgroundColor: [
+                                            "#3e95cd",
+                                            "#8e5ea2",
+                                            "#3cba9f",
+                                            "#e8c3b9",
+                                            "#c45850"
+                                        ],
+                                        data: [2478, 5267, 734, 784, 433]
+                                    }
+                                ]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    text:
+                                        "Predicted world population (millions) in 2050"
+                                }
+                            }
+                        }
+                    )
+                });
             });
+        } else {
 
         }
-
     }
 
-    render(){
+    render() {
         let stats = [];
+        let labels = [];
+        let chart;
         const statContent = this.state.element.results;
-        if(this.state.isActive){
-            console.log(statContent)
+        chart = <canvas id="doughnut-chart" width="0" height="0" />;
+        if (this.state.isActive) {
+            console.log(statContent);
+            console.log(chart);
             for (let key in statContent) {
-//                console.log(statContent[key]);
+                //                console.log(statContent[key]);
                 stats.push(statContent[key]);
+                labels.push(key);
             }
-
         }
         return (
             <div className="analyze">
-                            <button className="btn btn-primary" onClick={this.handleClick}>
-                Analyze
-            </button>
-            <div>
-                {stats.map(el => (
-                    <div>{el}</div>
-                ))}
+
+                <button
+                    className="btn btn-primary"
+                    onClick={this.handleClick}
+                >
+                    Analyze
+                </button>
+                {chart}
             </div>
-
-            </div>
-
-
         );
     }
 }
+
+
 //end
 //===========================================
 // Code for dynamically writing search to fetch -1 ApiCall
@@ -103,7 +147,7 @@ class MainFrame extends React.Component {
             value: "",
             isLoaded: false,
             getData: null,
-            error: null,
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -157,11 +201,7 @@ class MainFrame extends React.Component {
                     });
                 }
             );
-
-
     }
-
-
 
     render() {
         if (this.state.isLoaded === false) {
@@ -212,6 +252,7 @@ class MainFrame extends React.Component {
                                             <p className="mt-1">
                                                 {val.description}
                                             </p>
+
                                             <a
                                                 className="btn btn-primary"
                                                 href={val.url}
@@ -220,7 +261,7 @@ class MainFrame extends React.Component {
                                                 {val.source.name}
                                             </a>
 
-                                            <ActionAnalyze cardInfo={val.url}/>
+                                            <ActionAnalyze cardInfo={val.url} />
                                         </div>
                                     </div>
                                 </div>
