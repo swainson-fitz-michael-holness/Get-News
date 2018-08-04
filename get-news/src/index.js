@@ -29,6 +29,12 @@ const urlSearch = function(el) {
     );
 };
 
+//Chart component
+function Chartify(props) {
+//    console.log(props.identity)
+    return <canvas id={props.identity} width="0" height="0" />
+}
+
 //Analyze button
 class ActionAnalyze extends React.Component {
     constructor(props) {
@@ -37,8 +43,8 @@ class ActionAnalyze extends React.Component {
             isActive: false,
             element: "",
             drawChart: "",
-            widthChart: "0",
-            heightChart: "0",
+            wChart: "0",
+            hChart: "0"
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -46,7 +52,7 @@ class ActionAnalyze extends React.Component {
 
     handleClick(e) {
         e.preventDefault();
-        console.log(e)
+        console.log(this.props.cardIdentity)
         if (this.state.isActive === false) {
             //Fetch analysis from AI
             $.post(
@@ -58,12 +64,10 @@ class ActionAnalyze extends React.Component {
                 })
             ).then(res => {
                 this.setState({
-                    isActive: !this.state.isActive,
+                    isActive: true,
                     element: JSON.parse(res),
-                    widthChart: "100",
-                    heightChart: "200",
                     drawChart: new Chart(
-                        document.getElementById("doughnut-chart"),
+                        document.getElementById(this.props.cardIdentity),
                         {
                             type: "doughnut",
                             data: {
@@ -100,7 +104,9 @@ class ActionAnalyze extends React.Component {
                 });
             });
         } else {
+            this.setState({
 
+            });
         }
     }
 
@@ -109,30 +115,45 @@ class ActionAnalyze extends React.Component {
         let labels = [];
         let chart;
         const statContent = this.state.element.results;
-        chart = <canvas id="doughnut-chart" width="0" height="0" />;
+        chart = <canvas className="analyzeChart"  id="doughnut-chart" width="0" height="0" />;
         if (this.state.isActive) {
             console.log(statContent);
-            console.log(chart);
+            console.log(this.props.cardInfo);
             for (let key in statContent) {
-                //                console.log(statContent[key]);
                 stats.push(statContent[key]);
                 labels.push(key);
             }
         }
         return (
-            <div className="analyze">
+            <div className="analyze ">
+
+
+
+                <a className="btn btn-primary"
+                    href={this.props.cardInfo}
+                    target="_blank"
+                >
+                    {this.props.cardName}
+                </a>
 
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary analyze-adj "
                     onClick={this.handleClick}
                 >
                     Analyze
                 </button>
-                {chart}
+
+                <Chartify identity={this.props.cardIdentity}/>
+
+
+
+
             </div>
         );
     }
 }
+
+
 
 
 //end
@@ -253,15 +274,7 @@ class MainFrame extends React.Component {
                                                 {val.description}
                                             </p>
 
-                                            <a
-                                                className="btn btn-primary"
-                                                href={val.url}
-                                                target="_blank"
-                                            >
-                                                {val.source.name}
-                                            </a>
-
-                                            <ActionAnalyze cardInfo={val.url} />
+                                            <ActionAnalyze cardInfo={val.url} cardName={val.source.name} cardIdentity={"chart"+info.articles.indexOf(val)}/>
                                         </div>
                                     </div>
                                 </div>

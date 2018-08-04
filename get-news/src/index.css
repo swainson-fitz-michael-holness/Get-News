@@ -26,6 +26,10 @@ body {
     margin-bottom: 40px;
 }
 
+.analyze-adj {
+    margin-left: 11px;
+}
+
 .inner-container {
     background-color: white;
     padding: 18px 18px 30px 18px;
