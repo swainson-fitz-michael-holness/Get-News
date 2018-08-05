@@ -30,9 +30,24 @@ const urlSearch = function(el) {
 };
 
 //Chart component
-function Chartify(props) {
-//    console.log(props.identity)
-    return <canvas id={props.identity} width="0" height="0" />
+class Chartify extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contentOn: <div className="collapse contentDim" id={"hide"+props.identity}><canvas id={props.identity} width="0" height="0" /></div>,
+        }
+    }
+
+
+    render(){
+//        if(this.state.isOn === true) {
+//            console.log(this.state.isOn)
+//            return this.state.contentOn;
+        return this.state.contentOn;
+        }
+//
+
+
 }
 
 //Analyze button
@@ -52,32 +67,38 @@ class ActionAnalyze extends React.Component {
 
     handleClick(e) {
         e.preventDefault();
-        console.log(this.props.cardIdentity)
-        if (this.state.isActive === false) {
+
+        if (this.state.drawChart === "" && this.state.element === "") {
+//             console.log("!!!!IF ONE")
             //Fetch analysis from AI
             $.post(
                 "https://apiv2.indico.io/texttags",
                 JSON.stringify({
                     api_key: "1fd3f7fee7efe92f194cf184a5b7bfc4",
                     data: this.props.cardInfo,
-                    top_n: 20
+                    top_n: 5
                 })
             ).then(res => {
+                let holder = JSON.parse(res)
+                let nameArr = [];
+                let dataArr = [];
+                for(var key in holder.results) {
+                    nameArr.push(key);
+                }
+                for(var key in holder.results) {
+                    dataArr.push(holder.results[key]);
+                }
+                console.log(nameArr)
+
                 this.setState({
-                    isActive: true,
                     element: JSON.parse(res),
+                    clabel: "hello",
                     drawChart: new Chart(
                         document.getElementById(this.props.cardIdentity),
                         {
                             type: "doughnut",
                             data: {
-                                labels: [
-                                    "Africa",
-                                    "Asia",
-                                    "Europe",
-                                    "Latin America",
-                                    "North America"
-                                ],
+                                labels: nameArr,
                                 datasets: [
                                     {
                                         label: "Population (millions)",
@@ -88,7 +109,7 @@ class ActionAnalyze extends React.Component {
                                             "#e8c3b9",
                                             "#c45850"
                                         ],
-                                        data: [2478, 5267, 734, 784, 433]
+                                        data: dataArr
                                     }
                                 ]
                             },
@@ -102,23 +123,21 @@ class ActionAnalyze extends React.Component {
                         }
                     )
                 });
+                console.log(this.state.clabel)
             });
-        } else {
-            this.setState({
+        } else if( !(this.state.element === "") ) {
 
-            });
         }
     }
 
     render() {
         let stats = [];
         let labels = [];
-        let chart;
         const statContent = this.state.element.results;
-        chart = <canvas className="analyzeChart"  id="doughnut-chart" width="0" height="0" />;
-        if (this.state.isActive) {
-            console.log(statContent);
-            console.log(this.props.cardInfo);
+//        console.log(this.state.drawChart);
+        if (!(this.state.drawChart === "")) {
+//            console.log(statContent);
+//            console.log(this.props.cardInfo);
             for (let key in statContent) {
                 stats.push(statContent[key]);
                 labels.push(key);
@@ -138,12 +157,11 @@ class ActionAnalyze extends React.Component {
 
                 <button
                     className="btn btn-primary analyze-adj "
-                    onClick={this.handleClick}
+                    onClick={this.handleClick} type="button" data-toggle="collapse" data-target={"#hide"+this.props.cardIdentity} aria-expanded="false" aria-controls="collapseExample"
                 >
                     Analyze
                 </button>
-
-                <Chartify identity={this.props.cardIdentity}/>
+                <Chartify identity={this.props.cardIdentity} />
 
 
 

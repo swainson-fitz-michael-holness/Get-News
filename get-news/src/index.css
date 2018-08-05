@@ -43,3 +43,8 @@ body {
 .chartDim {
     display: block;
 }
+
+.contentDim {
+    height: 400px;
+    width: auto;
+}
