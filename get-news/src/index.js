@@ -307,3 +307,4 @@ class MainFrame extends React.Component {
 
 ReactDOM.render(<MainFrame />, document.getElementById("root"));
 registerServiceWorker();
+//A rewrite is in orders
