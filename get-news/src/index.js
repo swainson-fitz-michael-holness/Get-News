@@ -101,7 +101,7 @@ class ActionAnalyze extends React.Component {
                                 labels: nameArr,
                                 datasets: [
                                     {
-                                        label: "Population (millions)",
+                                        label: "keyword analysis",
                                         backgroundColor: [
                                             "#3e95cd",
                                             "#8e5ea2",
@@ -117,7 +117,7 @@ class ActionAnalyze extends React.Component {
                                 title: {
                                     display: true,
                                     text:
-                                        "Predicted world population (millions) in 2050"
+                                        "This topic is about:"
                                 }
                             }
                         }
