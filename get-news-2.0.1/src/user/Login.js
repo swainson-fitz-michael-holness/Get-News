@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from "jquery";
+
 import '../App.css';
 import firebase from 'firebase';
 import NavigationLogOut from '../components/NavigationLogOut.js'
