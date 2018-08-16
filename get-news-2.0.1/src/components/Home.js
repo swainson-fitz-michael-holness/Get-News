@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from '../config/Access.js';
+import NavigationLogIn from './NavigationLogIn.js'
 
 class Home extends Component {
     constructor(props){
@@ -13,8 +14,9 @@ class Home extends Component {
 
     render(){
         return (
-            <div>
-                <button onClick={this.logOut}>Log Out</button>
+            <div className="container">
+               <NavigationLogIn/>
+
             </div>
         );
     }
