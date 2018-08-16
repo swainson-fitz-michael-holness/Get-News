@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import $ from "jquery";
 import '../App.css';
 import firebase from 'firebase';
+import NavigationLogOut from '../components/NavigationLogOut.js'
 
 class Login extends Component {
     constructor(props){
@@ -34,25 +35,29 @@ class Login extends Component {
 
     render() {
         return (
-            <form>
-                <div className="form-group login-box border-primary rounded shadow-lg">
-                    <div>
-                        <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email address..." className="form-control label"/>
+            <div className="container">
+                < NavigationLogOut/>
+
+                <form>
+                    <div className="form-group login-box border-primary rounded shadow-lg">
+                        <div>
+                            <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email address..." className="form-control label"/>
+                        </div>
+
+                        <div>
+                            <input value={this.state.password} onChange={this.handleChange} name="password" type="password" id="password" placeholder="password..." className="form-control label"/>
+                        </div>
+
+                        <div className="login-btn">
+
+                            <button  onClick={this.login} type="button" className="btn btn-block btn-primary">
+                                Submit
+                            </button>
+                        </div>
+
                     </div>
-
-                    <div>
-                        <input value={this.state.password} onChange={this.handleChange} name="password" type="password" id="password" placeholder="password..." className="form-control label"/>
-                    </div>
-
-                    <div className="login-btn">
-
-                        <button  onClick={this.login} type="button" className="btn btn-block btn-primary">
-                            Submit
-                        </button>
-                    </div>
-
-                </div>
-            </form>
+                </form>
+            </div>
 
         );
     }
