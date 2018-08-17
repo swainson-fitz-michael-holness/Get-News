@@ -54,8 +54,8 @@ class Home extends Component {
     }
 
     render(){
-        const getNews = this.state;
-        console.log(getNews.data);
+        const getNews = this.state.data;
+        console.log(getNews);
 
 
         return (
@@ -63,7 +63,12 @@ class Home extends Component {
                    <NavigationLogIn/>
 
                    <div className="row">
-                        <ArticleCard  />
+                       {this.state.isLoaded === true ? <ArticleCard
+                       title={getNews.articles[2].title}
+                       img={getNews.articles[2].urlToImage}
+                       info={getNews.articles[2].description}
+
+                        /> : <div></div>}
                    </div>
 
                 </div>
