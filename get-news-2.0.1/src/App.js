@@ -11,7 +11,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            user: <Load/>
+            user: <Load/>,
         }
     }
 
@@ -41,11 +41,13 @@ class App extends Component {
 //        };
 
     render() {
-        if(this.state.user){
-            return <Home/>
-        } else {
-            return <Login/>
-        };
+
+        return (
+            <div>
+                { this.state.user ? <Home/> : <Login/>}
+            </div>
+        );
+
     }
 }
 
