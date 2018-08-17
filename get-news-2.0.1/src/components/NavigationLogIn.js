@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import $ from "jquery";
+//import $ from "jquery";
 import fire from '../config/Access.js';
 
 class NavigationLogIn extends Component {
@@ -44,9 +44,9 @@ class NavigationLogIn extends Component {
                             </a>
                         </li>
                         <li className="nav-item ">
-                            <button onClick={this.logOut} className="nav-link btn btn-link" >
+                            <a onClick={this.logOut} href={null} className="nav-link" >
                                 Log Out
-                            </button>
+                            </a>
                         </li>
 
                     </ul>

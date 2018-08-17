@@ -1,16 +1,31 @@
-import React, { Component } from "react";
-import "./App.css";
-import Login from "./user/Login.js";
+import React, { Component } from 'react';
+import './App.css';
+import Login from './user/Login.js';
 import fire from './config/Access.js';
 import Home from './components/Home';
+import Load from './components/Load.js';
 
-class App extends Component {
-        constructor(props){
+//Add Context API
+const AppContext = React.createContext();
+
+class AppProvider extends Component {
+    constructor(props){
         super(props);
+
         this.state = {
-            user: null,
+            user: <Load/>,
         }
     }
+
+    render() {
+        return <AppContext.Provider value={this.state}>
+            {this.props.children}
+        </AppContext.Provider>
+    }
+}
+
+class App extends Component {
+
 
     componentDidMount(){
        this.authListener();
@@ -30,13 +45,18 @@ class App extends Component {
         });
     }
 
+//        if(this.state.user){
+//            return <Home/> :
+//        } else {
+//            return <Login/>
+//        };
 
     render() {
-        return (
-            <div className='App'>
-               { this.state.user ? (<Home/>) : (<Login/>) }
-            </div>
-         );
+        return <AppProvider>
+            <AppContext.Consumer>
+                {(context) => context.user ? <Home/> : <Login/>}
+            </AppContext.Consumer>
+        </AppProvider>
     }
 }
 
