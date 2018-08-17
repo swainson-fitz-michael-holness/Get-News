@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import NavigationLogIn from './NavigationLogIn.js'
 import ArticleCard from './Article.js';
 
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+
 const key = "apiKey=6c6b71cbab324fbd82b11f2c79e14456";
 
 const url = function(endpoint, country, key) {
@@ -62,13 +64,20 @@ class Home extends Component {
                 <div className="container">
                    <NavigationLogIn/>
 
-                   <div className="row">
-                       {this.state.isLoaded === true ? <ArticleCard
-                       title={getNews.articles[2].title}
-                       img={getNews.articles[2].urlToImage}
-                       info={getNews.articles[2].description}
 
-                        /> : <div></div>}
+
+                   <div className="row">
+                       {this.state.isLoaded === true ?    getNews.articles.map(val => (
+                        <ArticleCard
+                        key={getNews.articles.indexOf(val)}
+                       title={val.title}
+                       img={val.urlToImage}
+                       info={val.description}
+                        sourceName={val.source.name}
+                        url={val.url}
+                        date={new Date(val.publishedAt).toLocaleDateString("en-US",options)}
+                        />
+                )) : <div></div>}
                    </div>
 
                 </div>

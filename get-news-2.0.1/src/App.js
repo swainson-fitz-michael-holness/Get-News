@@ -5,6 +5,13 @@ import fire from './config/Access.js';
 import Home from './components/Home';
 import Load from './components/Load.js';
 
+//function PageLoad(props) {
+//    const userIsLoaded = props.userIsLoaded;
+//    if(userIsLoaded) {
+//        return
+//    }
+//}
+
 
 class App extends Component {
     constructor(props){
@@ -12,11 +19,12 @@ class App extends Component {
 
         this.state = {
             user: null,
+            userIsLoaded: "init"
         }
     }
 
     componentDidMount(){
-       this.authListener();
+        this.authListener();
     }
 
     authListener(){
@@ -24,11 +32,12 @@ class App extends Component {
             if (user) {
                 // User is signed in.
                 this.setState({ user: user });
-
-                console.log("logged In");
+                this.setState({ userIsLoaded: "logged in" });
+                console.log(user);
             } else {
                 // No user is signed in.
                 this.setState({ user: null });
+                this.setState({ userIsLoaded: "logged out" });
                 console.log("logged out")
             }
         });
@@ -40,13 +49,19 @@ class App extends Component {
 //            return <Login/>
 //        };
 
+//     <div>
+//                {this.state.user ? <Home/> : <Login/>}
+//            </div>
+
     render() {
 
-        return (
-            <div>
-                { this.state.user ? <Home/> : <Login/>}
-            </div>
-        );
+        if(this.state.userIsLoaded === "logged in"){
+           return <Home/>
+        } else if( this.state.userIsLoaded === "logged out") {
+            return <Login/>
+        } else if( this.state.userIsLoaded === "init") {
+            return <Load/>
+        }
 
     }
 }
