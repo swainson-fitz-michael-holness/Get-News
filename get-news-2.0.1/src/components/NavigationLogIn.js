@@ -10,6 +10,7 @@ class NavigationLogIn extends Component {
 
     logOut() {
         fire.auth().signOut();
+//        console.log("working");
     }
 
     render() {

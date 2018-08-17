@@ -17,20 +17,19 @@ class Home extends Component {
 
     render(){
         return (
+                <div className="container">
+                   <NavigationLogIn/>
 
-            <div className="container">
-               <NavigationLogIn/>
+                   <div className="row">
+                        <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
+                       <ArticleCard />
+                       <ArticleCard />
+                       <ArticleCard />
+                   </div>
 
-               <div className="row">
-                    <ArticleCard />
-                    <ArticleCard />
-                    <ArticleCard />
-                   <ArticleCard />
-                   <ArticleCard />
-                   <ArticleCard />
-               </div>
-
-            </div>
+                </div>
         )
 
     }

@@ -5,27 +5,15 @@ import fire from './config/Access.js';
 import Home from './components/Home';
 import Load from './components/Load.js';
 
-//Add Context API
-const AppContext = React.createContext();
 
-class AppProvider extends Component {
+class App extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            user: <Load/>,
+            user: <Load/>
         }
     }
-
-    render() {
-        return <AppContext.Provider value={this.state}>
-            {this.props.children}
-        </AppContext.Provider>
-    }
-}
-
-class App extends Component {
-
 
     componentDidMount(){
        this.authListener();
@@ -36,27 +24,28 @@ class App extends Component {
             if (user) {
                 // User is signed in.
                 this.setState({ user: user });
-                console.log(user);
+
+                console.log("logged In");
             } else {
                 // No user is signed in.
                 this.setState({ user: null });
-                console.log('signed out')
+                console.log("logged out")
             }
         });
     }
 
 //        if(this.state.user){
-//            return <Home/> :
+//            return <Home/>
 //        } else {
 //            return <Login/>
 //        };
 
     render() {
-        return <AppProvider>
-            <AppContext.Consumer>
-                {(context) => context.user ? <Home/> : <Login/>}
-            </AppContext.Consumer>
-        </AppProvider>
+        if(this.state.user){
+            return <Home/>
+        } else {
+            return <Login/>
+        };
     }
 }
 
