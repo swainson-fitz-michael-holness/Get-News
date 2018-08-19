@@ -4,7 +4,23 @@ import $ from "jquery";
 
 
 class ArticleCard extends Component {
+    constructor(props){
+        super(props);
 
+        this.state = {
+            init: "Loading",
+        }
+
+        this.handleClick = this.handleClick.bind(this);
+    };
+
+    handleClick(e){
+        e.preventDefault();
+//        $(this).find('.modal-title').text('New message to ' )
+        this.setState({
+            init: this.props.url,
+        });
+    };
 
     render(){
         return(
@@ -15,10 +31,10 @@ class ArticleCard extends Component {
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
 
-                    <button type="button" className="card-link btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#analysisModal" style={{marginRight: "20px"}} data-whatever={this.props.url}>Analyze</button>
+                    <button type="button" className="card-link btn btn-outline-primary btn-sm" data-toggle="modal" data-target={"#A"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}>Analyze</button>
 
 
-                    <div className="modal fade" id="analysisModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={"A"+this.props.ID} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div className="modal-dialog" role="document">
                         <div className="modal-content">
                           <div className="modal-header">
@@ -28,7 +44,7 @@ class ArticleCard extends Component {
                             </button>
                           </div>
                           <div className="modal-body">
-
+                            {this.state.init}
                           </div>
                           <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
