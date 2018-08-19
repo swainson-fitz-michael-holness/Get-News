@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from "jquery";
+import Analysis from "./Analysis.js";
 
 
 
@@ -18,14 +19,14 @@ class ArticleCard extends Component {
         e.preventDefault();
 //        $(this).find('.modal-title').text('New message to ' )
         this.setState({
-            init: this.props.url,
+            init: <Analysis dataURL={this.props.url}/>,
         });
     };
 
     render(){
         return(
             <div className="col-md-6" style={{marginBottom: "50px"}}>
-                <div className="card shadow" style={{width: "auto", padding: "0", borderRadius: "10px"}}>
+                <div className="card shadow" style={{width: "auto", padding: "0", borderRadius: "10px", border: "none"}}>
                 <img className="card-img-top" style={{borderRadius: "10px 10px 0px 0px"}} src={this.props.img || "https://vignette.wikia.nocookie.net/the-darkest-minds/images/4/47/Placeholder.png/revision/latest?cb=20160927044640"} alt="ariticle "/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
