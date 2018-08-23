@@ -3,13 +3,16 @@ import $ from "jquery";
 import Analysis from "./Analysis.js";
 
 
-
+//=============================================================
+//Component which presents AI analysis content
+//=============================================================
 class ArticleCard extends Component {
     constructor(props){
         super(props);
 
         this.state = {
             init: "Loading",
+            chartID: null,
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -19,7 +22,7 @@ class ArticleCard extends Component {
         e.preventDefault();
 //        $(this).find('.modal-title').text('New message to ' )
         this.setState({
-            init: <Analysis dataURL={this.props.url}/>,
+            init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID}/>,
         });
     };
 
@@ -69,5 +72,6 @@ class ArticleCard extends Component {
         );
     }
 };
+// --END
 
 export default ArticleCard;

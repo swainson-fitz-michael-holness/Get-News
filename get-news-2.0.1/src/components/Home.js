@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavigationLogIn from "./NavigationLogIn.js";
 import ArticleCard from "./Article.js";
 
+//for constructing date format
 const options = {
   weekday: "long",
   year: "numeric",
@@ -9,6 +10,9 @@ const options = {
   day: "numeric"
 };
 
+//=============================================================
+//collext credentials for loading api articles by request and search bar
+//=============================================================
 const key = "apiKey=6c6b71cbab324fbd82b11f2c79e14456"; //6
 
 const url = function(endpoint, country, key) {
@@ -30,7 +34,13 @@ const urlSearch = function(el) {
     key
   );
 };
+// --END
 
+
+
+//=============================================================
+//Component which presents Articles on login.
+//=============================================================
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -41,9 +51,9 @@ class Home extends Component {
         error: null
     };
   }
-
+    //when app loads run fetch api
   componentDidMount() {
-    //Make api on Load
+    //update state on succesful api Load else error check
     fetch(req)
       .then(function(response) {
         return response.json();
@@ -71,11 +81,12 @@ class Home extends Component {
     );
   }
 
+
   render() {
     const getNews = this.state.data;
     console.log(this.state.error);
 
-
+    //view displayed with dynamic information brought in by the api
     return (
       <div className="container">
         <NavigationLogIn />
@@ -100,7 +111,7 @@ class Home extends Component {
           ) : (
             <div className="mx-auto" style={{width: "200px", marginTop: "180px"}}>
 
-    {this.state.error ? <div style={{textAlign: "center", color: "red"}}>something went wrong <br/> Please try again later </div> : <div><i className="fa fa-circle-notch fa-spin" style={{fontSize:"4rem", margin: "0px 0px 4px 11px"}}></i><h4>Loading</h4></div>}
+    {this.state.error ? <div style={{textAlign: "center", color: "red"}}>something went wrong <br/> Please try again later </div> : <div style={{display: "block", margin: "auto", width: "90px"}}><div className="fa fa-spinner fa-spin mx-auto" style={{ fontSize:"90px"}}></div><h4 style={{textAlign: "center", marginTop: "10px"}}>Loading</h4></div>}
 </div>
           )}
         </div>
@@ -108,5 +119,6 @@ class Home extends Component {
     );
   }
 }
+  //--END
 
 export default Home;
