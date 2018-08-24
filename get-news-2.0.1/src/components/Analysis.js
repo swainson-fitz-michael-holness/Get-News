@@ -101,7 +101,7 @@ class Analysis extends Component {
         $.post(
             "https://apiv2.indico.io/apis/multiapi/batch?apis=twitterengagement,sentimenthq,texttags,political,people,places,emotion",
             JSON.stringify({
-                api_key: "1fd3f7fee7efe92f194cf184a5b7bfc4",
+                api_key: "1fd3f7fee7efe92f194cf184a5b7bfc4", //1
                 data: this.props.dataURL,
                 top_n: 5
             })
@@ -167,6 +167,10 @@ class Analysis extends Component {
             });
 
              console.log(this.state.dataSentiment)
+        }).catch(error => {
+            this.setState({
+                load: <div style={{color: "red", textAlign: "center"}}>Sorry, couldn't collect data at this moment. Please refresh the page and try again.</div>
+            });
         });
     }
 
@@ -188,11 +192,10 @@ class Analysis extends Component {
                 <div className="progress" style={{height: "25px"}}>
                     <div className="progress-bar bg-warning" role="progressbar" style={{width: info.dataSentiment+"%"}} aria-valuenow={info.dataSentiment} aria-valuemin="0" aria-valuemax="100">{info.dataSentiment}%</div>
                 </div>
-                <h5 style={{marginTop: "20px"}}>Viralbility:</h5>
+                <h5 style={{marginTop: "20px"}}>Engagement:</h5>
                 <div className="progress" style={{height: "25px"}}>
                     <div className="progress-bar" role="progressbar" style={{width: info.dataViral+"%"}} aria-valuenow={info.dataViral} aria-valuemin="0" aria-valuemax="100">{info.dataViral}%</div>
                 </div>
-
 
             </div>)
         } else {
