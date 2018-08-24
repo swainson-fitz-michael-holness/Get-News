@@ -7,16 +7,19 @@ class Analysis extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            dataLoaded: false,
             load: <div>Loading... </div>,
             horChart: (
                 <canvas style={{ display: "none" }} id={this.props.chartID} />
-            )
+            ),
+            polChart: <canvas style={{ display: "none" }} id={"A"+this.props.chartID} />
         };
 
-        this.handleChart = this.handleChart.bind(this);
+        this.handleHorChart = this.handleHorChart.bind(this);
+        this.handlePolChart = this.handlePolChart.bind(this);
     }
 
-    handleChart(label, data) {
+    handleHorChart(label, data) {
         new Chart(document.getElementById(this.props.chartID), {
             type: "horizontalBar",
             data: {
@@ -45,6 +48,28 @@ class Analysis extends Component {
         });
     }
 
+    handlePolChart(){
+        new Chart(document.getElementById("A"+this.props.chartID), {
+    type: 'doughnut',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+    };
+
     //when the modal loads gather data from api AI
     componentDidMount() {
         $.post(
@@ -56,6 +81,8 @@ class Analysis extends Component {
             })
         ).then(res => {
             let holder = JSON.parse(res);
+
+            //----- emo stats
             let emoNameArr = [];
             let emoDataArr = [];
             for (var keyName in holder.results.emotion.results[0]) {
@@ -64,30 +91,46 @@ class Analysis extends Component {
             for (var keyData in holder.results.emotion.results[0]) {
                 emoDataArr.push(holder.results.emotion.results[0][keyData]);
             }
+            //end
 
             console.log(holder);
 
             this.setState({
+                dataLoaded: true,
                 horChart: (
                     <canvas
                         style={{ display: "block" }}
-                        id={this.props.chartID}
                     >
-                        {this.handleChart(emoNameArr, emoDataArr)}
+                        {this.handleHorChart(emoNameArr, emoDataArr)}
                     </canvas>
                 ),
-                load: <div style={{ display: "none" }} />
+                load: <div style={{ display: "none" }} />,
+                polChart: <canvas
+                        style={{ display: "block" }}
+                    >
+                        {this.handlePolChart()}
+                    </canvas>
             });
         });
     }
 
     render() {
-        return (
-            <div>
-                {this.state.load}
+        const info = this.state;
+
+            if(info.dataLoaded) {
+            return (<div>
                 {this.state.horChart}
-            </div>
-        );
+                <hr style={{marginTop: "10px"}}/>
+                {this.state.polChart}
+            </div>)
+        } else {
+            return (<div>
+               {this.state.horChart}
+                {this.state.load}
+                {this.state.polChart}
+            </div>)
+        }
+
     }
 }
 
