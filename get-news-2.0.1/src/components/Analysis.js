@@ -7,16 +7,20 @@ class Analysis extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            dataViral: null,
+            dataSentiment: null,
             dataLoaded: false,
             load: <div>Loading... </div>,
-            horChart: (
+            horChart:
                 <canvas style={{ display: "none" }} id={this.props.chartID} />
-            ),
-            polChart: <canvas style={{ display: "none" }} id={"A"+this.props.chartID} />
+            ,
+            polChart: <canvas style={{ display: "none" }} id={"A"+this.props.chartID} />,
+            txtChart: <canvas style={{ display: "none" }} id={"B"+this.props.chartID} />,
         };
 
         this.handleHorChart = this.handleHorChart.bind(this);
         this.handlePolChart = this.handlePolChart.bind(this);
+        this.handleTxtChart = this.handleTxtChart.bind(this);
     }
 
     handleHorChart(label, data) {
@@ -50,24 +54,46 @@ class Analysis extends Component {
 
     handlePolChart(label, data){
         new Chart(document.getElementById("A"+this.props.chartID), {
-    type: 'doughnut',
-    data: {
-      labels: label,
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: data
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Political analysis'
-      }
-    }
-});
+            type: 'doughnut',
+            data: {
+              labels: label,
+              datasets: [
+                {
+                  label: "num",
+                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                  data: data
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Political analysis'
+              }
+            }
+        });
+    };
+
+    handleTxtChart(label, data){
+        new Chart(document.getElementById("B"+this.props.chartID), {
+            type: 'pie',
+            data: {
+              labels: label,
+              datasets: [
+                {
+                  label: "num)",
+                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                  data: data
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'This article is about:'
+              }
+            }
+        });
     };
 
     //when the modal loads gather data from api AI
@@ -81,7 +107,7 @@ class Analysis extends Component {
             })
         ).then(res => {
             let holder = JSON.parse(res);
-
+            console.log(holder)
             //----- emo stats
             let emoNameArr = [];
             let emoDataArr = [];
@@ -93,21 +119,34 @@ class Analysis extends Component {
             }
             //end
 
-            //----- poli stats
+            //----- pol stats
             let polNameArr = [];
             let polDataArr = [];
-            for (var keyName in holder.results.political.results[0]) {
-                polNameArr.push(keyName);
+            for (var keyPolName in holder.results.political.results[0]) {
+                polNameArr.push(keyPolName);
             }
-            for (var keyData in holder.results.political.results[0]) {
-                polDataArr.push(holder.results.political.results[0][keyData]);
+            for (var keyPolData in holder.results.political.results[0]) {
+                polDataArr.push(holder.results.political.results[0][keyPolData]);
             }
             //end
 
-            console.log(holder);
+            //----- Text stats
+            let TxtNameArr = [];
+            let TxtDataArr = [];
+            for (var keyTxtName in holder.results.texttags.results[0]) {
+                TxtNameArr.push(keyTxtName);
+            }
+            for (var keyTxtData in holder.results.texttags.results[0]) {
+                TxtDataArr.push(holder.results.texttags.results[0][keyTxtData]);
+            }
+            //end
+
 
             this.setState({
+                dataViral: Math.round(holder.results.twitterengagement.results[0]*100),
+                dataSentiment: Math.round(holder.results.sentimenthq.results[0]*100),
                 dataLoaded: true,
+                load: <div style={{ display: "none" }} />,
                 horChart: (
                     <canvas
                         style={{ display: "block" }}
@@ -115,30 +154,56 @@ class Analysis extends Component {
                         {this.handleHorChart(emoNameArr, emoDataArr)}
                     </canvas>
                 ),
-                load: <div style={{ display: "none" }} />,
                 polChart: <canvas
                         style={{ display: "block" }}
                     >
                         {this.handlePolChart(polNameArr, polDataArr)}
+                    </canvas>,
+                txtChart: <canvas
+                        style={{ display: "block" }}
+                    >
+                        {this.handleTxtChart(TxtNameArr, TxtDataArr)}
                     </canvas>
             });
+
+             console.log(this.state.dataSentiment)
         });
     }
 
     render() {
         const info = this.state;
+//        let sentiment = Math.round(info.data.sentimenthq.results*100)
+
 
             if(info.dataLoaded) {
             return (<div>
-                {this.state.horChart}
-                <hr style={{marginTop: "10px"}}/>
-                {this.state.polChart}
+               {info.load}
+                {info.horChart}
+                <hr style={{marginTop: "10px", display: "block"}}/>
+                {info.polChart}
+                <hr style={{marginTop: "10px", display: "block"}}/>
+                {info.txtChart}
+                <hr/>
+                <h5>Positivity:</h5>
+                <div className="progress" style={{height: "25px"}}>
+                    <div className="progress-bar bg-warning" role="progressbar" style={{width: info.dataSentiment+"%"}} aria-valuenow={info.dataSentiment} aria-valuemin="0" aria-valuemax="100">{info.dataSentiment}%</div>
+                </div>
+                <h5 style={{marginTop: "20px"}}>Viralbility:</h5>
+                <div className="progress" style={{height: "25px"}}>
+                    <div className="progress-bar" role="progressbar" style={{width: info.dataViral+"%"}} aria-valuenow={info.dataViral} aria-valuemin="0" aria-valuemax="100">{info.dataViral}%</div>
+                </div>
+
+
             </div>)
         } else {
             return (<div>
-               {this.state.horChart}
-                {this.state.load}
-                {this.state.polChart}
+               {info.load}
+                {info.horChart}
+                <hr style={{marginTop: "10px", display: "none"}}/>
+                {info.polChart}
+                <hr style={{marginTop: "10px", display: "none"}}/>
+                {info.txtChart}
+
             </div>)
         }
 
