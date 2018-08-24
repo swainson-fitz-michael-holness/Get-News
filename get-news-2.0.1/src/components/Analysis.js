@@ -48,23 +48,23 @@ class Analysis extends Component {
         });
     }
 
-    handlePolChart(){
+    handlePolChart(label, data){
         new Chart(document.getElementById("A"+this.props.chartID), {
     type: 'doughnut',
     data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      labels: label,
       datasets: [
         {
           label: "Population (millions)",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
+          data: data
         }
       ]
     },
     options: {
       title: {
         display: true,
-        text: 'Predicted world population (millions) in 2050'
+        text: 'Political analysis'
       }
     }
 });
@@ -93,6 +93,17 @@ class Analysis extends Component {
             }
             //end
 
+            //----- poli stats
+            let polNameArr = [];
+            let polDataArr = [];
+            for (var keyName in holder.results.political.results[0]) {
+                polNameArr.push(keyName);
+            }
+            for (var keyData in holder.results.political.results[0]) {
+                polDataArr.push(holder.results.political.results[0][keyData]);
+            }
+            //end
+
             console.log(holder);
 
             this.setState({
@@ -108,7 +119,7 @@ class Analysis extends Component {
                 polChart: <canvas
                         style={{ display: "block" }}
                     >
-                        {this.handlePolChart()}
+                        {this.handlePolChart(polNameArr, polDataArr)}
                     </canvas>
             });
         });
