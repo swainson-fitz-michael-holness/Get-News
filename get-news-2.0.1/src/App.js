@@ -4,6 +4,7 @@ import Login from './user/Login.js';
 import fire from './config/Access.js';
 import Home from './components/Home';
 import Load from './components/Load.js';
+import NavigationLogIn from "./components/NavigationLogIn.js";
 
 //function PageLoad(props) {
 //    const userIsLoaded = props.userIsLoaded;
@@ -38,7 +39,7 @@ class App extends Component {
                 // No user is signed in.
                 this.setState({ user: null });
                 this.setState({ userIsLoaded: "logged out" });
-                console.log("logged out")
+                console.log("logged out");
             }
         });
     }
@@ -56,7 +57,7 @@ class App extends Component {
     render() {
 
         if(this.state.userIsLoaded === "logged in"){
-           return <Home/>
+           return <NavigationLogIn />
         } else if( this.state.userIsLoaded === "logged out") {
             return <Login/>
         } else if( this.state.userIsLoaded === "init") {
