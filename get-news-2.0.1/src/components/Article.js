@@ -15,6 +15,7 @@ class ArticleCard extends Component {
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleDataClick = this.handleDataClick.bind(this);
     };
 
     handleClick(e){
@@ -25,11 +26,16 @@ class ArticleCard extends Component {
         });
     };
 
+    handleDataClick(e){
+        e.preventDefault();
+        console.log(e.target)
+    };
+
     render(){
         return(
             <div className="col-md-6" style={{marginBottom: "50px"}}>
                 <div className="card shadow" style={{width: "auto", padding: "0", borderRadius: "10px", border: "none"}}>
-                <img className="card-img-top" style={{borderRadius: "10px 10px 0px 0px"}} src={this.props.img || "https://vignette.wikia.nocookie.net/the-darkest-minds/images/4/47/Placeholder.png/revision/latest?cb=20160927044640"} alt="ariticle "/>
+                <img className="card-img-top" style={{borderRadius: "10px 10px 0px 0px"}} src={this.props.img || "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle "/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
@@ -51,7 +57,6 @@ class ArticleCard extends Component {
                           </div>
                           <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
                           </div>
                         </div>
                       </div>

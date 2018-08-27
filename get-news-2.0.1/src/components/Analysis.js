@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import $ from "jquery";
 import Chart from "chart.js";
+import fire from "../config/Access.js";
+
+const db = fire.database();
+//const ref = db.ref("analysis");
 
 //Gathers information bassed on url to analyzxe from news article
 class Analysis extends Component {
@@ -21,6 +25,7 @@ class Analysis extends Component {
         this.handleHorChart = this.handleHorChart.bind(this);
         this.handlePolChart = this.handlePolChart.bind(this);
         this.handleTxtChart = this.handleTxtChart.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleHorChart(label, data) {
@@ -174,6 +179,17 @@ class Analysis extends Component {
         });
     }
 
+    handleChange(e){
+        e.preventDefault();
+        alert("working")
+        db.ref("test").set({
+            user: "one",
+        });
+        console.log(fire)
+
+
+    };
+
     render() {
         const info = this.state;
 //        let sentiment = Math.round(info.data.sentimenthq.results*100)
@@ -196,7 +212,7 @@ class Analysis extends Component {
                 <div className="progress" style={{height: "25px"}}>
                     <div className="progress-bar" role="progressbar" style={{width: info.dataViral+"%"}} aria-valuenow={info.dataViral} aria-valuemin="0" aria-valuemax="100">{info.dataViral}%</div>
                 </div>
-
+                <button onClick={this.handleChange} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
             </div>)
         } else {
             return (<div>
