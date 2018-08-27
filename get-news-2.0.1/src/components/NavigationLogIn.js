@@ -48,7 +48,7 @@ class NavigationLogIn extends Component {
         const news = this.state;
 
         return (
-            <div>
+            <div className="container">
                 <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
                     <button
                         className="navbar-toggler"
@@ -92,6 +92,7 @@ class NavigationLogIn extends Component {
                         </form>
                     </div>
                 </nav>
+
                 <Home term={news.valSubmit}/>
             </div>
 

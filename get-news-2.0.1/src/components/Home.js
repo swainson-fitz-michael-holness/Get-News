@@ -28,7 +28,7 @@ const req = new Request(
 
 const urlSearch = function(el) {
     return (
-        "https://newsapi.org/v2/top-headlines?" +
+        "https://newsapi.org/v2/everything?" +
         "q=" +
         el +
         "&" +
@@ -117,9 +117,12 @@ class Home extends Component {
         //view displayed with dynamic information brought in by the api
         return (
             <div className="container">
+               <div className="text-right" style={{marginBottom: "20px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
                 <div className="row">
+
                     {this.state.isLoaded === true ? (
                         getNews.articles.map(val => (
+
                             <ArticleCard
                                 key={getNews.articles.indexOf(val)}
                                 title={val.title}
@@ -180,3 +183,7 @@ class Home extends Component {
 //--END
 
 export default Home;
+
+//TODO
+//give search results condition
+//fix tags in title
