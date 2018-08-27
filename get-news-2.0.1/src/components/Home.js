@@ -49,7 +49,8 @@ class Home extends Component {
         this.state = {
             isLoaded: false,
             data: null,
-            error: null
+            error: null,
+            init: props.term,
         };
     }
 
@@ -72,12 +73,41 @@ class Home extends Component {
                         data: data
                     });
                 }
+
             })
             .catch(err => {
                 this.setState({
                     error: err
                 });
             });
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.term !== prevProps.term ){
+                    fetch(urlSearch(this.props.term))
+            .then(function(response) {
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "error") {
+                    this.setState({
+                        isLoaded: false,
+                        data: data
+                    });
+                } else {
+                    this.setState({
+                        isLoaded: true,
+                        data: data
+                    });
+                }
+
+            })
+            .catch(err => {
+                this.setState({
+                    error: err
+                });
+            });
+        }
     }
 
     render() {

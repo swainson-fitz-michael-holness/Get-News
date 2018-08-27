@@ -8,8 +8,11 @@ class NavigationLogIn extends Component {
         super(props);
 
         this.state = {
-            val: "love",
-            initHome: <Home term=""/>,
+            val: "",
+            valSubmit: "uk",
+            firstLoad: false,
+            initHome: null,
+            searchHome: null,
         };
 
         this.logOut = this.logOut.bind(this);
@@ -30,10 +33,11 @@ class NavigationLogIn extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        alert(this.state.val)
         this.setState({
-           initHome: <Home term={this.state.val}/>
+//           firstLoad: !this.state.firstLoad,
+            valSubmit: this.state.val
         });
+
     }
 
     handleSearch(el){
@@ -42,6 +46,7 @@ class NavigationLogIn extends Component {
 
     render() {
         const news = this.state;
+
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
@@ -87,10 +92,11 @@ class NavigationLogIn extends Component {
                         </form>
                     </div>
                 </nav>
-                {this.state.initHome}
+                <Home term={this.state.valSubmit}/>
             </div>
 
         );
+
     }
 }
 
