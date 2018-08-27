@@ -57,7 +57,7 @@ class Home extends Component {
     //when app loads run fetch api
     componentDidMount() {
         //update state on succesful api Load else error check
-        fetch(urlSearch(this.props.term))
+        fetch(req)
             .then(function(response) {
                 return response.json();
             })

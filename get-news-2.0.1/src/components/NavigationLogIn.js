@@ -92,7 +92,7 @@ class NavigationLogIn extends Component {
                         </form>
                     </div>
                 </nav>
-                <Home term={this.state.valSubmit}/>
+                <Home term={news.valSubmit}/>
             </div>
 
         );

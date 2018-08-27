@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from './user/Login.js';
 import fire from './config/Access.js';
-import Home from './components/Home';
 import Load from './components/Load.js';
 import NavigationLogIn from "./components/NavigationLogIn.js";
 
