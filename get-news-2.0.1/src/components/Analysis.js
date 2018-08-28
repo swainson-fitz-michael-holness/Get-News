@@ -4,6 +4,8 @@ import Chart from "chart.js";
 import fire from "../config/Access.js";
 
 const db = fire.database();
+const userDB = fire.auth().currentUser;
+
 //const ref = db.ref("analysis");
 
 //Gathers information bassed on url to analyzxe from news article
@@ -20,6 +22,7 @@ class Analysis extends Component {
             ,
             polChart: <canvas style={{ display: "none" }} id={"A"+this.props.chartID} />,
             txtChart: <canvas style={{ display: "none" }} id={"B"+this.props.chartID} />,
+            apiData: null,
         };
 
         this.handleHorChart = this.handleHorChart.bind(this);
@@ -112,7 +115,10 @@ class Analysis extends Component {
             })
         ).then(res => {
             let holder = JSON.parse(res);
-            console.log(holder)
+            this.setState({
+                apiData: holder
+            });
+            console.log(this.state.apiData);
             //----- emo stats
             let emoNameArr = [];
             let emoDataArr = [];
@@ -171,7 +177,6 @@ class Analysis extends Component {
                     </canvas>
             });
 
-             console.log(this.state.dataSentiment)
         }).catch(error => {
             this.setState({
                 load: <div style={{color: "red", textAlign: "center"}}>Sorry, couldn't collect data at this moment. Please refresh the page and try again.</div>
@@ -179,21 +184,34 @@ class Analysis extends Component {
         });
     }
 
+    //
+    // LOOK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //
     handleChange(e){
         e.preventDefault();
-        alert("working")
-        db.ref("test").set({
-            user: "one",
+        let user = fire.auth().currentUser;
+        let dbData = this.state.apiData.results;
+        console.log(user)
+        db.ref("articles").push({
+            url: this.props.dataURL,
+            emotion: dbData.emotion.results[0],
+            people: dbData.people.results[0],
+            places: dbData.places.results[0],
+            political: dbData.political.results[0],
+            sentimenthq: dbData.sentimenthq.results[0],
+            texttags: dbData.texttags.results[0],
+            twitterengagement: dbData.twitterengagement.results[0],
         });
-        console.log(fire)
 
+        fire.database().ref("articles").on("value", (el)=>{
+            let keys = Object.keys(el.val());
+            console.log(keys)
+        });
 
     };
 
     render() {
         const info = this.state;
-//        let sentiment = Math.round(info.data.sentimenthq.results*100)
-
 
             if(info.dataLoaded) {
             return (<div>

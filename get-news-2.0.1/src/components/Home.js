@@ -28,12 +28,12 @@ const req = new Request(
 
 const urlSearch = function(el) {
     return (
-        "https://newsapi.org/v2/everything?" +
+        "https://newsapi.org/v2/top-headlines?" +
         "q=" +
         el +
         "&" +
         "language=en&" +
-        "sortBy=popularity&" +
+        "sortBy=recent&" +
         key
     );
 };
