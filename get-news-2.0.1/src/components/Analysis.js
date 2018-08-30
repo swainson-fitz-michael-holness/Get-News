@@ -4,7 +4,6 @@ import Chart from "chart.js";
 import fire from "../config/Access.js";
 
 const db = fire.database();
-const userDB = fire.auth().currentUser;
 
 //const ref = db.ref("analysis");
 
@@ -23,12 +22,14 @@ class Analysis extends Component {
             polChart: <canvas style={{ display: "none" }} id={"A"+this.props.chartID} />,
             txtChart: <canvas style={{ display: "none" }} id={"B"+this.props.chartID} />,
             apiData: null,
+            user: fire.auth().currentUser,
         };
 
         this.handleHorChart = this.handleHorChart.bind(this);
         this.handlePolChart = this.handlePolChart.bind(this);
         this.handleTxtChart = this.handleTxtChart.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     handleHorChart(label, data) {
@@ -187,12 +188,15 @@ class Analysis extends Component {
     //
     // LOOK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //
-    handleChange(e){
-        e.preventDefault();
-        let user = fire.auth().currentUser;
+
+    // Each user has their own unique uid to save analysis
+
+    // To limit the call of the api and prevent saving duplicate results:
+    // search database for keys of saved article and check that the url is not the same as the url in apiData.
+    handleChange(){
+
         let dbData = this.state.apiData.results;
-        console.log(user)
-        db.ref("articles").push({
+        db.ref(this.state.user.uid+"/articles").push({
             url: this.props.dataURL,
             emotion: dbData.emotion.results[0],
             people: dbData.people.results[0],
@@ -203,12 +207,33 @@ class Analysis extends Component {
             twitterengagement: dbData.twitterengagement.results[0],
         });
 
-        fire.database().ref("articles").on("value", (el)=>{
-            let keys = Object.keys(el.val());
-            console.log(keys)
-        });
+
+
+
 
     };
+
+    handleCheck(e) {
+        e.preventDefault();
+
+        fire.database().ref(this.state.user.uid+"/articles").once("value", (el)=>{
+            let keys = Object.keys(el.val());
+            let dbObj = el.val();
+
+            for (var i = 0; i < keys.length; i++) {
+                if(dbObj[keys[i]].url === this.props.dataURL) {
+                    console.log("do not push");
+                    break;
+                } else if (i === keys.length - 1) {
+                    console.log(keys.length - 1);
+                    this.handleChange();
+                    break;
+                }
+            }
+        });
+
+
+    }
 
     render() {
         const info = this.state;
@@ -230,7 +255,7 @@ class Analysis extends Component {
                 <div className="progress" style={{height: "25px"}}>
                     <div className="progress-bar" role="progressbar" style={{width: info.dataViral+"%"}} aria-valuenow={info.dataViral} aria-valuemin="0" aria-valuemax="100">{info.dataViral}%</div>
                 </div>
-                <button onClick={this.handleChange} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
+                <button onClick={this.handleCheck} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
             </div>)
         } else {
             return (<div>
