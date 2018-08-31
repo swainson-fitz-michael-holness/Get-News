@@ -40,7 +40,7 @@ class ArticleCard extends Component {
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
 
-                    <button type="button" className="card-link btn btn-link " data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="far fa-newspaper" style={{fontSize: "1.9rem"}}></i></button>
+                    <button type="button" className="card-link btn btn-link  " data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="fas fa-chart-bar " style={{fontSize: "1.9rem"}}></i> </button>
 
 
                     <div className="modal fade" id={"Z"+this.props.ID} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

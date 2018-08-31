@@ -5,9 +5,9 @@ import fire from "../config/Access.js";
 
 const db = fire.database();
 
-//const ref = db.ref("analysis");
 
-//Gathers information bassed on url to analyzxe from news article
+
+//This component gathers information based on url to analyzxe from news article
 class Analysis extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +32,7 @@ class Analysis extends Component {
         this.handleCheck = this.handleCheck.bind(this);
     }
 
+    // creates the emotional horizontal bar chart
     handleHorChart(label, data) {
         new Chart(document.getElementById(this.props.chartID), {
             type: "horizontalBar",
@@ -61,6 +62,7 @@ class Analysis extends Component {
         });
     }
 
+    // creates political doghnutchart
     handlePolChart(label, data){
         new Chart(document.getElementById("A"+this.props.chartID), {
             type: 'doughnut',
@@ -83,6 +85,7 @@ class Analysis extends Component {
         });
     };
 
+    //creates keyword pie chart
     handleTxtChart(label, data){
         new Chart(document.getElementById("B"+this.props.chartID), {
             type: 'pie',
@@ -105,7 +108,7 @@ class Analysis extends Component {
         });
     };
 
-    //when the modal loads gather data from api AI
+    //when the modal loads gather data from api AI then parse them into arrays to use in charts wherever needed
     componentDidMount() {
         $.post(
             "https://apiv2.indico.io/apis/multiapi/batch?apis=twitterengagement,sentimenthq,texttags,political,people,places,emotion",
@@ -153,7 +156,7 @@ class Analysis extends Component {
             }
             //end
 
-
+            //updates the state of the 3 charts used with chartjs
             this.setState({
                 dataViral: Math.round(holder.results.twitterengagement.results[0]*100),
                 dataSentiment: Math.round(holder.results.sentimenthq.results[0]*100),
@@ -185,9 +188,9 @@ class Analysis extends Component {
         });
     }
 
-    //
-    // LOOK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //
+    //====================================================
+    // Database with Firebase !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //==================================================
 
     // Each user has their own unique uid to save analysis
 
@@ -206,13 +209,9 @@ class Analysis extends Component {
             texttags: dbData.texttags.results[0],
             twitterengagement: dbData.twitterengagement.results[0],
         });
-
-
-
-
-
     };
 
+    //checks for duplicates in database
     handleCheck(e) {
         e.preventDefault();
 
@@ -227,7 +226,7 @@ class Analysis extends Component {
                 } else if (i === keys.length - 1) {
                     console.log(keys.length - 1);
                     this.handleChange();
-                    break;
+
                 }
             }
         });
@@ -235,6 +234,7 @@ class Analysis extends Component {
 
     }
 
+    //update the DOM accordingly
     render() {
         const info = this.state;
 
