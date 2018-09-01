@@ -20,9 +20,10 @@ class ArticleCard extends Component {
 
     handleClick(e){
         e.preventDefault();
-//        $(this).find('.modal-title').text('New message to ' )
+
+    // at the time of 8.31.2018 redux is not implemented. If in the future it is implemented modift this code to limit passing in props
         this.setState({
-            init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID}/>,
+            init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID} dataDate={this.props.date} dataTitle={this.props.title} dataInfo={this.props.info} dataSource={this.props.sourceName}/>,
         });
     };
 
@@ -34,13 +35,15 @@ class ArticleCard extends Component {
     render(){
         return(
             <div className="col-md-6" style={{marginBottom: "50px"}}>
-                <div className="card shadow" style={{width: "auto", padding: "0", borderRadius: "10px", border: "none"}}>
-                <img className="card-img-top" style={{borderRadius: "10px 10px 0px 0px"}} src={this.props.img || "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle "/>
+                <div className="card shadow" style={{width: "auto", padding: "0", borderRadius: "7px", border: "none"}}>
+                <img className="card-img-top" style={{borderRadius: "7px 7px 0px 0px"}} src={this.props.img || "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle "/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
 
-                    <button type="button" className="card-link btn btn-link  " data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="fas fa-chart-bar " style={{fontSize: "1.9rem"}}></i> </button>
+                    <button type="button" className="card-link btn btn-link  " data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="fas fa-chart-bar " style={{fontSize: "1.3rem"}}></i> </button>
+
+
 
 
                     <div className="modal fade" id={"Z"+this.props.ID} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,6 +66,7 @@ class ArticleCard extends Component {
                     </div>
 
                     <a target="_blank" href={this.props.url} className="card-link">{this.props.sourceName}</a>
+                    <i className="fab fa-twitter" style={{float: "right", marginTop: "10px", fontSize: "1.1rem", color: "#007bff"}}></i>
 
 
                 </div>
