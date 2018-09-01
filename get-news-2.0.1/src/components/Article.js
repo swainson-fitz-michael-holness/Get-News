@@ -15,21 +15,14 @@ class ArticleCard extends Component {
         }
 
         this.handleClick = this.handleClick.bind(this);
-        this.handleDataClick = this.handleDataClick.bind(this);
     };
 
     handleClick(e){
         e.preventDefault();
 
-    // at the time of 8.31.2018 redux is not implemented. If in the future it is implemented modift this code to limit passing in props
         this.setState({
-            init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID} dataDate={this.props.date} dataTitle={this.props.title} dataInfo={this.props.info} dataSource={this.props.sourceName}/>,
+                init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID} dataDate={this.props.date} dataTitle={this.props.title} dataInfo={this.props.info} dataSource={this.props.sourceName}/>,
         });
-    };
-
-    handleDataClick(e){
-        e.preventDefault();
-        console.log(e.target)
     };
 
     render(){
@@ -41,7 +34,7 @@ class ArticleCard extends Component {
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
 
-                    <button type="button" className="card-link btn btn-link  " data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="fas fa-chart-bar " style={{fontSize: "1.3rem"}}></i> </button>
+                    <button type="button" className="card-link btn btn-primary rounded-circle" data-toggle="modal" data-target={"#Z"+this.props.ID} style={{marginRight: "20px"}} onClick={this.handleClick}><i className="fas fa-plug " style={{fontSize: "0.9rem"}}></i> </button>
 
 
 
@@ -50,7 +43,7 @@ class ArticleCard extends Component {
                       <div className="modal-dialog" role="document">
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Article Analysis</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">{this.props.title}</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>

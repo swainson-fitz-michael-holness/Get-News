@@ -6,8 +6,9 @@ import fire from "../config/Access.js";
 const db = fire.database();
 
 
-
-//This component gathers information based on url to analyzxe from news article
+//=============================================================
+//This component gathers information based on url to analyze from news article
+//=============================================================
 class Analysis extends Component {
     constructor(props) {
         super(props);
@@ -108,7 +109,9 @@ class Analysis extends Component {
         });
     };
 
+    //=============================================================
     //when the modal loads gather data from api AI then parse them into arrays to use in charts wherever needed
+    //=============================================================
     componentDidMount() {
         $.post(
             "https://apiv2.indico.io/apis/multiapi/batch?apis=twitterengagement,sentimenthq,texttags,political,people,places,emotion",
@@ -188,9 +191,11 @@ class Analysis extends Component {
         });
     }
 
-    //====================================================
+
+
+    //=============================================================
     // Database with Firebase !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //==================================================
+    //=============================================================
 
     // Each user has their own unique uid to save analysis
 

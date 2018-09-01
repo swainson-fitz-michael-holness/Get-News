@@ -18,7 +18,7 @@ class NavigationLogIn extends Component {
         this.logOut = this.logOut.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
+//        this.handleSearch = this.handleSearch.bind(this);
     }
 
     logOut() {
@@ -40,9 +40,9 @@ class NavigationLogIn extends Component {
 
     }
 
-    handleSearch(el){
-
-    }
+//    handleSearch(el){
+//
+//    }
 
     render() {
         const news = this.state;

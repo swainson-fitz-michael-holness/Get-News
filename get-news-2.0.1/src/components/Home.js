@@ -84,39 +84,38 @@ class Home extends Component {
 
     componentDidUpdate(prevProps) {
         if(this.props.term !== prevProps.term ){
-                    fetch(urlSearch(this.props.term))
-            .then(function(response) {
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === "error") {
-                    this.setState({
-                        isLoaded: false,
-                        data: data
-                    });
-                } else {
-                    this.setState({
-                        isLoaded: true,
-                        data: data
-                    });
-                }
+            fetch(urlSearch(this.props.term))
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === "error") {
+                        this.setState({
+                            isLoaded: false,
+                            data: data
+                        });
+                    } else {
+                        this.setState({
+                            isLoaded: true,
+                            data: data
+                        });
+                    }
 
-            })
-            .catch(err => {
-                this.setState({
-                    error: err
+                })
+                .catch(err => {
+                    this.setState({
+                        error: err
+                    });
                 });
-            });
         }
     }
 
     render() {
         const getNews = this.state.data;
-//        console.log(this.state.error);
 
         //view displayed with dynamic information brought in by the api
         return (
-            <div className="container">
+            <div className="container" >
                <div className="text-right" style={{marginBottom: "20px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
                 <div className="row">
 
@@ -124,7 +123,7 @@ class Home extends Component {
                         getNews.articles.map(val => (
 
                             <ArticleCard
-                                key={getNews.articles.indexOf(val)}
+                                key={getNews.articles.indexOf(val)+Math.random().toString(36).substring(2, 15)}
                                 title={val.title}
                                 img={val.urlToImage}
                                 info={val.description}
