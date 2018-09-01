@@ -18,7 +18,6 @@ class NavigationLogIn extends Component {
         this.logOut = this.logOut.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-//        this.handleSearch = this.handleSearch.bind(this);
     }
 
     logOut() {
@@ -34,24 +33,21 @@ class NavigationLogIn extends Component {
     handleSubmit(e){
         e.preventDefault();
         this.setState({
-//           firstLoad: !this.state.firstLoad,
             valSubmit: this.state.val
         });
 
     }
 
-//    handleSearch(el){
-//
-//    }
-
     render() {
         const news = this.state;
 
         return (
-            <div className="container">
-                <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
+            <div>
+
+                <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
+                   <div className="container">
                     <button
-                        className="navbar-toggler"
+                        className="navbar-toggler border-0"
                         type="button"
                         data-toggle="collapse"
                         data-target="#navbarSupportedContent"
@@ -61,6 +57,8 @@ class NavigationLogIn extends Component {
                     >
                         <span className="navbar-toggler-icon" />
                     </button>
+
+
 
                     <div
                         className="collapse navbar-collapse "
@@ -86,14 +84,21 @@ class NavigationLogIn extends Component {
 
                         </ul>
 
-                        <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
+                       <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
                             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
                             <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
+
+                    </div>
                     </div>
                 </nav>
 
+
+
+            <div >
                 <Home term={news.valSubmit}/>
+            </div>
+
             </div>
 
         );
