@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+//=============================================================
+// loading component visual
+//=============================================================
 class Load extends Component {
     render(){
         return(

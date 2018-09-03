@@ -11,4 +11,8 @@ const config = {
 
 const fire = firebase.initializeApp(config);
 
+//=============================================================
+//DEV MODE
+//============================================================+
+
 export default fire;

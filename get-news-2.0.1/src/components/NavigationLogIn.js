@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import $ from "jquery";
 import Home from './Home.js';
 import fire from '../config/Access.js';
 
@@ -20,16 +19,20 @@ class NavigationLogIn extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    //Handle log out function with firebase
     logOut() {
         fire.auth().signOut();
     }
 
+    //Everytime an input is made in the search field fire this change function and save results in this.state.val
     handleChange(e){
         e.preventDefault();
         this.setState({
             val: e.target.value,
         })
     }
+
+    //When the submit button is clicked update the submitted state as the current state of this.state.val
     handleSubmit(e){
         e.preventDefault();
         this.setState({
@@ -38,6 +41,7 @@ class NavigationLogIn extends Component {
 
     }
 
+//    load Navbar
     render() {
         const news = this.state;
 

@@ -82,6 +82,7 @@ class Home extends Component {
             });
     }
 
+    //if a search is inputted refetch data based on the search result. Note this bug. If the key isn't unique information fetched initially will continue to propagate. To fix this I used a random string generator to ensure uniqueness.
     componentDidUpdate(prevProps) {
         if(this.props.term !== prevProps.term ){
             fetch(urlSearch(this.props.term))
