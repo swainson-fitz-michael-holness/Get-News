@@ -71,17 +71,17 @@ class NavigationLogIn extends Component {
 
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href={null}>
+                                <a className="nav-link" href={null}  style={{cursor: "pointer"}}>
                                     Articles <span className="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href={null}>
+                                <a className="nav-link" href={null} style={{cursor: "pointer"}}>
                                     Dashboard
                                 </a>
                             </li>
                             <li className="nav-item ">
-                                <a onClick={this.logOut} href={null} className="nav-link" >
+                                <a onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
                                     Log Out
                                 </a>
                             </li>

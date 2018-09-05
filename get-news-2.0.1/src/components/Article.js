@@ -59,7 +59,8 @@ class ArticleCard extends Component {
                     </div>
 
                     <a target="_blank" href={this.props.url} className="card-link">{this.props.sourceName}</a>
-                    <i className="fab fa-twitter" style={{float: "right", marginTop: "10px", fontSize: "1.1rem", color: "#007bff"}}></i>
+                    <i className="fab fa-twitter" style={{float: "right", marginTop: "10px", fontSize: "1.1rem", color: "#007bff", cursor: "pointer"}}></i>
+                    <i className="fab fa-facebook-f" style={{float: "right", marginTop: "10px", fontSize: "1.1rem", color: "#007bff", marginRight: "18px", cursor: "pointer"}}></i>
 
 
                 </div>
