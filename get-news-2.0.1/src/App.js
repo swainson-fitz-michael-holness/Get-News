@@ -5,6 +5,7 @@ import fire from './config/Access.js';
 import Load from './components/Load.js';
 import NavigationLogIn from "./components/NavigationLogIn.js";
 
+
 //function PageLoad(props) {
 //    const userIsLoaded = props.userIsLoaded;
 //    if(userIsLoaded) {
@@ -42,16 +43,6 @@ class App extends Component {
             }
         });
     }
-
-//        if(this.state.user){
-//            return <Home/>
-//        } else {
-//            return <Login/>
-//        };
-
-//     <div>
-//                {this.state.user ? <Home/> : <Login/>}
-//            </div>
 
     render() {
 

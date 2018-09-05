@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Home from './Home.js';
-import fire from '../config/Access.js';
+import Home from "./Home.js";
+import fire from "../config/Access.js";
 
 class NavigationLogIn extends Component {
     constructor(props){
@@ -47,7 +47,6 @@ class NavigationLogIn extends Component {
 
         return (
             <div>
-
                 <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
                    <div className="container">
                     <button
