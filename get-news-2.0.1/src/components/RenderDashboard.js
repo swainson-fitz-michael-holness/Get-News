@@ -11,7 +11,7 @@ class RenderDashboard extends Component {
             db: fire.database(),
             user: fire.auth().currentUser,
             tag: [],
-            content: <Dashboard numkey={1}/>
+            content: ""
         };
     }
 
@@ -21,11 +21,10 @@ class RenderDashboard extends Component {
             "value",
             el => {
                 let tag = Object.keys(el.val());
-                console.log(tag);
 
                 this.setState({
                     tag: tag,
-                    content: tag.map(val => <Dashboard numkey={tag.indexOf(val)}/>)
+                    content: tag.map(val => <Dashboard key={val} numkey={tag.indexOf(val)}/>)
                 });
 
             },

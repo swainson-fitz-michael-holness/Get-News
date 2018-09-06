@@ -108,7 +108,7 @@ class Dashboard extends Component {
                                 type="button"
                                 className=" btn btn-link rounded-circle "
                                  style={{marginRight:"9px"}}>
-                                    <i class="far fa-trash-alt"></i>
+                                    <i className="far fa-trash-alt"></i>
                                 </button>
 
                                  <button
