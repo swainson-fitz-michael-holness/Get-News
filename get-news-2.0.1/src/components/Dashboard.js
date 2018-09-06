@@ -8,7 +8,8 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             db: fire.database(),
-            user: fire.auth().currentUser
+            user: fire.auth().currentUser,
+            keys: null
         };
     }
 
@@ -28,41 +29,28 @@ class Dashboard extends Component {
         return (
             <div style={{ marginTop: "80px" }} className="container">
                 <div className="col-md-6" style={{ marginBottom: "50px" }}>
-                    <div
-                        className="card shadow"
-                        style={{
-                            width: "auto",
-                            padding: "0px",
-                            borderRadius: "7px",
-                            border: "none"
-                        }}
-                    >
-                        <div className="card-body">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-10">
-                                        <h5 className="card-title">Title</h5>
-                                        <p className="card-text">
-                                            info goes here
-                                        </p>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <button
-                                            type="button"
-                                            className="card-link btn btn-primary rounded-circle"
-                                            data-toggle="modal"
-                                            data-target={"#Z" + this.props.ID}
-                                            style={{ marginRight: "20px" }}
-                                            onClick={this.handleClick}
-                                        >
-                                            <i
-                                                className="fas fa-plug "
-                                                style={{ fontSize: "0.9rem" }}
-                                            />{" "}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+
+                        <div className="media shadow" style={{padding:"10px 10px 10px 10px", borderRadius: "7px"}}>
+
+                           <div className="media-body" style={{}}>
+                               <h5 className="card-title">Title</h5>
+                               <hr/>
+                                <i className="fab fa-twitter" style={{fontSize: "1.1rem", color: "#007bff", cursor: "pointer"}}></i>
+                                <i className="fab fa-facebook-f" style={{fontSize: "1.1rem", color: "#007bff", cursor: "pointer", marginLeft: "13px"}}></i>
+                           </div>
+
+                            <button
+                                type="button"
+                                className=" btn btn-primary rounded-circle align-self-center ml-3"
+                                data-toggle="modal"
+                                data-target={"#Z" + this.props.ID}
+                                style={{}}
+                            >
+                                <i
+                                    className="fas fa-plug "
+                                    style={{ fontSize: "0.9rem" }}
+                                />{" "}
+                            </button>
 
                             <div
                                 className="modal fade"
@@ -109,7 +97,7 @@ class Dashboard extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+
             </div>
         );
     }

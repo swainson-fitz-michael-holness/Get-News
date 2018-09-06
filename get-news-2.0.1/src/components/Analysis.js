@@ -206,6 +206,9 @@ class Analysis extends Component {
         let dbData = this.state.apiData.results;
         db.ref(this.state.user.uid+"/articles").push({
             url: this.props.dataURL,
+            title: this.props.dataTitle,
+            info: this.props.dataInfo,
+            date: this.props.dataDate,
             emotion: dbData.emotion.results[0],
             people: dbData.people.results[0],
             places: dbData.places.results[0],
@@ -221,19 +224,26 @@ class Analysis extends Component {
         e.preventDefault();
 
         fire.database().ref(this.state.user.uid+"/articles").once("value", (el)=>{
-            let keys = Object.keys(el.val());
+
             let dbObj = el.val();
 
-            for (var i = 0; i < keys.length; i++) {
-                if(dbObj[keys[i]].url === this.props.dataURL) {
-                    console.log("do not push");
-                    break;
-                } else if (i === keys.length - 1) {
-                    console.log(keys.length - 1);
-                    this.handleChange();
+            if(dbObj){
+                let keys = Object.keys(el.val());
+                for (var i = 0; i < keys.length; i++) {
+                    if(dbObj[keys[i]].url === this.props.dataURL) {
+                        console.log("do not push");
+                        break;
+                    } else if (i === keys.length - 1) {
+//                        console.log(keys.length - 1);
+                        this.handleChange();
 
+                    }
                 }
+            } else {
+                this.handleChange();
             }
+
+
         });
 
 
