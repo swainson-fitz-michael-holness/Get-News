@@ -3,6 +3,9 @@ import Home from "./Home.js";
 import fire from "../config/Access.js";
 import {BrowserRouter, Route, Switch, NavLink, Link} from 'react-router-dom';
 import Dashboard from './Dashboard.js';
+import $ from 'jquery';
+import RenderDashboard from './RenderDashboard.js';
+
 
 class NavigationLogIn extends Component {
     constructor(props){
@@ -43,9 +46,21 @@ class NavigationLogIn extends Component {
 
     }
 
+    componentDidMount(){
+        console.log(document.querySelector("#test"))
+
+        $('#test>li>div>a').on('click', function(){
+            $("#navbarSupportedContent").toggle("hide");
+        });
+        $('#hamburger').on('click', function(){
+            console.log($("#navbarSupportedContent").toggle("show"));
+        });
+    }
+
 //    load Navbar
     render() {
         const news = this.state;
+
 
         return (
             <BrowserRouter>
@@ -54,10 +69,11 @@ class NavigationLogIn extends Component {
                 <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
                    <div className="container-fluid">
                     <button
+                       id="hamburger"
                         className="navbar-toggler border-0"
                         type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
+
+
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
@@ -69,17 +85,17 @@ class NavigationLogIn extends Component {
 
                     <div
                         className="collapse navbar-collapse "
-                        id="navbarSupportedContent"
+                        id="navbarSupportedContent" style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}
                     >
 
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active" >
-                                <div className="nav-link" href={null}><Link to="/">Articles</Link></div>
+                        <ul id="test" className="navbar-nav mr-auto">
+                            <li className="nav-item active lt" >
+                                <div className="nav-link"><Link to="/">Articles</Link></div>
                             </li>
-                            <li className="nav-item" >
+                            <li className="nav-item lt" >
                                 <div className="nav-link" href={null}><Link to="/Dashboard">Dashboard</Link></div>
                             </li>
-                            <li className="nav-item ">
+                            <li className="nav-item lt">
                                 <a onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
                                     Log Out
                                 </a>
@@ -96,14 +112,14 @@ class NavigationLogIn extends Component {
                     </div>
                 </nav>
 
-<Switch>
-            <Route
-                path="/"
-                render={(props => <Home {...props} term={news.valSubmit}/>)}
-                exact
-            />
-            <Route path="/Dashboard" component={Dashboard} />
-          </Switch>
+            <Switch>
+                <Route
+                    path="/"
+                    render={(props => <Home {...props} term={news.valSubmit}/>)}
+                    exact
+                />
+                <Route path="/Dashboard" component={RenderDashboard} />
+            </Switch>
 
 
 

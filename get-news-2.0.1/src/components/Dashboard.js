@@ -21,14 +21,12 @@ class Dashboard extends Component {
         dash.db.ref(dash.user.uid + "/articles").once(
             "value",
             el => {
-                let tag = Object.keys(el.val())
-
-                console.log( el.val()[tag[0]].image);
+                let tag = Object.keys(el.val());
                 this.setState({
                     keys: Object.keys(el.val()),
-                    title: el.val()[tag[0]].title,
-                    date: el.val()[tag[0]].date,
-                    image: el.val()[tag[0]].image
+                    title: el.val()[tag[this.props.numkey]].title,
+                    date: el.val()[tag[this.props.numkey]].date,
+                    image: el.val()[tag[this.props.numkey]].image
                 });
 
             },
@@ -38,9 +36,7 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div style={{ marginTop: "80px" }} className="container">
-                <div className="col-md-6" style={{ marginBottom: "50px" }}>
-
+            <div className="col-md-6" style={{marginBottom: "50px", }}>
                        <div className="shadow" style={{padding:"0px 10px 10px 0px", borderRadius: "7px"}}>
 
                         <div className="media " >
@@ -51,7 +47,7 @@ class Dashboard extends Component {
 
                            <div className="media-body" style={{}}>
 
-                               <h5 className="card-title" style={{fontSize: "1.1rem"}}>{this.state.title}</h5>
+                               <p className="card-title" style={{fontSize: "1rem"}}>{this.state.title}</p>
 
 
 
@@ -104,13 +100,15 @@ class Dashboard extends Component {
                             </div>
                         </div>
 
-                        <button type="button" className="btn btn-link"><i class="fas fa-bolt" style={{ fontSize: "1rem", marginRight: "10px" }}></i>track</button>
+                        <button type="button" className="btn btn-link"><i className="fas fa-bolt" style={{ fontSize: "1rem", marginRight: "10px" }}></i>track</button>
 
-                                <div style={{float: "right"}}>
-                                    <button
+                                <div style={{float: "right", }}>
+
+                                <button
                                 type="button"
                                 className=" btn btn-link rounded-circle "
-                                >
+                                 style={{marginRight:"9px"}}>
+                                    <i class="far fa-trash-alt"></i>
                                 </button>
 
                                  <button
@@ -127,9 +125,10 @@ class Dashboard extends Component {
                                 </button>
                                     </div>
                         </div>
-                    </div>
+                        </div>
 
-            </div>
+
+
         );
     }
 }

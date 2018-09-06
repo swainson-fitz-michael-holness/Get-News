@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import $ from 'jquery';
 import ArticleCard from "./Article.js";
 
 //for constructing date format
@@ -84,6 +84,7 @@ class Home extends Component {
 
     //if a search is inputted refetch data based on the search result. Note this bug. If the key isn't unique information fetched initially will continue to propagate. To fix this I used a random string generator to ensure uniqueness.
     componentDidUpdate(prevProps) {
+
         if(this.props.term !== prevProps.term ){
             fetch(urlSearch(this.props.term))
                 .then(function(response) {
@@ -112,6 +113,7 @@ class Home extends Component {
     }
 
     render() {
+
         const getNews = this.state.data;
 
         //view displayed with dynamic information brought in by the api
