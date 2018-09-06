@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Home from "./Home.js";
 import fire from "../config/Access.js";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Dashboard from './Dashboard.js';
 
 class NavigationLogIn extends Component {
     constructor(props){
@@ -46,7 +48,20 @@ class NavigationLogIn extends Component {
         const news = this.state;
 
         return (
+            <BrowserRouter>
             <div>
+
+          <Switch>
+
+            <Route
+                path="/"
+                render={(props => <Home {...props} term={news.valSubmit}/>)}
+                exact
+            />
+            <Route path="/Dashboard" component={Dashboard} />
+          </Switch>
+
+
                 <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
                    <div className="container">
                     <button
@@ -98,15 +113,16 @@ class NavigationLogIn extends Component {
 
 
 
-            <div >
-                <Home term={news.valSubmit}/>
-            </div>
+
 
             </div>
-
+</BrowserRouter>
         );
 
     }
 }
 
 export default NavigationLogIn;
+//            <div style={{marginTop:"70px"}}>
+//                <Home  term={news.valSubmit}/>
+//            </div>
