@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Home from "./Home.js";
 import fire from "../config/Access.js";
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, NavLink, Link} from 'react-router-dom';
 import Dashboard from './Dashboard.js';
 
 class NavigationLogIn extends Component {
@@ -51,19 +51,8 @@ class NavigationLogIn extends Component {
             <BrowserRouter>
             <div>
 
-          <Switch>
-
-            <Route
-                path="/"
-                render={(props => <Home {...props} term={news.valSubmit}/>)}
-                exact
-            />
-            <Route path="/Dashboard" component={Dashboard} />
-          </Switch>
-
-
                 <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
-                   <div className="container">
+                   <div className="container-fluid">
                     <button
                         className="navbar-toggler border-0"
                         type="button"
@@ -84,15 +73,11 @@ class NavigationLogIn extends Component {
                     >
 
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <a className="nav-link" href={null}  style={{cursor: "pointer"}}>
-                                    Articles <span className="sr-only">(current)</span>
-                                </a>
+                            <li className="nav-item active" >
+                                <div className="nav-link" href={null}><Link to="/">Articles</Link></div>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href={null} style={{cursor: "pointer"}}>
-                                    Dashboard
-                                </a>
+                            <li className="nav-item" >
+                                <div className="nav-link" href={null}><Link to="/Dashboard">Dashboard</Link></div>
                             </li>
                             <li className="nav-item ">
                                 <a onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
@@ -111,7 +96,14 @@ class NavigationLogIn extends Component {
                     </div>
                 </nav>
 
-
+<Switch>
+            <Route
+                path="/"
+                render={(props => <Home {...props} term={news.valSubmit}/>)}
+                exact
+            />
+            <Route path="/Dashboard" component={Dashboard} />
+          </Switch>
 
 
 

@@ -116,7 +116,7 @@ class Home extends Component {
 
         //view displayed with dynamic information brought in by the api
         return (
-            <div className="container" >
+            <div className="container" style={{marginTop: "80px"}} >
                <div className="text-left" style={{marginBottom: "3px", opacity:"0.5", marginTop: "10px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
                 <div className="row">
 
@@ -140,7 +140,7 @@ class Home extends Component {
                     ) : (
                         <div
                             className="mx-auto"
-                            style={{ width: "200px", marginTop: "180px" }}
+                            style={{ width: "7px", marginTop: "180px" }}
                         >
                             {this.state.error ? (
                                 <div
