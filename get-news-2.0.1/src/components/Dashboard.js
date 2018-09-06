@@ -3,13 +3,15 @@ import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
 
+//The dashboard is meant for the user to quickly view a collection of saved articles. When the user finds an article they've saved they can delete, share, ect They can also track an article to a topic.
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
             db: fire.database(),
             user: fire.auth().currentUser,
-            keys: null
+            keys: null,
+            title: "",
         };
     }
 
@@ -19,7 +21,16 @@ class Dashboard extends Component {
         dash.db.ref(dash.user.uid + "/articles").once(
             "value",
             el => {
-                console.log(el.val());
+                let tag = Object.keys(el.val())
+
+                console.log( el.val()[tag[0]].image);
+                this.setState({
+                    keys: Object.keys(el.val()),
+                    title: el.val()[tag[0]].title,
+                    date: el.val()[tag[0]].date,
+                    image: el.val()[tag[0]].image
+                });
+
             },
             err => {}
         );
@@ -30,27 +41,23 @@ class Dashboard extends Component {
             <div style={{ marginTop: "80px" }} className="container">
                 <div className="col-md-6" style={{ marginBottom: "50px" }}>
 
-                        <div className="media shadow" style={{padding:"10px 10px 10px 10px", borderRadius: "7px"}}>
+                       <div className="shadow" style={{padding:"0px 10px 10px 0px", borderRadius: "7px"}}>
+
+                        <div className="media " >
+                           <img className="mr-3 img-fluid " src={this.state.image|| "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle " style={{width: "64px", height: "64px", border: "inline", objectFit:" cover", borderRadius: "7px 0px 0px 0px"}}/>
+
+
+
 
                            <div className="media-body" style={{}}>
-                               <h5 className="card-title">Title</h5>
-                               <hr/>
-                                <i className="fab fa-twitter" style={{fontSize: "1.1rem", color: "#007bff", cursor: "pointer"}}></i>
-                                <i className="fab fa-facebook-f" style={{fontSize: "1.1rem", color: "#007bff", cursor: "pointer", marginLeft: "13px"}}></i>
+
+                               <h5 className="card-title" style={{fontSize: "1.1rem"}}>{this.state.title}</h5>
+
+
+
                            </div>
 
-                            <button
-                                type="button"
-                                className=" btn btn-primary rounded-circle align-self-center ml-3"
-                                data-toggle="modal"
-                                data-target={"#Z" + this.props.ID}
-                                style={{}}
-                            >
-                                <i
-                                    className="fas fa-plug "
-                                    style={{ fontSize: "0.9rem" }}
-                                />{" "}
-                            </button>
+
 
                             <div
                                 className="modal fade"
@@ -95,6 +102,30 @@ class Dashboard extends Component {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <button type="button" className="btn btn-link"><i class="fas fa-bolt" style={{ fontSize: "1rem", marginRight: "10px" }}></i>track</button>
+
+                                <div style={{float: "right"}}>
+                                    <button
+                                type="button"
+                                className=" btn btn-link rounded-circle "
+                                >
+                                </button>
+
+                                 <button
+                                    type="button"
+                                    className=" btn btn-primary rounded-circle "
+                                    data-toggle="modal"
+                                    data-target={"#Z" + this.props.ID}
+                                    style={{}}
+                                >
+                                    <i
+                                        className="fas fa-plug "
+                                        style={{ fontSize: "0.9rem" }}
+                                    />{" "}
+                                </button>
+                                    </div>
                         </div>
                     </div>
 

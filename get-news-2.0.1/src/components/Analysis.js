@@ -209,6 +209,7 @@ class Analysis extends Component {
             title: this.props.dataTitle,
             info: this.props.dataInfo,
             date: this.props.dataDate,
+            image: this.props.dataImg,
             emotion: dbData.emotion.results[0],
             people: dbData.people.results[0],
             places: dbData.places.results[0],

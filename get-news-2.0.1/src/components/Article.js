@@ -21,7 +21,7 @@ class ArticleCard extends Component {
         e.preventDefault();
 
         this.setState({
-                init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID} dataDate={this.props.date} dataTitle={this.props.title} dataInfo={this.props.info} dataSource={this.props.sourceName}/>,
+                init: <Analysis dataURL={this.props.url} chartID={"C"+this.props.ID} dataDate={this.props.date} dataTitle={this.props.title} dataInfo={this.props.info} dataSource={this.props.sourceName } dataImg={this.props.img}/>,
         });
     };
 
