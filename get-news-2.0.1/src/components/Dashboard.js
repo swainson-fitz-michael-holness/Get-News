@@ -13,6 +13,8 @@ class Dashboard extends Component {
             keys: null,
             title: "",
         };
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +34,14 @@ class Dashboard extends Component {
             },
             err => {}
         );
+    }
+
+    handleClick(e){
+        e.preventDefault();
+        this.state.db.ref(this.state.user.uid + "/articles/" + this.props.keyID).remove(window.location.reload());
+        console.log(this.props.keyID);
+
+
     }
 
     render() {
@@ -104,10 +114,10 @@ class Dashboard extends Component {
 
                                 <div style={{float: "right", }}>
 
-                                <button
+                                <button onClick={this.handleClick}
                                 type="button"
                                 className=" btn btn-link rounded-circle "
-                                 style={{marginRight:"9px"}}>
+                                 style={{marginRight:"9px", color: "red"}}>
                                     <i className="far fa-trash-alt"></i>
                                 </button>
 
