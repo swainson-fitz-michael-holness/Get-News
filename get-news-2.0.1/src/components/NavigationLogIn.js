@@ -47,17 +47,18 @@ class NavigationLogIn extends Component {
     }
 
     componentDidMount(){
-        console.log(document.querySelector("#test"))
-
-        $('#test>li>div>a').on('click', function(){
-            $("#navbarSupportedContent").toggle("hide");
-        });
-        $('#hamburger').on('click', function(){
-            console.log($("#navbarSupportedContent").toggle("show"));
-        });
+//        console.log(document.querySelector("#test"))
+//
+//        $('#test>li>div>a').on('click', function(){
+//            $("#navbarSupportedContent").toggle("hide");
+//        });
+//        $('#hamburger').on('click', function(){
+//            console.log($("#navbarSupportedContent").toggle("show"));
+//        });
     }
 
 //    load Navbar
+
     render() {
         const news = this.state;
 
@@ -66,19 +67,20 @@ class NavigationLogIn extends Component {
             <BrowserRouter>
             <div>
 
-                <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow-sm ">
+                <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow ">
                    <div className="container-fluid">
                     <button
                        id="hamburger"
                         className="navbar-toggler border-0"
                         type="button"
-
-
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
+                        style={{border: "none", outline: "none" }}
                     >
-                        <span className="navbar-toggler-icon" />
+                        <span id=" h-icon " className="navbar-toggler-icon" style={{width: "20px", height: "20px"}}/>
                     </button>
 
 
@@ -87,16 +89,17 @@ class NavigationLogIn extends Component {
                         className="collapse navbar-collapse "
                         id="navbarSupportedContent" style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}
                     >
+                        <hr/>
 
                         <ul id="test" className="navbar-nav mr-auto">
                             <li className="nav-item active lt" >
-                                <div className="nav-link"><Link to="/">Articles</Link></div>
+                                <div className="nav-link " data-toggle="collapse" data-target="#navbarSupportedContent"><Link to="/">Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link" href={null}><Link to="/Dashboard">Dashboard</Link></div>
+                                <div className="nav-link " data-toggle="collapse" data-target="#navbarSupportedContent" href={null}><Link to="/Dashboard">Dashboard</Link></div>
                             </li>
                             <li className="nav-item lt">
-                                <a onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
+                                <a  onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
                                     Log Out
                                 </a>
                             </li>

@@ -47,7 +47,7 @@ class Dashboard extends Component {
     render() {
         return (
             <div className="col-md-6" style={{marginBottom: "50px", }}>
-                       <div className="shadow" style={{padding:"0px 10px 10px 0px", borderRadius: "7px"}}>
+                       <div className="shadow-sm" style={{padding:"0px 10px 10px 0px", borderRadius: "7px"}}>
 
                         <div className="media " >
                            <img className="mr-3 img-fluid " src={this.state.image|| "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle " style={{width: "64px", height: "64px", border: "inline", objectFit:" cover", borderRadius: "7px 0px 0px 0px"}}/>

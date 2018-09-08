@@ -28,8 +28,8 @@ class ArticleCard extends Component {
     render(){
         return(
             <div className="col-md-6" style={{marginBottom: "50px", }}>
-                <div className="card shadow" style={{width: "auto", padding: "0px", borderRadius: "7px", border: "none"}}>
-                <img className="card-img-top" style={{borderRadius: "7px 7px 0px 0px"}} src={this.props.img || "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle "/>
+                <div className="card shadow-sm" style={{width: "auto", padding: "0px", borderRadius: "5px", border: "none"}}>
+                <img className="card-img-top" style={{borderRadius: "5px 5px 0px 0px"}} src={this.props.img || "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"} alt="ariticle "/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.info}</p>
@@ -64,7 +64,7 @@ class ArticleCard extends Component {
 
 
                 </div>
-                <div className="card-footer text-muted">
+                <div className="card-footer text-muted" style={{backgroundColor: "white"}}>
                    {this.props.date}
                     </div>
             </div>
