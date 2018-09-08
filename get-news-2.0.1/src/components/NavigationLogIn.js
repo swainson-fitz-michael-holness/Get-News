@@ -86,17 +86,19 @@ class NavigationLogIn extends Component {
 
 
                     <div
-                        className="collapse navbar-collapse "
+                        className="collapse navbar-collapse ml-auto"
                         id="navbarSupportedContent" style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}
                     >
-                        <hr/>
+
 
                         <ul id="test" className="navbar-nav mr-auto">
+
                             <li className="nav-item active lt" >
-                                <div className="nav-link " data-toggle="collapse" data-target="#navbarSupportedContent"><Link to="/">Articles</Link></div>
+                               <hr/>
+                                <div className="nav-link " ><Link to="/">Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link " data-toggle="collapse" data-target="#navbarSupportedContent" href={null}><Link to="/Dashboard">Dashboard</Link></div>
+                                <div className="nav-link "  href={null}><Link to="/Dashboard" >Dashboard</Link></div>
                             </li>
                             <li className="nav-item lt">
                                 <a  onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
