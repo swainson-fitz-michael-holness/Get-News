@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
+import DbAnalysis from "./DbAnalysis.js";
 
 //The dashboard is meant for the user to quickly view a collection of saved articles. When the user finds an article they've saved they can delete, share, ect They can also track an article to a topic.
 class Dashboard extends Component {
@@ -11,10 +12,12 @@ class Dashboard extends Component {
             db: fire.database(),
             user: fire.auth().currentUser,
             keys: null,
-            title: ""
+            title: "",
+            init: "Loading..."
         };
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleClickCtrl = this.handleClickCtrl.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +31,9 @@ class Dashboard extends Component {
                     keys: Object.keys(el.val()),
                     title: el.val()[tag[this.props.numkey]].title,
                     date: el.val()[tag[this.props.numkey]].date,
-                    image: el.val()[tag[this.props.numkey]].image
+                    image: el.val()[tag[this.props.numkey]].image,
+                    dbData: el.val(),
+//                    tag: Object.keys(this.state.dbData)
                 });
             },
             err => {}
@@ -41,6 +46,25 @@ class Dashboard extends Component {
             .ref(this.state.user.uid + "/articles/" + this.props.keyID)
             .remove(window.location.reload());
         console.log(this.props.keyID);
+    }
+
+    handleClickCtrl(e) {
+        e.preventDefault();
+//        console.log(this.state.dbData[Object.keys(this.state.dbData)[this.props.numkey]].title)
+
+        this.setState({
+            init: (
+                <DbAnalysis
+                    dataURL={this.props.url}
+                    chartID={"C" + this.props.ID}
+                    dataDate={this.state.date}
+                    dataTitle={this.state.title}
+                    dataInfo={this.props.info}
+                    dataSource={this.props.sourceName}
+                    dataImg={this.props.img}
+                />
+            ),
+        });
     }
 
     render() {
@@ -75,7 +99,7 @@ class Dashboard extends Component {
                         />
                     </div>
 
-                    <div className="col-sm-8" style={{}}>
+                    <div className="col-sm-8">
                         <p className="card-title" style={{ fontSize: "1rem" }}>
                             {this.state.title}
                         </p>
@@ -83,7 +107,7 @@ class Dashboard extends Component {
 
                     <div
                         className="modal fade"
-                        id={"Z" + this.props.ID}
+                        id={"Z" + this.props.keyID}
                         tabIndex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
@@ -96,7 +120,7 @@ class Dashboard extends Component {
                                         className="modal-title"
                                         id="exampleModalLabel"
                                     >
-                                        {this.state.title}
+                                    {this.props.title}
                                     </h5>
                                     <button
                                         type="button"
@@ -138,7 +162,8 @@ class Dashboard extends Component {
                                 type="button"
                                 className=" btn"
                                 data-toggle="modal"
-                                data-target={"#Z" + this.props.ID}
+                                data-target={"#Z" + this.props.keyID}
+                                onClick={this.handleClickCtrl}
                                 style={{ background: "none" }}
                             >
                                 <i

@@ -17,14 +17,15 @@ class RenderDashboard extends Component {
 
     componentDidMount(){
         const rDash = this.state;
+//        console.log(this.state.db.ref(rDash.user.uid + "/articles"))
         rDash.db.ref(rDash.user.uid + "/articles").once(
             "value",
             el => {
                 let tag = Object.keys(el.val());
-
+//                console.log(el.val()[tag[0]].title)
                 this.setState({
                     tag: tag,
-                    content: tag.map(val => <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)}/>)
+                    content: tag.map(val => <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title}/>)
                 });
 
             },
