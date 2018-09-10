@@ -62,6 +62,7 @@ class Dashboard extends Component {
                     dataInfo={this.props.info}
                     dataSource={this.props.sourceName}
                     dataImg={this.props.img}
+                    dataKeyID={this.props.keyID}
                 />
             ),
         });

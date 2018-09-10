@@ -11,17 +11,45 @@ class DbAnalysis extends Component {
             load: <div>loading</div>,
             db: fire.database(),
             user: fire.auth().currentUser,
-            keys: null,
-            title: "",
-            date: "",
-            image: ""
+            keys: "",
+            horChart: <canvas style={{ display: "none" }} id="horChart"/>
+
         }
+
+        this.handleHorChart = this.handleHorChart.bind(this);
+    }
+
+    handleHorChart(label, data) {
+        new Chart(document.getElementById("horChart"), {
+            type: "horizontalBar",
+            data: {
+                labels: label,
+                datasets: [
+                    {
+                        label: "emotion",
+                        backgroundColor: [
+                            "#3e95cd",
+                            "#8e5ea2",
+                            "#3cba9f",
+                            "#e8c3b9",
+                            "#c45850"
+                        ],
+                        data: data
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Emotion evoked from article"
+                }
+            }
+        });
     }
 
     componentDidMount(){
-        this.setState({
-            load: <div>Loaded</div>
-        });
+
 
         const dash = this.state;
 
@@ -29,13 +57,25 @@ class DbAnalysis extends Component {
             "value",
             el => {
                 let tag = Object.keys(el.val());
+                let db = el.val();
+
+                //----- emo stats
+                let emoNameArr = [];
+                let emoDataArr = [];
+                let emoData = db[this.props.dataKeyID].emotion
+
+                for (var keyName in emoData) {
+                    emoNameArr.push(keyName);
+                }
+                for (var keyData in emoData) {
+                    emoDataArr.push(emoData[keyData]);
+                }
+                //end
+
                 this.setState({
                     keys: Object.keys(el.val()),
-                    title: el.val()[tag[this.props.numkey]].title,
-                    date: el.val()[tag[this.props.numkey]].date,
-                    image: el.val()[tag[this.props.numkey]].image,
-                    dbData: el.val(),
-                    loaded: <div>Loaded</div>
+                    load: <div style={{display: "none"}}>Loaded</div>,
+                    horChart: <canvas style={{ display: "block" }} id={this.state.keys}> {this.handleHorChart(emoNameArr,emoDataArr)} </canvas>
                 });
             },
             err => {}
@@ -43,10 +83,11 @@ class DbAnalysis extends Component {
     }
 
     render(){
-        let state = this.state;
+        let dbA = this.state;
         return (
             <div>
-                {this.state.load}
+                {dbA.load}
+                {dbA.horChart}
             </div>
         );
     }
