@@ -12,11 +12,17 @@ class DbAnalysis extends Component {
             db: fire.database(),
             user: fire.auth().currentUser,
             keys: "",
-            horChart: <canvas style={{ display: "none" }} id="horChart"/>
+            hr:"",
+            horChart: <canvas style={{ display: "none" }} id="horChart"/>,
+            polChart: <canvas style={{ display: "none" }} id="polChart"/>,
+            txtChart: <canvas style={{ display: "none" }} id="txtChart"/>,
 
         }
 
         this.handleHorChart = this.handleHorChart.bind(this);
+        this.handlePolChart = this.handlePolChart.bind(this);
+        this.handleTxtChart = this.handleTxtChart.bind(this);
+
     }
 
     handleHorChart(label, data) {
@@ -48,6 +54,54 @@ class DbAnalysis extends Component {
         });
     }
 
+    // creates political doghnutchart
+    handlePolChart(label, data){
+        new Chart(document.getElementById("polChart"), {
+            type: 'doughnut',
+            data: {
+              labels: label,
+              datasets: [
+                {
+                  label: "num",
+                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                  data: data
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Political analysis'
+              }
+            }
+        });
+    };
+
+    //creates keyword pie chart
+    handleTxtChart(label, data){
+        new Chart(document.getElementById("txtChart"), {
+            type: 'pie',
+            data: {
+              labels: label,
+              datasets: [
+                {
+                  label: "num)",
+                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                  data: data
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'This article is about:'
+              }
+            }
+        });
+    };
+
+
+
     componentDidMount(){
 
 
@@ -72,10 +126,40 @@ class DbAnalysis extends Component {
                 }
                 //end
 
+                //----- emo stats
+                let polNameArr = [];
+                let polDataArr = [];
+                let polData = db[this.props.dataKeyID].political
+
+                for (var keyPolName in polData) {
+                    polNameArr.push(keyPolName);
+                }
+                for (var keyPolData in polData) {
+                    polDataArr.push(polData[keyPolData]);
+                }
+                //end
+
+                //----- Text stats
+                let txtNameArr = [];
+                let txtDataArr = [];
+                let txtData = db[this.props.dataKeyID].texttags
+
+                for (var keytxtName in txtData) {
+                    txtNameArr.push(keytxtName);
+                }
+                for (var keytxtData in txtData) {
+                    txtDataArr.push(txtData[keytxtData]);
+                }
+                //end
+
                 this.setState({
                     keys: Object.keys(el.val()),
                     load: <div style={{display: "none"}}>Loaded</div>,
-                    horChart: <canvas style={{ display: "block" }} id={this.state.keys}> {this.handleHorChart(emoNameArr,emoDataArr)} </canvas>
+                    hr:<hr style={{marginTop: "10px", display: "block"}}/>,
+                    horChart: <canvas style={{ display: "block" }} id={this.state.keys}> {this.handleHorChart(emoNameArr,emoDataArr)} </canvas>,
+                    polChart: <canvas style={{ display: "block" }} id={"A" + this.state.keys}> {this.handlePolChart(polNameArr,polDataArr)} </canvas>,
+
+                    txtChart: <canvas style={{ display: "block" }} id={"B" + this.state.keys}> {this.handleTxtChart(txtNameArr,txtDataArr)} </canvas>,
                 });
             },
             err => {}
@@ -88,6 +172,10 @@ class DbAnalysis extends Component {
             <div>
                 {dbA.load}
                 {dbA.horChart}
+                {dbA.hr}
+                {dbA.polChart}
+                {dbA.hr}
+                {dbA.txtChart}
             </div>
         );
     }
