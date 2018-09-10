@@ -18,7 +18,6 @@ class ArticleCard extends Component {
 
     handleClick(e) {
         e.preventDefault();
-
         this.setState({
             init: (
                 <Analysis
@@ -101,7 +100,7 @@ class ArticleCard extends Component {
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="modal-body">
+                                    <div id="analysis-content" className="modal-body">
                                         {this.state.init}
                                     </div>
                                     <div className="modal-footer">

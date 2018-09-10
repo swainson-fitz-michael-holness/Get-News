@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import $ from 'jquery';
+//import $ from 'jquery';
 import ArticleCard from "./Article.js";
 
 //for constructing date format

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Home from "./Home.js";
 import fire from "../config/Access.js";
-import {BrowserRouter, Route, Switch, NavLink, Link} from 'react-router-dom';
-import Dashboard from './Dashboard.js';
-import $ from 'jquery';
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+//import Dashboard from './Dashboard.js';
+//import $ from 'jquery';
 import RenderDashboard from './RenderDashboard.js';
 
 
@@ -94,7 +94,7 @@ class NavigationLogIn extends Component {
                         <ul id="test" className="navbar-nav mr-auto">
 
                             <li className="nav-item active lt" >
-                               <hr/>
+
                                 <div className="nav-link " ><Link to="/">Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import $ from "jquery";
-import Chart from "chart.js";
 import fire from "../config/Access.js";
 import Dashboard from './Dashboard.js';
 
@@ -17,24 +15,20 @@ class RenderDashboard extends Component {
 
     componentDidMount(){
         const rDash = this.state;
-//        console.log(this.state.db.ref(rDash.user.uid + "/articles"))
-        rDash.db.ref(rDash.user.uid + "/articles").once(
-            "value",
+
+        rDash.db.ref(rDash.user.uid + "/articles").once("value",
             el => {
                 let tag = Object.keys(el.val());
-//                console.log(el.val()[tag[0]].title)
+
                 this.setState({
                     tag: tag,
-                    content: tag.map(val => <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title}/>)
+                    content: tag.map(val => {return <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title}/>}),
                 });
-
-            },
-            err => {}
+            }
         );
     }
 
-    render(){
-
+    render() {
         return(
             <div style={{ marginTop: "80px" }} className="container">
                 <div className="row" style={{ marginBottom: "50px" }}>
@@ -43,6 +37,6 @@ class RenderDashboard extends Component {
             </div>
         );
     }
-};
+}
 
 export default RenderDashboard;

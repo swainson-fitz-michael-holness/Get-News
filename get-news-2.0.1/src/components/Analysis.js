@@ -186,23 +186,17 @@ class Analysis extends Component {
 
         }).catch(error => {
             this.setState({
-                load: <div style={{color: "red", textAlign: "center"}}>Sorry, couldn't collect data at this moment. Please refresh the page and try again.</div>
+                load: <div style={{color: "red", textAlign: "center"}}>Sorry, can not collect data at this moment. Please refresh the page and try again.</div>
             });
         });
     }
-
-
-
     //=============================================================
     // Database with Firebase !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //=============================================================
-
     // Each user has their own unique uid to save analysis
-
     // To limit the call of the api and prevent saving duplicate results:
     // search database for keys of saved article and check that the url is not the same as the url in apiData.
     handleChange(){
-
         let dbData = this.state.apiData.results;
         db.ref(this.state.user.uid+"/articles").push({
             url: this.props.dataURL,
@@ -219,15 +213,11 @@ class Analysis extends Component {
             twitterengagement: dbData.twitterengagement.results[0],
         });
     };
-
     //checks for duplicates in database
     handleCheck(e) {
         e.preventDefault();
-
         fire.database().ref(this.state.user.uid+"/articles").once("value", (el)=>{
-
             let dbObj = el.val();
-
             if(dbObj){
                 let keys = Object.keys(el.val());
                 for (var i = 0; i < keys.length; i++) {
@@ -237,23 +227,16 @@ class Analysis extends Component {
                     } else if (i === keys.length - 1) {
 //                        console.log(keys.length - 1);
                         this.handleChange();
-
                     }
                 }
             } else {
                 this.handleChange();
             }
-
-
         });
-
-
     }
-
     //update the DOM accordingly
     render() {
         const info = this.state;
-
             if(info.dataLoaded) {
             return (<div>
                {info.load}
@@ -281,11 +264,8 @@ class Analysis extends Component {
                 {info.polChart}
                 <hr style={{marginTop: "10px", display: "none"}}/>
                 {info.txtChart}
-
             </div>)
         }
-
     }
 }
-
 export default Analysis;
