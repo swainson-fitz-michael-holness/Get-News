@@ -101,7 +101,7 @@ class Dashboard extends Component {
                     </div>
 
                     <div className="col-sm-8">
-                        <p className="card-title" style={{ fontSize: "1rem" }}>
+                        <p className="card-title" style={{ fontSize: "1rem", marginTop: "15px"}}>
                             {this.state.title}
                         </p>
                     </div>

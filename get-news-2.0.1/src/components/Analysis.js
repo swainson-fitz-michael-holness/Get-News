@@ -78,6 +78,7 @@ class Analysis extends Component {
               ]
             },
             options: {
+                legend: { display: document.documentElement.clientWidth < 500 ? false : true },
               title: {
                 display: true,
                 text: 'Political analysis'
@@ -94,13 +95,14 @@ class Analysis extends Component {
               labels: label,
               datasets: [
                 {
-                  label: "num)",
+                  label: "num",
                   backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
                   data: data
                 }
               ]
             },
             options: {
+                legend: { display: document.documentElement.clientWidth < 500 ? false : true },
               title: {
                 display: true,
                 text: 'This article is about:'

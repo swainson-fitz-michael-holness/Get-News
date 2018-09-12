@@ -22,7 +22,7 @@ class RenderDashboard extends Component {
 
                 this.setState({
                     tag: tag,
-                    content: tag.map(val => {return <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title}/>}),
+                    content: tag.map(val => {return <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title} />}),
                 });
             }
         );
