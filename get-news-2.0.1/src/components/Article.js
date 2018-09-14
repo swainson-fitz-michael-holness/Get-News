@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import Analysis from "./Analysis.js";
 
+
+//for constructing date format
+const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+};
+
 //=============================================================
 //Component which presents AI analysis content
 //=============================================================
@@ -10,7 +19,10 @@ class ArticleCard extends Component {
 
         this.state = {
             init: "Loading",
-            chartID: null
+            chartID: null,
+            date: new Date(
+                        this.props.date
+                ).toLocaleDateString("en-US", options)
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -139,7 +151,7 @@ class ArticleCard extends Component {
                         className="card-footer text-muted"
                         style={{ backgroundColor: "white" }}
                     >
-                        {this.props.date}
+                        {this.state.date }
                     </div>
                 </div>
             </div>

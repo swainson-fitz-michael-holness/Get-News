@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 //import Dashboard from './Dashboard.js';
 //import $ from 'jquery';
 import RenderDashboard from './RenderDashboard.js';
+import Lab from './Lab.js';
 
 
 class NavigationLogIn extends Component {
@@ -67,7 +68,7 @@ class NavigationLogIn extends Component {
             <BrowserRouter>
             <div>
 
-                <nav style={{backgroundColor:"white"}} className="navbar fixed-top navbar-expand-lg navbar-light shadow ">
+                <nav style={{backgroundColor:"#3c90df"}} className="navbar fixed-top navbar-expand-lg navbar-dark shadow ">
                    <div className="container-fluid">
                     <button
                        id="hamburger"
@@ -78,16 +79,16 @@ class NavigationLogIn extends Component {
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
-                        style={{border: "none", outline: "none" }}
+                        style={{border: "none", outline: "none",}}
                     >
-                        <span id=" h-icon " className="navbar-toggler-icon" style={{width: "20px", height: "20px"}}/>
+                        <span id=" h-icon " className="navbar-toggler-icon" style={{width: "30px", height: "35px", }}/>
                     </button>
 
 
 
                     <div
                         className="collapse navbar-collapse ml-auto"
-                        id="navbarSupportedContent" style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}
+                        id="navbarSupportedContent"
                     >
 
 
@@ -95,14 +96,17 @@ class NavigationLogIn extends Component {
 
                             <li className="nav-item active lt" >
 
-                                <div className="nav-link " ><Link to="/">Articles</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}}><Link to="/" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link "  href={null}><Link to="/Dashboard" >Dashboard</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved</Link></div>
+                            </li>
+                            <li className="nav-item lt" >
+                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Lab" ><i className="fas fa-flask" style={{marginRight: "3px", }}></i > Lab</Link></div>
                             </li>
                             <li className="nav-item lt">
-                                <a  onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer"}}>
-                                    Log Out
+                                <a  onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer", color: "white", textDecoration: "none"}}>
+                                    <i className="fas fa-sign-out-alt" style={{marginRight: "3px", }}></i> Log Out
                                 </a>
                             </li>
 
@@ -110,7 +114,7 @@ class NavigationLogIn extends Component {
 
                        <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
                             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
-                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            <button className="btn btn-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
 
                     </div>
@@ -124,6 +128,7 @@ class NavigationLogIn extends Component {
                     exact
                 />
                 <Route path="/Dashboard" component={RenderDashboard} />
+                <Route path="/Lab" component={Lab} />
             </Switch>
 
 

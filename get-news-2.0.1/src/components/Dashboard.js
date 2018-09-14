@@ -4,6 +4,15 @@ import React, { Component } from "react";
 import fire from "../config/Access.js";
 import DbAnalysis from "./DbAnalysis.js";
 
+
+//for constructing date format
+const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+};
+
 //The dashboard is meant for the user to quickly view a collection of saved articles. When the user finds an article they've saved they can delete, share, ect They can also track an article to a topic.
 class Dashboard extends Component {
     constructor(props) {
@@ -13,7 +22,8 @@ class Dashboard extends Component {
             user: fire.auth().currentUser,
             keys: null,
             title: "",
-            init: "Loading..."
+            init: "Loading...",
+            img: require("../img/place.png"),
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -30,7 +40,10 @@ class Dashboard extends Component {
                 this.setState({
                     keys: Object.keys(el.val()),
                     title: el.val()[tag[this.props.numkey]].title,
-                    date: el.val()[tag[this.props.numkey]].date,
+                    img: "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80",
+                    date:  new Date(
+                        el.val()[tag[this.props.numkey]].date
+                ).toLocaleDateString("en-US", options),
                     image: el.val()[tag[this.props.numkey]].image,
                     dbData: el.val(),
 //                    tag: Object.keys(this.state.dbData)
@@ -87,7 +100,7 @@ class Dashboard extends Component {
                             className="mr-3 img-fluid "
                             src={
                                 this.state.image ||
-                                "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"
+                                this.state.img
                             }
                             alt="ariticle "
                             style={{
@@ -104,6 +117,7 @@ class Dashboard extends Component {
                         <p className="card-title" style={{ fontSize: "1rem", marginTop: "15px"}}>
                             {this.state.title}
                         </p>
+
                     </div>
 
                     <div

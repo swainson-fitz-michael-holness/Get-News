@@ -2,13 +2,6 @@ import React, { Component } from "react";
 //import $ from 'jquery';
 import ArticleCard from "./Article.js";
 
-//for constructing date format
-const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-};
 
 //=============================================================
 //collect credentials for loading api articles by request and search bar
@@ -113,7 +106,6 @@ class Home extends Component {
     }
 
     render() {
-
         const getNews = this.state.data;
 
         //view displayed with dynamic information brought in by the api
@@ -133,9 +125,7 @@ class Home extends Component {
                                 info={val.description}
                                 sourceName={val.source.name}
                                 url={val.url}
-                                date={new Date(
-                                    val.publishedAt
-                                ).toLocaleDateString("en-US", options)}
+                                date={val.publishedAt}
                                 ID={getNews.articles.indexOf(val)}
                             />
                         ))
@@ -164,16 +154,9 @@ class Home extends Component {
                                 >
                                     <div
                                         className="fa fa-spinner fa-spin mx-auto"
-                                        style={{ fontSize: "90px" }}
+                                        style={{ fontSize: "50px", textAlign: "center", color:"#3c90df" }}
                                     />
-                                    <h4
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: "10px"
-                                        }}
-                                    >
-                                        Loading
-                                    </h4>
+
                                 </div>
                             )}
                         </div>

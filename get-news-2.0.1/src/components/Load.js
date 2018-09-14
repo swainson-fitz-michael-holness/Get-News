@@ -8,7 +8,7 @@ class Load extends Component {
         return(
             <div className="mx-auto" style={{width: "100px", marginTop: "180px"}}>
 
-</div>
+            </div>
         );
     }
 };

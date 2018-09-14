@@ -200,6 +200,7 @@ class Analysis extends Component {
     // search database for keys of saved article and check that the url is not the same as the url in apiData.
     handleChange(){
         let dbData = this.state.apiData.results;
+        console.log(dbData)
         db.ref(this.state.user.uid+"/articles").push({
             url: this.props.dataURL,
             title: this.props.dataTitle,
@@ -213,7 +214,7 @@ class Analysis extends Component {
             sentimenthq: dbData.sentimenthq.results[0],
             texttags: dbData.texttags.results[0],
             twitterengagement: dbData.twitterengagement.results[0],
-        });
+        }, el => alert("saved"));
     };
     //checks for duplicates in database
     handleCheck(e) {
