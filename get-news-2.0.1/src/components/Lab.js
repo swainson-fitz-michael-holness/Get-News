@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
+import moment from "moment";
 
 const options = {
-    month: "numeric",
+    month: "short",
     day: "numeric",
-    hour: "numeric"
+//    year: "numeric"
 };
+
+const timeFormat = 'MM/DD/YYYY HH:mm';
 
 class Lab extends Component {
     constructor(props) {
@@ -23,7 +26,7 @@ class Lab extends Component {
 
     handleTrend(label, anger, fear, joy, surprise) {
  new Chart(document.getElementById("pie-chart"), {
-type: 'bar',
+type: 'scatter',
   data: {
     labels: label,
     datasets: [{
@@ -31,21 +34,6 @@ type: 'bar',
         label: "Anger",
         borderColor: "#3e95cd",
         backgroundColor: "#3e95cd",
-        fill: true
-      }, {
-        data: fear,
-        label: "Fear",
-        borderColor: "#8e5ea2",
-        fill: false
-      }, {
-        data: joy,
-        label: "Joy",
-        borderColor: "#3cba9f",
-        fill: false
-      }, {
-        data: surprise,
-        label: "Surpise",
-        borderColor: "#e8c3b9",
         fill: false
       },
     ]
@@ -54,7 +42,28 @@ type: 'bar',
     title: {
       display: true,
       text: 'Emotion of selected articles'
-    }
+    },
+      scales: {
+					xAxes: [{
+						type: 'time',
+						time: {
+							format: timeFormat,
+							// round: 'day'
+							tooltipFormat: 'll HH:mm'
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'value'
+						}
+					}]
+				},
+
   }
 });
     }
@@ -74,20 +83,26 @@ type: 'bar',
                 let dataSurpriseArr = [];
 //                console.log(new Date (db[tag[0]].date).getTime());
 
+            let dateWindow = [];
+
+            for (var g = -1; g<1; g++){
+                dateWindow.push(moment().add(g, "d").toDate());
+            }
+
                 for(var i = 0; i < tag.length; i++) {
                     dataDateArrMs.push(new Date (db[tag[i]].date).getTime());
                     dataDateArr.push(new Date (db[tag[i]].date).toLocaleDateString("en-US", options));
-                    dataAngerArr.push(db[tag[i]].emotion.anger);
+                    dataAngerArr.push({y:db[tag[i]].emotion.anger, x: new Date (db[tag[i]].date).toLocaleDateString("en-US")});
                     dataFearArr.push(db[tag[i]].emotion.fear);
                     dataJoyArr.push(db[tag[i]].emotion.joy);
                     dataSurpriseArr.push(db[tag[i]].emotion.surprise);
                 }
 
                 this.setState({
-                    chart: this.handleTrend(dataDateArr, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr),
+                    chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr),
                 });
 
-                console.log(dataFearArr)
+                console.log(dateWindow);
             }
         );
 
