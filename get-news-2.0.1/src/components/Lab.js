@@ -24,7 +24,7 @@ class Lab extends Component {
         this.handleTrend = this.handleTrend.bind(this);
     }
 
-    handleTrend(label, anger, fear, joy, surprise) {
+    handleTrend(label, anger, fear, joy, surprise, el) {
  new Chart(document.getElementById("pie-chart"), {
 type: 'scatter',
   data: {
@@ -59,10 +59,29 @@ type: 'scatter',
 					yAxes: [{
 						scaleLabel: {
 							display: true,
-							labelString: 'value'
-						}
+							labelString: "value"
+						},
 					}]
 				},
+      tooltips: {
+                enabled: true,
+                mode: 'single',
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                    if (label) {
+                        label += ': ';
+                    }
+                        let tag = Object.keys(el.val());
+                        let db = el.val();
+
+                        console.log(db[tag[tooltipItem.index]])
+                    label += db[tag[tooltipItem.index]].title;
+                    return label + " : " + tooltipItem.xLabel;
+                    }
+                }
+            },
 
   }
 });
@@ -75,8 +94,6 @@ type: 'scatter',
 
                 let db = el.val();
                 let tag = Object.keys(el.val());
-                let dataDateArr = [];
-                let dataDateArrMs = [];
                 let dataAngerArr = [];
                 let dataFearArr = [];
                 let dataJoyArr = [];
@@ -90,8 +107,6 @@ type: 'scatter',
             }
 
                 for(var i = 0; i < tag.length; i++) {
-                    dataDateArrMs.push(new Date (db[tag[i]].date).getTime());
-                    dataDateArr.push(new Date (db[tag[i]].date).toLocaleDateString("en-US", options));
                     dataAngerArr.push({y:db[tag[i]].emotion.anger, x: new Date (db[tag[i]].date).toLocaleDateString("en-US")});
                     dataFearArr.push(db[tag[i]].emotion.fear);
                     dataJoyArr.push(db[tag[i]].emotion.joy);
@@ -99,10 +114,10 @@ type: 'scatter',
                 }
 
                 this.setState({
-                    chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr),
+                    chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr, el),
                 });
 
-                console.log(dateWindow);
+//                console.log(dateWindow);
             }
         );
 
