@@ -32,10 +32,28 @@ type: 'scatter',
     datasets: [{
         data: anger,
         label: "Anger",
-        borderColor: "#3e95cd",
-        backgroundColor: "#3e95cd",
+        borderColor: "#ff3366",
+        backgroundColor: "#ff3366",
         fill: false
-      },
+      }, {
+        data: fear,
+        label: "fear",
+        borderColor: "#6b9b6b",
+        backgroundColor: "#6b9b6b",
+        fill: false
+      }, {
+        data: joy,
+        label: "joy",
+        borderColor: "#3b6dbf",
+        backgroundColor: "#3b6dbf",
+        fill: false
+      }, {
+        data: surprise,
+        label: "surprise",
+        borderColor: "#f4df42",
+        backgroundColor: "#f4df42",
+        fill: false
+      }
     ]
   },
   options: {
@@ -49,7 +67,7 @@ type: 'scatter',
 						time: {
 							format: timeFormat,
 							// round: 'day'
-							tooltipFormat: 'll HH:mm'
+							tooltipFormat: 'll HH:mm' // HH:mm
 						},
 						scaleLabel: {
 							display: true,
@@ -76,7 +94,6 @@ type: 'scatter',
                         let tag = Object.keys(el.val());
                         let db = el.val();
 
-                        console.log(db[tag[tooltipItem.index]])
                     label += db[tag[tooltipItem.index]].title;
                     return label + " : " + tooltipItem.xLabel;
                     }
@@ -89,6 +106,9 @@ type: 'scatter',
 
     componentDidMount(){
         const dash = this.state;
+//        Chart.defaults.global.tooltips = {
+//
+//        }
         dash.db.ref(dash.user.uid + "/articles").once("value",
             el => {
 
@@ -98,6 +118,8 @@ type: 'scatter',
                 let dataFearArr = [];
                 let dataJoyArr = [];
                 let dataSurpriseArr = [];
+                let tagLength = tag.length;
+                let i = 0;
 //                console.log(new Date (db[tag[0]].date).getTime());
 
             let dateWindow = [];
@@ -106,11 +128,16 @@ type: 'scatter',
                 dateWindow.push(moment().add(g, "d").toDate());
             }
 
-                for(var i = 0; i < tag.length; i++) {
-                    dataAngerArr.push({y:db[tag[i]].emotion.anger, x: new Date (db[tag[i]].date).toLocaleDateString("en-US")});
-                    dataFearArr.push(db[tag[i]].emotion.fear);
-                    dataJoyArr.push(db[tag[i]].emotion.joy);
-                    dataSurpriseArr.push(db[tag[i]].emotion.surprise);
+                for(i; i < tagLength; i++) {
+                    dataAngerArr.push({y:db[tag[i]].emotion.anger, x: new Date (db[tag[i]].date)});
+
+                    dataFearArr.push({y:db[tag[i]].emotion.fear, x: new Date (db[tag[i]].date)});
+
+                    dataJoyArr.push({y:db[tag[i]].emotion.joy, x: new Date (db[tag[i]].date)});
+
+                    dataSurpriseArr.push({y:db[tag[i]].emotion.surprise, x: new Date (db[tag[i]].date)});
+
+//BDDSEA
                 }
 
                 this.setState({
