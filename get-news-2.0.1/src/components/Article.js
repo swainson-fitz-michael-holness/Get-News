@@ -79,7 +79,7 @@ class ArticleCard extends Component {
                             onClick={this.handleClick}
                         >
                             <i
-                                className="fas fa-plug "
+                                className="fas fa-chart-bar "
                                 style={{ fontSize: "0.9rem" }}
                             />{" "}
                         </button>

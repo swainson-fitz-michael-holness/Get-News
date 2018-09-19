@@ -24,6 +24,9 @@ class Analysis extends Component {
             txtChart: <canvas style={{ display: "none" }} id={"B"+this.props.chartID} />,
             apiData: null,
             user: fire.auth().currentUser,
+            visible: "hidden",
+
+
         };
 
         this.handleHorChart = this.handleHorChart.bind(this);
@@ -188,7 +191,7 @@ class Analysis extends Component {
 
         }).catch(error => {
             this.setState({
-                load: <div style={{color: "red", textAlign: "center"}}>Sorry, can not collect data at this moment. Please refresh the page and try again.</div>
+                load: <div style={{color: "red", textAlign: "center", display: "none"}}>Sorry, can not collect data at this moment. Please refresh the page and try again.</div>
             });
         });
     }
@@ -214,7 +217,13 @@ class Analysis extends Component {
             sentimenthq: dbData.sentimenthq.results[0],
             texttags: dbData.texttags.results[0],
             twitterengagement: dbData.twitterengagement.results[0],
-        }, el => alert("saved"));
+        }, el => {
+            this.setState({
+                visible: "visible"
+            });
+//            document.getElementById("save-alert").style.visability = "visible";
+
+        });
     };
     //checks for duplicates in database
     handleCheck(e) {
@@ -257,7 +266,27 @@ class Analysis extends Component {
                 <div className="progress" style={{height: "25px"}}>
                     <div className="progress-bar" role="progressbar" style={{width: info.dataViral+"%"}} aria-valuenow={info.dataViral} aria-valuemin="0" aria-valuemax="100">{info.dataViral}%</div>
                 </div>
-                <button onClick={this.handleCheck} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
+
+                <div className="row">
+                   <div className="col-sm-3">
+                        <button onClick={this.handleCheck} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
+                   </div>
+                    <div className="col-sm-9" style={{position: "relative", }}>
+
+                       <div id="save-alert" style={{marginTop: "37px", visibility: this.state.visible, position: "absolute", bottom: "0"}} className="" role="alert">
+
+                    <i class="fas fa-check-square" style={{marginRight: "10px", marginTop:"37px", position: "absoltue", bottom:"0", fontSize: "1.7rem", color: "#8fb56e"}}></i>
+
+                    <p style={{display: "inline", color: "#8fb56e"}}>
+                        Saved successfully!
+                    </p>
+
+                </div>
+
+                    </div>
+                </div>
+
+
             </div>)
         } else {
             return (<div>
