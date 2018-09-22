@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import $ from "jquery";
+import $ from "jquery";
 //import Chart from "chart.js";
 import fire from "../config/Access.js";
 import DbAnalysis from "./DbAnalysis.js";
@@ -57,8 +57,8 @@ class Dashboard extends Component {
         e.preventDefault();
         this.state.db
             .ref(this.state.user.uid + "/articles/" + this.props.keyID)
-            .remove(window.location.reload());
-        console.log(this.props.keyID);
+            .remove(el => {$("#del"+this.props.keyID).css("display", "none")});
+//        console.log(this.props.keyID);
     }
 
     handleClickCtrl(e) {
@@ -83,13 +83,13 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div className="col-md-6" style={{ marginBottom: "50px" }}>
+            <div id={"del" + this.props.keyID} className="col-md-6 " style={{ marginBottom: "50px" }}>
                 <div
                     className="shadow-sm row"
                     style={{
                         margin: "0px 5px 0px 0px",
                         borderRadius: "4px 4px 0px 0px",
-                        backgroundColor: "white"
+                        backgroundColor: "white",
                     }}
                 >
                     <div
@@ -175,14 +175,14 @@ class Dashboard extends Component {
                         <div style={{ float: "right" }}>
 
 
-                        <div class="dropdown">
+                        <div className="dropdown">
                           <button className="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ background: "none", color: "#787d87" }}>
                             <i
                                     className="fas fa-ellipsis-v"
                                     style={{ fontSize: "0.9rem" }}
                                 />
                           </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                             <button
                                 type="button"
@@ -197,6 +197,14 @@ class Dashboard extends Component {
                                     style={{ fontSize: "1rem", marginRight: "5px", color: "#007bff" }}
                                 /> <span >Analysis</span>
                             </button>
+
+                            <button onClick={this.handleClick}
+                                type="button"
+                                className=" btn  "
+                                 style={{background: "none", color: "red"}}>
+                                    <i className="far fa-trash-alt" style={{ fontSize: "1rem", marginRight: "9px", color: "red" }}></i>
+                                    <span >Delete</span>
+                                </button>
 
                           </div>
                         </div>
