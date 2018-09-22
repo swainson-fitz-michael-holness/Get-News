@@ -173,6 +173,17 @@ class Dashboard extends Component {
                 >
                     <div className="col-sm-12 ">
                         <div style={{ float: "right" }}>
+
+
+                        <div class="dropdown">
+                          <button className="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ background: "none", color: "#787d87" }}>
+                            <i
+                                    className="fas fa-ellipsis-v"
+                                    style={{ fontSize: "0.9rem" }}
+                                />
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
                             <button
                                 type="button"
                                 className=" btn"
@@ -182,11 +193,13 @@ class Dashboard extends Component {
                                 style={{ background: "none", color: "#787d87" }}
                             >
                                 <i
-                                    className="fas fa-ellipsis-v"
-                                    style={{ fontSize: "0.9rem" }}
-                                />
+                                    className="far fa-chart-bar"
+                                    style={{ fontSize: "1rem", marginRight: "5px", color: "#007bff" }}
+                                /> <span >Analysis</span>
                             </button>
 
+                          </div>
+                        </div>
 
                         </div>
 
