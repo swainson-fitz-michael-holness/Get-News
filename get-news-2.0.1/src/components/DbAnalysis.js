@@ -28,7 +28,6 @@ class DbAnalysis extends Component {
         this.handleHorChart = this.handleHorChart.bind(this);
         this.handlePolChart = this.handlePolChart.bind(this);
         this.handleTxtChart = this.handleTxtChart.bind(this);
-
     }
 
     handleHorChart(label, data) {
@@ -181,7 +180,6 @@ class DbAnalysis extends Component {
                     <div className="progress-bar " role="progressbar" style={{width: posit+"%"}} aria-valuenow={posit} aria-valuemin="0" aria-valuemax="100">{posit}%</div></div>,
                 });
             },
-            err => {}
         );
     }
 

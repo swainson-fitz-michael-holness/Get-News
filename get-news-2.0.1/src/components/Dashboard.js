@@ -179,13 +179,15 @@ class Dashboard extends Component {
                                 data-toggle="modal"
                                 data-target={"#Z" + this.props.keyID}
                                 onClick={this.handleClickCtrl}
-                                style={{ background: "none" }}
+                                style={{ background: "none", color: "#787d87" }}
                             >
                                 <i
                                     className="fas fa-ellipsis-v"
                                     style={{ fontSize: "0.9rem" }}
                                 />
                             </button>
+
+
                         </div>
 
                         <p

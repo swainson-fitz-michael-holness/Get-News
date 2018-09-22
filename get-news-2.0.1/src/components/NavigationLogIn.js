@@ -21,30 +21,11 @@ class NavigationLogIn extends Component {
         };
 
         this.logOut = this.logOut.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     //Handle log out function with firebase
     logOut() {
         fire.auth().signOut();
-    }
-
-    //Everytime an input is made in the search field fire this change function and save results in this.state.val
-    handleChange(e){
-        e.preventDefault();
-        this.setState({
-            val: e.target.value,
-        })
-    }
-
-    //When the submit button is clicked update the submitted state as the current state of this.state.val
-    handleSubmit(e){
-        e.preventDefault();
-        this.setState({
-            valSubmit: this.state.val
-        });
-
     }
 
     componentDidMount(){
@@ -112,10 +93,7 @@ class NavigationLogIn extends Component {
 
                         </ul>
 
-                       <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
-                            <button className="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+
 
                     </div>
                     </div>

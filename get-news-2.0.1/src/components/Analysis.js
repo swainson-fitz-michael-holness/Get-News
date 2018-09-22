@@ -273,9 +273,9 @@ class Analysis extends Component {
                    </div>
                     <div className="col-sm-9" style={{position: "relative", }}>
 
-                       <div id="save-alert" style={{marginTop: "37px", visibility: this.state.visible, position: "absolute", bottom: "0"}} className="" role="alert">
+                       <div id="save-alert" style={{marginTop: "37px", visibility: this.state.visible, position: "absolute", bottom: "0"}} role="alert">
 
-                    <i class="fas fa-check-square" style={{marginRight: "10px", marginTop:"37px", position: "absoltue", bottom:"0", fontSize: "1.7rem", color: "#8fb56e"}}></i>
+                    <i className="fas fa-check-square" style={{marginRight: "10px", marginTop:"37px", position: "absoltue", bottom:"0", fontSize: "1.7rem", color: "#8fb56e"}}></i>
 
                     <p style={{display: "inline", color: "#8fb56e"}}>
                         Saved successfully!

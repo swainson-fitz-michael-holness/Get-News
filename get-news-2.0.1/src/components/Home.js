@@ -44,7 +44,35 @@ class Home extends Component {
             data: null,
             error: null,
             init: props.term,
+
+            val: "",
+            valSubmit: "uk",
+            firstLoad: false,
+            initHome: null,
+            searchHome: null,
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    //Everytime an input is made in the search field fire this change function and save results in this.state.val
+    handleChange(e){
+        e.preventDefault();
+
+        this.setState({
+            val: e.target.value,
+        })
+    }
+
+    //When the submit button is clicked update the submitted state as the current state of this.state.val
+    handleSubmit(e){
+        e.preventDefault();
+        console.log(this.props.term)
+        this.setState({
+            valSubmit: this.state.val
+        });
+
     }
 
     //when app loads run fetch api
@@ -76,10 +104,10 @@ class Home extends Component {
     }
 
     //if a search is inputted refetch data based on the search result. Note this bug. If the key isn't unique information fetched initially will continue to propagate. To fix this I used a random string generator to ensure uniqueness.
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
 
-        if(this.props.term !== prevProps.term ){
-            fetch(urlSearch(this.props.term))
+        if(this.state.valSubmit !== prevState.valSubmit ){
+            fetch(urlSearch(this.state.valSubmit))
                 .then(function(response) {
                     return response.json();
                 })
@@ -111,7 +139,14 @@ class Home extends Component {
         //view displayed with dynamic information brought in by the api
         return (
             <div className="container" style={{marginTop: "80px"}} >
-               <div className="text-left" style={{marginBottom: "3px", opacity:"0.5", marginTop: "10px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
+
+               <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
+                            <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
+                            <button className="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+
+                            <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "20px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
+                        </form>
+                        <hr/>
                 <div className="row">
 
 
