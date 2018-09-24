@@ -7,6 +7,11 @@ import Chart from "chart.js";
 //===========================================
 // Code for dynamically writing search to fetch -1 ApiCall
 //===========================================
+$("img").error(function () {
+//    $(this).hide();
+     or $(this).css({visibility:"hidden"});
+});
+
 const key = "apiKey=6c6b71cbab324fbd82b11f2c79e14456";
 
 const url = function(endpoint, country, key) {

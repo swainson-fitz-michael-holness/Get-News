@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+//import $ from "jquery";
 import './App.css';
 import Login from './user/Login.js';
 import fire from './config/Access.js';
 import Load from './components/Load.js';
 import NavigationLogIn from "./components/NavigationLogIn.js";
+
 
 
 //function PageLoad(props) {
@@ -13,6 +15,12 @@ import NavigationLogIn from "./components/NavigationLogIn.js";
 //    }
 //}
 
+//$("img").error(function () {
+//    $(this).hide();
+    // or $(this).css({visibility:"hidden"});
+//    });
+
+//console.log($("img").onError)
 
 class App extends Component {
     constructor(props){

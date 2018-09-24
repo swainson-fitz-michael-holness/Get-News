@@ -175,14 +175,14 @@ class Dashboard extends Component {
                         <div style={{ float: "right" }}>
 
 
-                        <div className="dropdown">
-                          <button className="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ background: "none", color: "#787d87" }}>
+                        <div className="dropdown dropleft">
+                          <button className="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ background: "none", color: "#787d87",  }}>
                             <i
                                     className="fas fa-ellipsis-v"
                                     style={{ fontSize: "0.9rem" }}
                                 />
                           </button>
-                          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <div className="dropdown-menu shadow-lg" aria-labelledby="dropdownMenuButton" style={{border: "0", }}>
 
                             <button
                                 type="button"

@@ -22,7 +22,8 @@ class ArticleCard extends Component {
             chartID: null,
             date: new Date(
                         this.props.date
-                ).toLocaleDateString("en-US", options)
+                ).toLocaleDateString("en-US", options),
+            pic: "null",
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -45,6 +46,14 @@ class ArticleCard extends Component {
         });
     }
 
+    componentDidMount (){
+
+        const pic = document.getElementById("pic"+this.props.ID);
+            pic.onerror = function () {
+            this.style.display = "none";
+        }
+    }
+
     render() {
         return (
             <div className="col-md-6" style={{ marginBottom: "50px" }}>
@@ -58,13 +67,16 @@ class ArticleCard extends Component {
                     }}
                 >
                     <img
-                        className="card-img-top"
+                       id={"pic"+this.props.ID}
+                        className="pic card-img-top"
                         style={{ borderRadius: "5px 5px 0px 0px" }}
                         src={
                             this.props.img ||
                             "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"
                         }
-                        alt="ariticle "
+
+                        alt= "img"
+
                     />
                     <div className="card-body">
                         <h5 className="card-title">{this.props.title}</h5>

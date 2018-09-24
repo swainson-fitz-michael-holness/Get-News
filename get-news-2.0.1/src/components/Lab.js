@@ -59,7 +59,7 @@ type: 'scatter',
   options: {
     title: {
       display: true,
-      text: 'Emotion of selected articles'
+      text: 'Distribution of saved articles by emotion'
     },
       scales: {
 					xAxes: [{
