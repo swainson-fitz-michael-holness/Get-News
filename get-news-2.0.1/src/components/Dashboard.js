@@ -51,6 +51,11 @@ class Dashboard extends Component {
             },
             err => {}
         );
+
+         const picImg = document.getElementById("picImg"+this.props.keyID);
+            picImg.onerror = function () {
+            this.style.display = "none";
+        }
     }
 
     handleClick(e) {
@@ -94,9 +99,13 @@ class Dashboard extends Component {
                 >
                     <div
                         className="col-sm-4"
-                        style={{ padding: "0px", minHeight: "100px" }}
+                        style={{ padding: "0px", minHeight: "100px" ,
+                               backgroundImage: 'url("https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80")',
+                                    backgroundSize: "cover"
+                               }}
                     >
                         <img
+                           id={"picImg" + this.props.keyID}
                             className="mr-3 img-fluid "
                             src={
                                 this.state.image ||
@@ -108,7 +117,8 @@ class Dashboard extends Component {
                                 height: "100%",
                                 border: "inline",
                                 objectFit: " cover",
-                                borderRadius: "4px 0px 0px 0px"
+                                borderRadius: "4px 0px 0px 0px",
+
                             }}
                         />
                     </div>
