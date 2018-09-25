@@ -68,7 +68,7 @@ class Home extends Component {
     //When the submit button is clicked update the submitted state as the current state of this.state.val
     handleSubmit(e){
         e.preventDefault();
-        console.log(this.props.term)
+        console.log(this.state.val)
         this.setState({
             valSubmit: this.state.val
         });
@@ -105,8 +105,8 @@ class Home extends Component {
 
     //if a search is inputted refetch data based on the search result. Note this bug. If the key isn't unique information fetched initially will continue to propagate. To fix this I used a random string generator to ensure uniqueness.
     componentDidUpdate(prevProps, prevState) {
-
-        if(this.state.valSubmit !== prevState.valSubmit ){
+//        console.log(this.state.valSubmit+" :: "+ prevState.valSubmit)
+        if((this.state.valSubmit !== prevState.valSubmit) && (this.state.valSubmit !== "")){
             fetch(urlSearch(this.state.valSubmit))
                 .then(function(response) {
                     return response.json();
@@ -138,15 +138,23 @@ class Home extends Component {
 
         //view displayed with dynamic information brought in by the api
         return (
-            <div className="container" style={{marginTop: "80px"}} >
+            <div className="container" style={{marginTop: "80px",}} >
 
-               <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit}>
+              <div>
+                  <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
                             <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
-                            <button className="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                            <div className="input-group-prepend">
+                                <button className="btn btn-success " type="submit">Search</button>
+                            </div>
 
-                            <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "20px"}}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
+
+
                         </form>
-                        <hr/>
+
+              </div>
+
+              <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
+
                 <div className="row">
 
 
@@ -166,8 +174,8 @@ class Home extends Component {
                         ))
                     ) : (
                         <div
-                            className="mx-auto"
-                            style={{ width: "7px", marginTop: "180px" }}
+                            className=""
+                            style={{ width: "50px", margin: "auto", marginTop: "100px", }}
                         >
                             {this.state.error ? (
                                 <div
@@ -180,19 +188,13 @@ class Home extends Component {
                                     later{" "}
                                 </div>
                             ) : (
-                                <div
-                                    style={{
-                                        display: "block",
-                                        margin: "auto",
-                                        width: "90px"
-                                    }}
-                                >
+
                                     <div
-                                        className="fa fa-spinner fa-spin mx-auto"
-                                        style={{ fontSize: "50px", textAlign: "center", color:"#3c90df" }}
+                                        className="fa fa-spinner fa-spin"
+                                        style={{ fontSize: "50px", color:"#3c90df",}}
                                     />
 
-                                </div>
+
                             )}
                         </div>
                     )}

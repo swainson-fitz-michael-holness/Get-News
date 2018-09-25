@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import logoAlt from "../img/reportralt.png";
 //import $ from "jquery";
 
 class NavigationLogOut extends Component {

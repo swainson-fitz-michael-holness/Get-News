@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 //import $ from 'jquery';
 import RenderDashboard from './RenderDashboard.js';
 import Lab from './Lab.js';
+import logo from "../img/reportra.png"
 
 
 class NavigationLogIn extends Component {
@@ -50,6 +51,7 @@ class NavigationLogIn extends Component {
             <div>
 
                 <nav style={{backgroundColor:"#3c90df"}} className="navbar fixed-top navbar-expand-lg navbar-dark shadow ">
+
                    <div className="container-fluid">
                     <button
                        id="hamburger"
@@ -65,6 +67,10 @@ class NavigationLogIn extends Component {
                         <span id=" h-icon " className="navbar-toggler-icon" style={{width: "30px", height: "35px", }}/>
                     </button>
 
+                    <span className="navbar-brand mb-0 h1">
+                       <img src={logo} alt="logo" style={{height: "30px", width: "auto"}}/>
+
+                    </span>
 
 
                     <div
@@ -108,9 +114,6 @@ class NavigationLogIn extends Component {
                 <Route path="/Dashboard" component={RenderDashboard} />
                 <Route path="/Lab" component={Lab} />
             </Switch>
-
-
-
             </div>
 </BrowserRouter>
         );
