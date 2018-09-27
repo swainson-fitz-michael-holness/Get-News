@@ -153,7 +153,7 @@ class Home extends Component {
                      <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
                             <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
                             <div className="input-group-prepend">
-                                <button className="btn btn-success " type="submit">Search</button>
+                                <button className="btn btn-success " type="submit" data-toggle="tooltip" data-placement="top" title="search for article"><i className="fas fa-search"></i></button>
                             </div>
 
 

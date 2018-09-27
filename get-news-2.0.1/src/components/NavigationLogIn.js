@@ -19,14 +19,33 @@ class NavigationLogIn extends Component {
             firstLoad: false,
             initHome: null,
             searchHome: null,
+            saved: "",
+            user: fire.auth().currentUser,
+            db: fire.database(),
         };
 
         this.logOut = this.logOut.bind(this);
+        this.checkSaved = this.checkSaved.bind(this);
     }
 
     //Handle log out function with firebase
     logOut() {
         fire.auth().signOut();
+    }
+
+    checkSaved(e){
+        e.preventDefault();
+
+        const mood = this.state
+
+        mood.db.ref(mood.user.uid + "/articles").on(
+            "value", el => {
+
+                this.setState({
+                    saved: Object.keys(el.val()).length
+                });
+            }
+        );
     }
 
     componentDidMount(){
@@ -63,6 +82,7 @@ class NavigationLogIn extends Component {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                         style={{border: "none", outline: "none",}}
+                        onClick={this.checkSaved}
                     >
                         <span id=" h-icon " className="navbar-toggler-icon" style={{width: "30px", height: "35px", }}/>
                     </button>
@@ -86,7 +106,7 @@ class NavigationLogIn extends Component {
                                 <div className="nav-link " style={{marginRight: "10px"}}><Link to="/" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved <span className="badge badge-secondary">{this.state.saved}</span></Link></div>
                             </li>
                             <li className="nav-item lt" >
                                 <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Lab" ><i className="fas fa-flask" style={{marginRight: "3px", }}></i > Lab</Link></div>
