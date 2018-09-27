@@ -2,6 +2,8 @@ import React, { Component } from "react";
 //import $ from 'jquery';
 import ArticleCard from "./Article.js";
 
+import {Animated} from "react-animated-css";
+
 
 //=============================================================
 //collect credentials for loading api articles by request and search bar
@@ -140,8 +142,15 @@ class Home extends Component {
         return (
             <div className="container" style={{marginTop: "80px",}} >
 
-              <div>
-                  <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
+
+            <div className="jumbotron " style={{backgroundColor: "rgba(255,255,255,0)", height: "17px"}}>
+
+
+              <div className="" style={{width: "80%", display: "block", margin: "auto", }}>
+
+
+                 <Animated animationIn="fadeIn" isVisible={true}>
+                     <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
                             <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
                             <div className="input-group-prepend">
                                 <button className="btn btn-success " type="submit">Search</button>
@@ -150,13 +159,15 @@ class Home extends Component {
 
 
                         </form>
+                 </Animated>
 
               </div>
+              </div>
 
-              <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>Results: {this.state.isLoaded === true ? <em>{getNews.articles.length}</em> : "..."} </div>
+              <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <em>{"Results: "+getNews.articles.length}</em> : ""} </div>
+
 
                 <div className="row">
-
 
                     {this.state.isLoaded === true ? (
                         getNews.articles.map(val => (
@@ -198,7 +209,9 @@ class Home extends Component {
                             )}
                         </div>
                     )}
+
                 </div>
+
             </div>
         );
     }
