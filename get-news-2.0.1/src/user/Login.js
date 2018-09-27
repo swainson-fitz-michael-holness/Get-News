@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import logoHD from "../img/reportralt.png"
 import '../App.css';
 import firebase from 'firebase';
 import NavigationLogOut from '../components/NavigationLogOut.js'
@@ -37,9 +37,9 @@ class Login extends Component {
         return (
             <div className="container">
                 < NavigationLogOut/>
-
+                <img src={logoHD} alt="" style={{width: "180px" ,height: "auto",display: "block", margin: "auto", marginTop: "100px"}}/>
                 <form>
-                    <div className="form-group login-box border-primary rounded shadow-lg">
+                    <div className="form-group login-box border-primary rounded shadow-lg" style = {{marginTop: "20px"}}>
                         <div>
                             <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email address..." className="form-control label"/>
                         </div>

@@ -268,10 +268,10 @@ class Analysis extends Component {
                 </div>
 
                 <div className="row">
-                   <div className="col-sm-3">
+                   <div className="col-4">
                         <button onClick={this.handleCheck} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
                    </div>
-                    <div className="col-sm-9" style={{position: "relative", }}>
+                    <div className="col-8" style={{position: "relative", }}>
 
                        <div id="save-alert" style={{marginTop: "37px", visibility: this.state.visible, position: "absolute", bottom: "0"}} role="alert">
 

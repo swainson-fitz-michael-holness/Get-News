@@ -31,9 +31,11 @@ class RenderDashboard extends Component {
     render() {
         return(
             <div style={{ marginTop: "80px" }} className="container">
-                <div className="row" style={{ marginBottom: "50px" }}>
+                <div className="row" style={{ marginBottom: "190px" }}>
                     {this.state.content}
+
                 </div>
+
             </div>
         );
     }
