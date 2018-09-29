@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Home from "./Home.js";
 import fire from "../config/Access.js";
+import '../App.css';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 //import Dashboard from './Dashboard.js';
-//import $ from 'jquery';
+import $ from 'jquery';
 import RenderDashboard from './RenderDashboard.js';
 import Lab from './Lab.js';
 import logo from "../img/reportra.png"
@@ -22,6 +23,7 @@ class NavigationLogIn extends Component {
             saved: "",
             user: fire.auth().currentUser,
             db: fire.database(),
+            bars: "fas fa-bars"
         };
 
         this.logOut = this.logOut.bind(this);
@@ -35,17 +37,16 @@ class NavigationLogIn extends Component {
 
     checkSaved(e){
         e.preventDefault();
+        if(this.state.bars === "fas fa-bars") {
+            this.setState({
+                bars: "fas fa-times"
+            });
+        } else {
+            this.setState({
+                bars: "fas fa-bars"
+            });
+        }
 
-        const mood = this.state
-
-        mood.db.ref(mood.user.uid + "/articles").on(
-            "value", el => {
-
-                this.setState({
-                    saved: Object.keys(el.val()).length
-                });
-            }
-        );
     }
 
     componentDidMount(){
@@ -57,10 +58,10 @@ class NavigationLogIn extends Component {
 //        $('#hamburger').on('click', function(){
 //            console.log($("#navbarSupportedContent").toggle("show"));
 //        });
+
     }
 
 //    load Navbar
-
     render() {
         const news = this.state;
 
@@ -84,7 +85,7 @@ class NavigationLogIn extends Component {
                         style={{border: "none", outline: "none",}}
                         onClick={this.checkSaved}
                     >
-                        <span id=" h-icon " className="navbar-toggler-icon" style={{width: "30px", height: "35px", }}/>
+                        <span id=" h-icon " className="" style={{width: "30px", height: "35px", }}><i className={news.bars}></i></span>
                     </button>
 
                     <span className="navbar-brand mb-0 h1">

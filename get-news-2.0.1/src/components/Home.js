@@ -146,12 +146,14 @@ class Home extends Component {
             <div className="jumbotron " style={{backgroundColor: "rgba(255,255,255,0)", height: "17px"}}>
 
 
-              <div className="" style={{width: "80%", display: "block", margin: "auto", }}>
+              <div id="home-search" style={{ display: "block", margin: "auto", }}>
 
 
                  <Animated animationIn="fadeIn" isVisible={true}>
                      <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
-                            <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search top headlines.." aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
+
+
                             <div className="input-group-prepend">
                                 <button className="btn btn-success " type="submit" data-toggle="tooltip" data-placement="top" title="search for article"><i className="fas fa-search"></i></button>
                             </div>
@@ -164,9 +166,9 @@ class Home extends Component {
               </div>
               </div>
 
-              <div className="" style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <em>{"Results: "+getNews.articles.length}</em> : ""} </div>
+              <div style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <div>Results: <span className="badge badge-pill badge-primary"> {getNews.articles.length}</span></div> : ""} </div>
 
-
+<hr/>
                 <div className="row">
 
                     {this.state.isLoaded === true ? (

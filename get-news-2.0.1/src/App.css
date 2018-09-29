@@ -19,3 +19,13 @@
 .login-btn {
     margin-top: 27px;
 }
+
+#home-search {
+    width: 80%;
+}
+
+@media only screen and (max-width: 1199px) {
+    #home-search {
+        width: 100%
+    }
+}

@@ -12,7 +12,8 @@ class RenderDashboard extends Component {
             tag: [],
             content: "",
             filterVal:"",
-//            filterSubmit: "",
+            savedIsLoaded: false,
+            savedNum:"",
 
         };
 
@@ -31,8 +32,11 @@ class RenderDashboard extends Component {
                 this.setState({
                     tag: tag,
                     content: tag.map(val => {return <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title} />}),
-                    filterSubmit: tag.length
+                    filterSubmit: tag.length,
+                    savedIsLoaded: true,
+                    savedNum: Object.keys(el.val()).length
                 });
+
             }
         );
 
@@ -42,8 +46,7 @@ class RenderDashboard extends Component {
         e.preventDefault();
         const cContent = document.querySelectorAll(".card-title");
         const card = document.querySelectorAll(".col-md-6");
-//        console.log(cContent[0].innerHTML.toUpperCase().indexOf(this.state.filterVal.toUpperCase()));
-//        console.log(cContent[0].innerHTML.toUpperCase());
+
         let g;
         let list = 0;
 
@@ -59,7 +62,7 @@ class RenderDashboard extends Component {
         }
 
         this.setState({
-            filterSubmit: document.querySelectorAll(".col-md-6").length,
+            savedNum: list,
         });
     }
 
@@ -77,12 +80,12 @@ class RenderDashboard extends Component {
                <div className="jumbotron " style={{backgroundColor: "rgba(255,255,255,0)", height: "17px"}}>
 
 
-              <div className="" style={{width: "80%", display: "block", margin: "auto", }}>
+              <div id="home-search" style={{ display: "block", margin: "auto", }}>
 
 
                  <Animated animationIn="fadeIn" isVisible={true}>
                      <form className="form-inline input-group mb-3" onSubmit={this.handleFilter}>
-                            <input className="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" value={this.state.val} onChange={this.handleFilterChange}/>
+                            <input className="form-control mr-sm-2" type="search" placeholder="filter saved articles..." aria-label="Search" value={this.state.val} onChange={this.handleFilterChange}/>
                             <div className="input-group-prepend">
                                 <button className="btn btn-primary " type="submit"><i className="fas fa-filter" data-toggle="tooltip" data-placement="top" title="Filter saved results of summary"></i></button>
                             </div>
@@ -95,6 +98,10 @@ class RenderDashboard extends Component {
               </div>
 
               </div>
+
+                <div style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.savedIsLoaded === true ? <div> Articles <span className="badge badge-pill badge-success"> {this.state.savedNum}</span></div> : ""} </div>
+
+<hr/>
 
                 <div className="row" style={{ marginBottom: "190px" }}>
                     {this.state.content}

@@ -102,7 +102,7 @@ class Dashboard extends Component {
                         className="col-sm-4"
                         style={{ padding: "0px", minHeight: "100px" ,
                                backgroundImage: 'url("https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80")',
-                                    backgroundSize: "cover"
+                                    backgroundSize: "cover", backgroundColor: "none"
                                }}
                     >
                         <img
