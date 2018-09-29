@@ -27,8 +27,8 @@ class Dashboard extends Component {
             img: require("../img/place.png"),
         };
 
-        this.handleClick = this.handleClick.bind(this);
         this.handleClickCtrl = this.handleClickCtrl.bind(this);
+        this.handleDel = this.handleDel.bind(this);
     }
 
     componentDidMount() {
@@ -59,12 +59,11 @@ class Dashboard extends Component {
         }
     }
 
-    handleClick(e) {
+    handleDel(e){
         e.preventDefault();
-        this.state.db
+                this.state.db
             .ref(this.state.user.uid + "/articles/" + this.props.keyID)
             .remove(el => {$("#del"+this.props.keyID).css("display", "none")});
-//        console.log(this.props.keyID);
     }
 
     handleClickCtrl(e) {
@@ -209,7 +208,7 @@ class Dashboard extends Component {
                                 /> <span >Analysis</span>
                             </button>
 
-                            <button onClick={this.handleClick}
+                            <button onClick={(e) => {this.handleDel(e);this.props.handleClick(e);} }
                                 type="button"
                                 className=" btn  "
                                  style={{background: "none", color: "red"}}>

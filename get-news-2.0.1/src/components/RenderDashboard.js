@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import fire from "../config/Access.js";
 import Dashboard from './Dashboard.js';
 import {Animated} from "react-animated-css";
+import $ from "jquery";
+
 
 class RenderDashboard extends Component {
     constructor(props) {
@@ -19,6 +21,7 @@ class RenderDashboard extends Component {
 
         this.handleFilter = this.handleFilter.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount(){
@@ -27,18 +30,68 @@ class RenderDashboard extends Component {
 
         rDash.db.ref(rDash.user.uid + "/articles").once("value",
             el => {
-                let tag = Object.keys(el.val());
+                if(el.val() !== null){
+                    let tag = Object.keys(el.val());
 
-                this.setState({
-                    tag: tag,
-                    content: tag.map(val => {return <Dashboard key={val} keyID={val} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title} />}),
-                    filterSubmit: tag.length,
-                    savedIsLoaded: true,
-                    savedNum: Object.keys(el.val()).length
-                });
-
+                    this.setState({
+                        tag: tag,
+                        content: tag.map(val => {return <Dashboard key={val} keyID={val} handleClick={this.handleClick} numkey={tag.indexOf(val)} title={el.val()[tag[tag.indexOf(val)]].title} />}),
+                        filterSubmit: tag.length,
+                        savedIsLoaded: true,
+                        savedNum: Object.keys(el.val()).length
+                    });
+                } else {
+                    this.setState({
+                        content: <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center"}}>
+                                  You do not have any saved articles yet!
+                                </div>
+                    });
+                }
             }
         );
+
+    }
+
+//     componentDidUpdate(prevProps, prevState) {
+//
+//        if((document.querySelectorAll(".col-md-6").length !== prevState.savedNum)){
+//             fire.database().ref(fire.auth().currentUser.uid + "/articles").once("value", el => {
+//                if(el.val() !== null){
+//
+//                    this.setState({
+//                        savedNum: Object.keys(el.val()).length
+//                    });
+//
+//                } else {
+//                    this.setState({
+//                        savedNum: 0
+//                    });
+//                }
+//            });
+//
+//        }
+//    }
+
+    handleClick(e) {
+        e.preventDefault();
+
+        fire.database().ref(fire.auth().currentUser.uid + "/articles").once("value", el => {
+                if(el.val() !== null){
+
+                    this.setState({
+                        savedNum: Object.keys(el.val()).length
+                    });
+
+                } else {
+                    this.setState({
+                        savedNum: 0,
+                        content: <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center"}}>
+                                  No saved articles left!
+                                </div>
+                    });
+                }
+            });
+
 
     }
 

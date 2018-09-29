@@ -19,6 +19,8 @@ class Lab extends Component {
             chart: "",
             db: fire.database(),
             user: fire.auth().currentUser,
+            isNull: false,
+            chartLoad: "none"
         }
 
         this.handleTrend = this.handleTrend.bind(this);
@@ -66,7 +68,7 @@ type: 'scatter',
 						type: 'time',
 						time: {
 							format: timeFormat,
-							// round: 'day'
+//							 round: 'day',
 							tooltipFormat: 'll HH:mm' // HH:mm
 						},
 						scaleLabel: {
@@ -112,7 +114,8 @@ type: 'scatter',
         dash.db.ref(dash.user.uid + "/articles").once("value",
             el => {
 
-                let db = el.val();
+            if(el.val() !== null) {
+                        let db = el.val();
                 let tag = Object.keys(el.val());
                 let dataAngerArr = [];
                 let dataFearArr = [];
@@ -120,6 +123,8 @@ type: 'scatter',
                 let dataSurpriseArr = [];
                 let tagLength = tag.length;
                 let i = 0;
+
+            let dataAvgAnger = [];
 //                console.log(new Date (db[tag[0]].date).getTime());
 
             let dateWindow = [];
@@ -137,14 +142,24 @@ type: 'scatter',
 
                     dataSurpriseArr.push({y:db[tag[i]].emotion.surprise, x: new Date (db[tag[i]].date)});
 
+
+
 //BDDSEA
                 }
 
                 this.setState({
                     chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr, el),
+                    chartLoad: "block"
                 });
 
-//                console.log(dateWindow);
+//                console.log(dataAngerArr[1].x.getDate());
+                } else {
+                    this.setState({
+                        isNull: true
+                    });
+                }
+
+
             }
         );
 
@@ -156,9 +171,13 @@ type: 'scatter',
             <div className="container " style={{marginTop: "80px"}}>
                 <div className="row">
                     <div  className="col-sm-12">
-                       <canvas className="shadow-sm" id="pie-chart"  style={{backgroundColor: "white", borderRadius: "5px ",}} width="200" height= "200">
+                      {this.state.isNull ? <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center", marginTop:"10px"}}>
+                                  No saved articles to track data!
+                                </div> : <canvas className="shadow-sm" id="pie-chart"  style={{backgroundColor: "white", borderRadius: "5px ", display: this.state.chartLoad}} width="200" height= "200">
                            {this.state.chart}
-                       </canvas>
+                       </canvas>}
+
+
 
                     </div>
                 </div>
