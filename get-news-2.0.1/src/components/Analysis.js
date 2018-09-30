@@ -278,7 +278,7 @@ class Analysis extends Component {
                     <i className="fas fa-check-square" style={{marginRight: "10px", marginTop:"37px", position: "absoltue", bottom:"0", fontSize: "1.7rem", color: "#8fb56e"}}></i>
 
                     <p style={{display: "inline", color: "#8fb56e"}}>
-                        Saved successfully!
+                        Saved!
                     </p>
 
                 </div>

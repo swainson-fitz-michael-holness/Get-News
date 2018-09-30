@@ -104,7 +104,7 @@ class NavigationLogIn extends Component {
 
                             <li className="nav-item active lt" >
 
-                                <div className="nav-link " style={{marginRight: "10px"}}><Link to="/" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}}><Link to="/reportra" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
                                 <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved <span className="badge badge-secondary">{this.state.saved}</span></Link></div>
@@ -128,7 +128,7 @@ class NavigationLogIn extends Component {
 
             <Switch>
                 <Route
-                    path="/"
+                    path="/reportra"
                     render={(props => <Home {...props} term={news.valSubmit}/>)}
                     exact
                 />

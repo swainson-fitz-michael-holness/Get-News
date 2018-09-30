@@ -1,6 +1,18 @@
 import React, { Component } from "react";
 import Analysis from "./Analysis.js";
 
+let freezeVp = function(e) {
+    e.preventDefault();
+};
+
+function stopBodyScrolling (bool) {
+    if (bool === true) {
+        document.body.addEventListener("touchmove", freezeVp, false);
+    } else {
+        document.body.removeEventListener("touchmove", freezeVp, false);
+    }
+}
+
 
 //for constructing date format
 const options = {
@@ -27,10 +39,12 @@ class ArticleCard extends Component {
         };
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleClick(e) {
         e.preventDefault();
+        stopBodyScrolling(true);
         this.setState({
             init: (
                 <Analysis
@@ -44,6 +58,11 @@ class ArticleCard extends Component {
                 />
             )
         });
+    }
+
+    handleClose(e) {
+        e.preventDefault();
+        stopBodyScrolling(false);
     }
 
     componentDidMount (){
@@ -132,6 +151,7 @@ class ArticleCard extends Component {
                                             type="button"
                                             className="btn btn-secondary"
                                             data-dismiss="modal"
+                                            onClick={this.handleClose}
                                         >
                                             Close
                                         </button>

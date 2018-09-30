@@ -63,7 +63,12 @@ class Dashboard extends Component {
         e.preventDefault();
                 this.state.db
             .ref(this.state.user.uid + "/articles/" + this.props.keyID)
-            .remove(el => {$("#del"+this.props.keyID).css("display", "none")});
+            .remove(el => {
+                    let cardDisplay = document.getElementById("del"+this.props.keyID) ;
+//                    $("#del"+this.props.keyID).css("display", "none");
+//                    console.log($("#del"+this.props.keyID))
+                    cardDisplay.parentNode.removeChild(cardDisplay);
+                });
     }
 
     handleClickCtrl(e) {
