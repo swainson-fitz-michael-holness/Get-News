@@ -104,13 +104,13 @@ class NavigationLogIn extends Component {
 
                             <li className="nav-item active lt" >
 
-                                <div className="nav-link " style={{marginRight: "10px"}}><Link to="/reportra" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}}><Link to="/apps/reportra" style={{color: "white", textDecoration: "none"}}><i className="fas fa-newspaper" style={{marginRight: "3px", }}></i> Articles</Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved <span className="badge badge-secondary">{this.state.saved}</span></Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/apps/reportra/Dashboard" ><i className="fas fa-save" style={{marginRight: "3px", }}></i > Saved <span className="badge badge-secondary">{this.state.saved}</span></Link></div>
                             </li>
                             <li className="nav-item lt" >
-                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/Lab" ><i className="fas fa-flask" style={{marginRight: "3px", }}></i > Lab</Link></div>
+                                <div className="nav-link " style={{marginRight: "10px"}} href={null}><Link style={{color: "white", textDecoration: "none"}} to="/apps/reportra/Lab" ><i className="fas fa-flask" style={{marginRight: "3px", }}></i > Lab</Link></div>
                             </li>
                             <li className="nav-item lt">
                                 <a  onClick={this.logOut} href={null} className="nav-link" style={{cursor: "pointer", color: "white", textDecoration: "none"}}>
@@ -128,12 +128,12 @@ class NavigationLogIn extends Component {
 
             <Switch>
                 <Route
-                    path="/reportra"
+                    path="/apps/reportra"
                     render={(props => <Home {...props} term={news.valSubmit}/>)}
                     exact
                 />
-                <Route path="/Dashboard" component={RenderDashboard} />
-                <Route path="/Lab" component={Lab} />
+                <Route path="/apps/reportra/Dashboard" component={RenderDashboard} />
+                <Route path="/apps/reportra/Lab" component={Lab} />
             </Switch>
             </div>
 </BrowserRouter>

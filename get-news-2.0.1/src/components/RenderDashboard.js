@@ -76,6 +76,11 @@ class RenderDashboard extends Component {
         e.preventDefault();
 
         fire.database().ref(fire.auth().currentUser.uid + "/articles").once("value", el => {
+//             let cardDisplay = document.getElementById("del"+this.props.keyID) ;
+//cardDisplay.parentNode.removeChild(cardDisplay);
+
+            console.log()
+
                 if(el.val() !== null){
 
                     this.setState({
@@ -85,9 +90,9 @@ class RenderDashboard extends Component {
                 } else {
                     this.setState({
                         savedNum: 0,
-                        content: <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center"}}>
-                                  No saved articles left!
-                                </div>
+//                        content: <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center"}}>
+//                                  No saved articles left!
+//                                </div>
                     });
                 }
             });

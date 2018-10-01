@@ -130,64 +130,74 @@ class Analysis extends Component {
             this.setState({
                 apiData: holder
             });
-            console.log(this.state.apiData);
-            //----- emo stats
-            let emoNameArr = [];
-            let emoDataArr = [];
-            for (var keyName in holder.results.emotion.results[0]) {
-                emoNameArr.push(keyName);
-            }
-            for (var keyData in holder.results.emotion.results[0]) {
-                emoDataArr.push(holder.results.emotion.results[0][keyData]);
-            }
-            //end
+            console.log(holder);
 
-            //----- pol stats
-            let polNameArr = [];
-            let polDataArr = [];
-            for (var keyPolName in holder.results.political.results[0]) {
-                polNameArr.push(keyPolName);
-            }
-            for (var keyPolData in holder.results.political.results[0]) {
-                polDataArr.push(holder.results.political.results[0][keyPolData]);
-            }
-            //end
+            if(this.state.apiData.results.emotion.status === 400) {
 
-            //----- Text stats
-            let TxtNameArr = [];
-            let TxtDataArr = [];
-            for (var keyTxtName in holder.results.texttags.results[0]) {
-                TxtNameArr.push(keyTxtName);
-            }
-            for (var keyTxtData in holder.results.texttags.results[0]) {
-                TxtDataArr.push(holder.results.texttags.results[0][keyTxtData]);
-            }
-            //end
+                this.setState({
+                    load: <div style={{color: "red", textAlign: "center"}}>Sorry, can not collect data at this moment. </div>
+                });
 
-            //updates the state of the 3 charts used with chartjs
-            this.setState({
-                dataViral: Math.round(holder.results.twitterengagement.results[0]*100),
-                dataSentiment: Math.round(holder.results.sentimenthq.results[0]*100),
-                dataLoaded: true,
-                load: <div style={{ display: "none" }} />,
-                horChart: (
-                    <canvas
-                        style={{ display: "block" }}
-                    >
-                        {this.handleHorChart(emoNameArr, emoDataArr)}
-                    </canvas>
-                ),
-                polChart: <canvas
-                        style={{ display: "block" }}
-                    >
-                        {this.handlePolChart(polNameArr, polDataArr)}
-                    </canvas>,
-                txtChart: <canvas
-                        style={{ display: "block" }}
-                    >
-                        {this.handleTxtChart(TxtNameArr, TxtDataArr)}
-                    </canvas>
-            });
+            } else {
+
+                //----- emo stats
+                let emoNameArr = [];
+                let emoDataArr = [];
+                for (var keyName in holder.results.emotion.results[0]) {
+                    emoNameArr.push(keyName);
+                }
+                for (var keyData in holder.results.emotion.results[0]) {
+                    emoDataArr.push(holder.results.emotion.results[0][keyData]);
+                }
+                //end
+
+                //----- pol stats
+                let polNameArr = [];
+                let polDataArr = [];
+                for (var keyPolName in holder.results.political.results[0]) {
+                    polNameArr.push(keyPolName);
+                }
+                for (var keyPolData in holder.results.political.results[0]) {
+                    polDataArr.push(holder.results.political.results[0][keyPolData]);
+                }
+                //end
+
+                //----- Text stats
+                let TxtNameArr = [];
+                let TxtDataArr = [];
+                for (var keyTxtName in holder.results.texttags.results[0]) {
+                    TxtNameArr.push(keyTxtName);
+                }
+                for (var keyTxtData in holder.results.texttags.results[0]) {
+                    TxtDataArr.push(holder.results.texttags.results[0][keyTxtData]);
+                }
+                //end
+
+                //updates the state of the 3 charts used with chartjs
+                this.setState({
+                    dataViral: Math.round(holder.results.twitterengagement.results[0]*100),
+                    dataSentiment: Math.round(holder.results.sentimenthq.results[0]*100),
+                    dataLoaded: true,
+                    load: <div style={{ display: "none" }} />,
+                    horChart: (
+                        <canvas
+                            style={{ display: "block" }}
+                        >
+                            {this.handleHorChart(emoNameArr, emoDataArr)}
+                        </canvas>
+                    ),
+                    polChart: <canvas
+                            style={{ display: "block" }}
+                        >
+                            {this.handlePolChart(polNameArr, polDataArr)}
+                        </canvas>,
+                    txtChart: <canvas
+                            style={{ display: "block" }}
+                        >
+                            {this.handleTxtChart(TxtNameArr, TxtDataArr)}
+                        </canvas>
+                });
+            }
 
         }).catch(error => {
             this.setState({
@@ -268,16 +278,16 @@ class Analysis extends Component {
                 </div>
 
                 <div className="row">
-                   <div className="col-4">
+                   <div className="col-6">
                         <button onClick={this.handleCheck} style={{marginTop: "37px"}} type="button" className="btn btn-primary">Save Article</button>
                    </div>
-                    <div className="col-8" style={{position: "relative", }}>
+                    <div className="col-6 " style={{}}>
 
                        <div id="save-alert" style={{marginTop: "37px", visibility: this.state.visible, position: "absolute", bottom: "0"}} role="alert">
 
                     <i className="fas fa-check-square" style={{marginRight: "10px", marginTop:"37px", position: "absoltue", bottom:"0", fontSize: "1.7rem", color: "#8fb56e"}}></i>
 
-                    <p style={{display: "inline", color: "#8fb56e"}}>
+                    <p style={{display: "inline", color: "#8fb56e", }}>
                         Saved!
                     </p>
 

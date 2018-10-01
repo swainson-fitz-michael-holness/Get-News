@@ -62,12 +62,16 @@ class Dashboard extends Component {
     handleDel(e){
         e.preventDefault();
                 this.state.db
-            .ref(this.state.user.uid + "/articles/" + this.props.keyID)
+        .ref(this.state.user.uid + "/articles/" + this.props.keyID)
             .remove(el => {
-                    let cardDisplay = document.getElementById("del"+this.props.keyID) ;
+
+                                 let cardDisplay = document.getElementById("del"+this.props.keyID) ;
+cardDisplay.parentNode.removeChild(cardDisplay);
+
 //                    $("#del"+this.props.keyID).css("display", "none");
-//                    console.log($("#del"+this.props.keyID))
-                    cardDisplay.parentNode.removeChild(cardDisplay);
+//                    console.log($("s#del"+this.props.keyID))
+
+
                 });
     }
 
@@ -215,6 +219,7 @@ class Dashboard extends Component {
 
                             <button onClick={(e) => {this.handleDel(e);this.props.handleClick(e);} }
                                 type="button"
+                                id={"ip"+this.props}
                                 className=" btn  "
                                  style={{background: "none", color: "red"}}>
                                     <i className="far fa-trash-alt" style={{ fontSize: "1rem", marginRight: "9px", color: "red" }}></i>
