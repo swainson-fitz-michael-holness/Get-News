@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Analysis from "./Analysis.js";
 
-let freezeVp = function(e) {
+let freezeVp = function (e) {
     e.preventDefault();
 };
 
-function stopBodyScrolling (bool) {
+function stopBodyScrolling(bool) {
     if (bool === true) {
         document.body.addEventListener("touchmove", freezeVp, false);
     } else {
@@ -33,8 +33,8 @@ class ArticleCard extends Component {
             init: "Loading",
             chartID: null,
             date: new Date(
-                        this.props.date
-                ).toLocaleDateString("en-US", options),
+                this.props.date
+            ).toLocaleDateString("en-US", options),
             pic: "null",
         };
 
@@ -65,10 +65,10 @@ class ArticleCard extends Component {
         stopBodyScrolling(false);
     }
 
-    componentDidMount (){
+    componentDidMount() {
 
-        const pic = document.getElementById("pic"+this.props.ID);
-            pic.onerror = function () {
+        const pic = document.getElementById("pic" + this.props.ID);
+        pic.onerror = function () {
             this.style.display = "none";
         }
     }
@@ -86,7 +86,7 @@ class ArticleCard extends Component {
                     }}
                 >
                     <img
-                       id={"pic"+this.props.ID}
+                        id={"pic" + this.props.ID}
                         className="pic card-img-top"
                         style={{ borderRadius: "5px 5px 0px 0px" }}
                         src={
@@ -94,7 +94,7 @@ class ArticleCard extends Component {
                             "https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&auto=format&fit=crop&w=1069&q=80"
                         }
 
-                        alt= "img"
+                        alt="img"
 
                     />
                     <div className="card-body">
@@ -170,20 +170,20 @@ class ArticleCard extends Component {
                         {//<i
                             //className="fab fa-twitter"
                             //style={{
-                                //float: "right",
-                                //marginTop: "10px",
-                                //fontSize: "1.1rem",
-                                //color: "#007bff",
-                               // cursor: "pointer"
+                            //float: "right",
+                            //marginTop: "10px",
+                            //fontSize: "1.1rem",
+                            //color: "#007bff",
+                            // cursor: "pointer"
                             //}}
-                        //>
+                            //>
                         }
                     </div>
                     <div
                         className="card-footer text-muted"
                         style={{ backgroundColor: "white" }}
                     >
-                        {this.state.date }
+                        {this.state.date}
                     </div>
                 </div>
             </div>

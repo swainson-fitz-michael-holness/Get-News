@@ -17,13 +17,13 @@ import NavigationLogIn from "./components/NavigationLogIn.js";
 
 //$("img").error(function () {
 //    $(this).hide();
-    // or $(this).css({visibility:"hidden"});
+// or $(this).css({visibility:"hidden"});
 //    });
 
 //console.log($("img").onError)
 
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -32,34 +32,32 @@ class App extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.authListener();
     }
 
-    authListener(){
+    authListener() {
         fire.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in.
                 this.setState({ user: user });
                 this.setState({ userIsLoaded: "logged in" });
-                console.log(user);
             } else {
                 // No user is signed in.
                 this.setState({ user: null });
                 this.setState({ userIsLoaded: "logged out" });
-                console.log("logged out");
             }
         });
     }
 
     render() {
 
-        if(this.state.userIsLoaded === "logged in"){
-           return <NavigationLogIn />
-        } else if( this.state.userIsLoaded === "logged out") {
-            return <Login/>
-        } else if( this.state.userIsLoaded === "init") {
-            return <Load/>
+        if (this.state.userIsLoaded === "logged in") {
+            return <NavigationLogIn />
+        } else if (this.state.userIsLoaded === "logged out") {
+            return <Login />
+        } else if (this.state.userIsLoaded === "init") {
+            return <Load />
         }
 
     }

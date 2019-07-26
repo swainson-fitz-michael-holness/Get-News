@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
 import moment from "moment";
 
-const options = {
-    month: "short",
-    day: "numeric",
-//    year: "numeric"
-};
+// const options = {
+//     month: "short",
+//     day: "numeric",
+//        year: "numeric"
+// };
 
 const timeFormat = 'MM/DD/YYYY HH:mm';
 
@@ -27,132 +26,129 @@ class Lab extends Component {
     }
 
     handleTrend(label, anger, fear, joy, surprise, el) {
- new Chart(document.getElementById("pie-chart"), {
-type: 'scatter',
-  data: {
-    labels: label,
-    datasets: [{
-        data: anger,
-        label: "Anger",
-        borderColor: "#ff3366",
-        backgroundColor: "#ff3366",
-        fill: false
-      }, {
-        data: fear,
-        label: "fear",
-        borderColor: "#6b9b6b",
-        backgroundColor: "#6b9b6b",
-        fill: false
-      }, {
-        data: joy,
-        label: "joy",
-        borderColor: "#3b6dbf",
-        backgroundColor: "#3b6dbf",
-        fill: false
-      }, {
-        data: surprise,
-        label: "surprise",
-        borderColor: "#f4df42",
-        backgroundColor: "#f4df42",
-        fill: false
-      }
-    ]
-  },
-  options: {
-    title: {
-      display: true,
-      text: 'Distribution of saved articles by emotion'
-    },
-      scales: {
-					xAxes: [{
-						type: 'time',
-						time: {
-							format: timeFormat,
-//							 round: 'day',
-							tooltipFormat: 'll HH:mm' // HH:mm
-						},
-						scaleLabel: {
-							display: true,
-							labelString: 'Date'
-						}
-					}],
-					yAxes: [{
-						scaleLabel: {
-							display: true,
-							labelString: "value"
-						},
-					}]
-				},
-      tooltips: {
-                enabled: true,
-                mode: 'single',
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                    if (label) {
-                        label += ': ';
-                    }
-                        let tag = Object.keys(el.val());
-                        let db = el.val();
-
-                    label += db[tag[tooltipItem.index]].title;
-                    return label + " : " + tooltipItem.xLabel;
-                    }
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'scatter',
+            data: {
+                labels: label,
+                datasets: [{
+                    data: anger,
+                    label: "Anger",
+                    borderColor: "#ff3366",
+                    backgroundColor: "#ff3366",
+                    fill: false
+                }, {
+                    data: fear,
+                    label: "fear",
+                    borderColor: "#6b9b6b",
+                    backgroundColor: "#6b9b6b",
+                    fill: false
+                }, {
+                    data: joy,
+                    label: "joy",
+                    borderColor: "#3b6dbf",
+                    backgroundColor: "#3b6dbf",
+                    fill: false
+                }, {
+                    data: surprise,
+                    label: "surprise",
+                    borderColor: "#f4df42",
+                    backgroundColor: "#f4df42",
+                    fill: false
                 }
+                ]
             },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Distribution of saved articles by emotion'
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            format: timeFormat,
+                            round: 'day',
+                            tooltipFormat: 'll HH:mm' // HH:mm
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "value"
+                        },
+                    }]
+                },
+                tooltips: {
+                    enabled: true,
+                    mode: 'single',
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-  }
-});
+                            if (label) {
+                                label += ': ';
+                            }
+                            let tag = Object.keys(el.val());
+                            let db = el.val();
+
+                            label += db[tag[tooltipItem.index]].title;
+                            return label + " : " + tooltipItem.xLabel;
+                        }
+                    }
+                },
+
+            }
+        });
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const dash = this.state;
-//        Chart.defaults.global.tooltips = {
-//
-//        }
+        //        Chart.defaults.global.tooltips = {
+        //
+        //        }
         dash.db.ref(dash.user.uid + "/articles").once("value",
             el => {
 
-            if(el.val() !== null) {
-                        let db = el.val();
-                let tag = Object.keys(el.val());
-                let dataAngerArr = [];
-                let dataFearArr = [];
-                let dataJoyArr = [];
-                let dataSurpriseArr = [];
-                let tagLength = tag.length;
-                let i = 0;
+                if (el.val() !== null) {
+                    let db = el.val();
+                    let tag = Object.keys(el.val());
+                    let dataAngerArr = [];
+                    let dataFearArr = [];
+                    let dataJoyArr = [];
+                    let dataSurpriseArr = [];
+                    let tagLength = tag.length;
+                    let i = 0;
 
-            let dataAvgAnger = [];
-//                console.log(new Date (db[tag[0]].date).getTime());
+                    // let dataAvgAnger = [];
+                    //                console.log(new Date (db[tag[0]].date).getTime());
 
-            let dateWindow = [];
+                    let dateWindow = [];
 
-            for (var g = -1; g<1; g++){
-                dateWindow.push(moment().add(g, "d").toDate());
-            }
+                    for (var g = -1; g < 1; g++) {
+                        dateWindow.push(moment().add(g, "d").toDate());
+                    }
 
-                for(i; i < tagLength; i++) {
-                    dataAngerArr.push({y:db[tag[i]].emotion.anger, x: new Date (db[tag[i]].date)});
+                    for (i; i < tagLength; i++) {
+                        dataAngerArr.push({ y: db[tag[i]].emotion.anger, x: new Date(db[tag[i]].date) });
 
-                    dataFearArr.push({y:db[tag[i]].emotion.fear, x: new Date (db[tag[i]].date)});
+                        dataFearArr.push({ y: db[tag[i]].emotion.fear, x: new Date(db[tag[i]].date) });
 
-                    dataJoyArr.push({y:db[tag[i]].emotion.joy, x: new Date (db[tag[i]].date)});
+                        dataJoyArr.push({ y: db[tag[i]].emotion.joy, x: new Date(db[tag[i]].date) });
 
-                    dataSurpriseArr.push({y:db[tag[i]].emotion.surprise, x: new Date (db[tag[i]].date)});
+                        dataSurpriseArr.push({ y: db[tag[i]].emotion.surprise, x: new Date(db[tag[i]].date) });
+                        //BDDSEA
+                    }
 
+                    this.setState({
+                        chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr, el),
+                        chartLoad: "block"
+                    });
 
-
-//BDDSEA
-                }
-
-                this.setState({
-                    chart: this.handleTrend(dateWindow, dataAngerArr, dataFearArr, dataJoyArr, dataSurpriseArr, el),
-                    chartLoad: "block"
-                });
-
-//                console.log(dataAngerArr[1].x.getDate());
+                    //                console.log(dataAngerArr[1].x.getDate());
                 } else {
                     this.setState({
                         isNull: true
@@ -166,16 +162,16 @@ type: 'scatter',
 
     }
 
-    render(){
-        return(
-            <div className="container " style={{marginTop: "80px"}}>
+    render() {
+        return (
+            <div className="container " style={{ marginTop: "80px" }}>
                 <div className="row">
-                    <div  className="col-sm-12">
-                      {this.state.isNull ? <div className="alert alert-warning" role="alert" style={{ display:"block", margin:"auto", textAlign:"center", marginTop:"10px"}}>
-                                  No saved articles to track data!
-                                </div> : <canvas className="shadow-sm" id="pie-chart"  style={{backgroundColor: "white", borderRadius: "5px ", display: this.state.chartLoad}} width="200" height= "200">
-                           {this.state.chart}
-                       </canvas>}
+                    <div className="col-sm-12">
+                        {this.state.isNull ? <div className="alert alert-warning" role="alert" style={{ display: "block", margin: "auto", textAlign: "center", marginTop: "10px" }}>
+                            No saved articles to track data!
+                                </div> : <canvas className="shadow-sm" id="pie-chart" style={{ backgroundColor: "white", borderRadius: "5px ", display: this.state.chartLoad }} width="200" height="200">
+                                {this.state.chart}
+                            </canvas>}
 
 
 
