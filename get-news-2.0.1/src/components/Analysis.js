@@ -3,6 +3,7 @@ import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
 import { generateKeyPairSync } from "crypto";
+import { promisify } from "util";
 const db = fire.database();
 
 
@@ -16,7 +17,7 @@ class Analysis extends Component {
         this.state = {
             dataViral: null,
             dataSentiment: null,
-            dataLoaded: true,
+            dataLoaded: false,
             load: <div>Loading... </div>,
             horChart: (
                 <canvas style={{ display: "none" }} id={this.props.chartID} />
@@ -151,163 +152,290 @@ class Analysis extends Component {
         });
     }
 
+    getAnalysis = () => {
+
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/emotion', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+        //         data: this.props.dataURL,
+        //         top_n: 5
+        //         // queries: ['team sports', 'royalty']
+        //     })
+        // })
+        //     .then(r => r.json())
+        //     .then(response => {
+        //         apiObj.emotion = response.results;
+
+        //         //----- emo stats
+        //         let emoNameArr = [];
+        //         let emoDataArr = [];
+        //         for (var keyName in response.results) {
+        //             emoNameArr.push(keyName);
+        //         }
+        //         for (var keyData in response.results) {
+        //             emoDataArr.push(
+        //                 response.results[keyData]
+        //             );
+        //         }
+
+
+        //         this.setState({
+        //             apiData: apiObj,
+        //             horChart: (
+        //                 <canvas style={{ display: "block" }}>
+        //                     {this.handleHorChart(emoNameArr, emoDataArr)}
+        //                 </canvas>
+        //             )
+        //         });
+
+        //     })
+        //     .catch(err => console.log(err));
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/political', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+        //         data: this.props.dataURL,
+        //         top_n: 5
+        //     })
+        // })
+        //     .then(r => r.json())
+        //     .then(response => {
+        //         apiObj.political = response.results
+
+        //         //----- pol stats
+        //         let polNameArr = [];
+        //         let polDataArr = [];
+        //         for (var keyPolName in response.results) {
+        //             polNameArr.push(keyPolName);
+        //         }
+        //         for (var keyPolData in response.results) {
+        //             polDataArr.push(
+        //                 response.results[keyPolData]
+        //             );
+        //         }
+        //         //end
+
+        //         this.setState({
+        //             apiData: apiObj,
+        //             polChart: (
+        //                 <canvas style={{ display: "block" }}>
+        //                     {this.handlePolChart(polNameArr, polDataArr)}
+        //                 </canvas>
+        //             ),
+        //         });
+        //     })
+        //     .catch(err => console.log(err));
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/texttags', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+        //         data: this.props.dataURL,
+        //         top_n: 5
+        //     })
+        // })
+        //     .then(r => r.json())
+        //     .then(response => {
+        //         apiObj.texttags = response.results;
+
+        //         //----- Text stats
+        //         let TxtNameArr = [];
+        //         let TxtDataArr = [];
+        //         for (var keyTxtName in response.results) {
+        //             TxtNameArr.push(keyTxtName);
+        //         }
+        //         for (var keyTxtData in response.results) {
+        //             TxtDataArr.push(
+        //                 response.results[keyTxtData]
+        //             );
+        //         }
+        //         //end
+
+        //         this.setState({
+        //             apiData: apiObj,
+        //             txtChart: (
+        //                 <canvas style={{ display: "block" }}>
+        //                     {this.handleTxtChart(TxtNameArr, TxtDataArr)}
+        //                 </canvas>
+        //             )
+        //         });
+        //     })
+        //     .catch(err => console.log(err));
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/sentimenthq', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+        //         data: this.props.dataURL,
+        //         top_n: 5
+        //     })
+        // })
+        //     .then(r => r.json())
+        //     .then(response => {
+        //         apiObj.sentimenthq = response.results;
+        //         this.setState({
+        //             apiData: apiObj,
+        // dataSentiment: Math.round(
+        //     response.results * 100
+        // ),
+        //             // dataLoaded: true
+        //         });
+        //     })
+        //     .catch(err => console.log(err));
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/twitterengagement', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+        //         data: this.props.dataURL,
+        //         top_n: 5
+        //     })
+        // })
+        //     .then(r => r.json())
+        //     .then(response => {
+        //         apiObj.twitterengagement = response.results;
+        //         this.setState({
+        //             apiData: apiObj,
+        // dataViral: Math.round(
+        //     response.results * 100
+        // ),
+        //             // dataLoaded: true
+        //         });
+        //     })
+        //     .catch(err => console.log(err));
+
+    }
+
     //=============================================================
     //when the modal loads gather data from api AI then parse them into arrays to use in charts wherever needed
     //=============================================================
     componentDidMount() {
+
         let apiObj = {};
-        fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/emotion', {
-            method: 'POST',
-            body: JSON.stringify({
-                api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-                data: this.props.dataURL,
-                top_n: 5
-                // queries: ['team sports', 'royalty']
+
+        Promise.all([
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/emotion', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 5
+                    // queries: ['team sports', 'royalty']
+                })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/political', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 5
+                })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/texttags', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 5
+                })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/sentimenthq', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 5
+                })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/twitterengagement', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 5
+                })
             })
-        })
-            .then(r => r.json())
-            .then(response => {
-                apiObj.emotion = response.results;
+
+        ]).then(responses => {
+            Promise.all(responses.map(val => val.json())).then(response => {
+                //emotion data 
+                apiObj.emotion = response[0].results;
+                apiObj.political = response[1].results;
+                apiObj.texttags = response[2].results;
+                apiObj.sentimenthq = response[3].results;
+                apiObj.twitterengagement = response[4].results;
 
                 //----- emo stats
                 let emoNameArr = [];
                 let emoDataArr = [];
-                for (var keyName in response.results) {
+                for (var keyName in response[0].results) {
                     emoNameArr.push(keyName);
                 }
-                for (var keyData in response.results) {
+                for (var keyData in response[0].results) {
                     emoDataArr.push(
-                        response.results[keyData]
+                        response[0].results[keyData]
                     );
                 }
-
-
-                this.setState({
-                    apiData: apiObj,
-                    horChart: (
-                        <canvas style={{ display: "block" }}>
-                            {this.handleHorChart(emoNameArr, emoDataArr)}
-                        </canvas>
-                    )
-                });
-
-            })
-            .catch(err => console.log(err));
-
-        fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/political', {
-            method: 'POST',
-            body: JSON.stringify({
-                api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-                data: this.props.dataURL,
-                top_n: 5
-            })
-        })
-            .then(r => r.json())
-            .then(response => {
-                apiObj.political = response.results
 
                 //----- pol stats
                 let polNameArr = [];
                 let polDataArr = [];
-                for (var keyPolName in response.results) {
+                for (var keyPolName in response[1].results) {
                     polNameArr.push(keyPolName);
                 }
-                for (var keyPolData in response.results) {
+                for (var keyPolData in response[1].results) {
                     polDataArr.push(
-                        response.results[keyPolData]
+                        response[1].results[keyPolData]
                     );
                 }
                 //end
 
+                //----- Text stats
+                let TxtNameArr = [];
+                let TxtDataArr = [];
+                for (var keyTxtName in response[2].results) {
+                    TxtNameArr.push(keyTxtName);
+                }
+                for (var keyTxtData in response[2].results) {
+                    TxtDataArr.push(
+                        response[2].results[keyTxtData]
+                    );
+                }
+                //end
+
+
                 this.setState({
                     apiData: apiObj,
+                    dataLoaded: true,
+                    load: "",
+                    horChart: (
+                        <canvas style={{ display: "block" }}>
+                            {this.handleHorChart(emoNameArr, emoDataArr)}
+                        </canvas>
+                    ),
                     polChart: (
                         <canvas style={{ display: "block" }}>
                             {this.handlePolChart(polNameArr, polDataArr)}
                         </canvas>
                     ),
-                });
-            })
-            .catch(err => console.log(err));
-
-        fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/texttags', {
-            method: 'POST',
-            body: JSON.stringify({
-                api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-                data: this.props.dataURL,
-                top_n: 5
-            })
-        })
-            .then(r => r.json())
-            .then(response => {
-                apiObj.texttags = response.results;
-
-                //----- Text stats
-                let TxtNameArr = [];
-                let TxtDataArr = [];
-                for (var keyTxtName in response.results) {
-                    TxtNameArr.push(keyTxtName);
-                }
-                for (var keyTxtData in response.results) {
-                    TxtDataArr.push(
-                        response.results[keyTxtData]
-                    );
-                }
-                //end
-
-                this.setState({
-                    apiData: apiObj,
                     txtChart: (
                         <canvas style={{ display: "block" }}>
                             {this.handleTxtChart(TxtNameArr, TxtDataArr)}
                         </canvas>
-                    )
-                });
-            })
-            .catch(err => console.log(err));
-
-        fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/sentimenthq', {
-            method: 'POST',
-            body: JSON.stringify({
-                api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-                data: this.props.dataURL,
-                top_n: 5
-            })
-        })
-            .then(r => r.json())
-            .then(response => {
-                apiObj.sentimenthq = response.results;
-                this.setState({
-                    apiData: apiObj,
+                    ),
                     dataSentiment: Math.round(
-                        response.results * 100
+                        response[3].results * 100
                     ),
-                    // dataLoaded: true
-                });
-            })
-            .catch(err => console.log(err));
-
-        fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/twitterengagement', {
-            method: 'POST',
-            body: JSON.stringify({
-                api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-                data: this.props.dataURL,
-                top_n: 5
-            })
-        })
-            .then(r => r.json())
-            .then(response => {
-                apiObj.twitterengagement = response.results;
-                this.setState({
-                    apiData: apiObj,
                     dataViral: Math.round(
-                        response.results * 100
+                        response[4].results * 100
                     ),
-                    // dataLoaded: true
                 });
-            })
-            .catch(err => console.log(err));
-
+                console.log(apiObj);
+            });
+        })
 
         //////////////////////////////////////////////////
         //     LEGACY AJAX CALL - fails due to cors
@@ -448,9 +576,8 @@ class Analysis extends Component {
                 image: this.props.dataImg,
 
                 //this data is brought in with the fetch command
+                //It saves all listed keys to firebase
                 emotion: dbData.emotion,
-                // people: dbData.people,
-                // places: dbData.places,
                 political: dbData.political,
                 sentimenthq: dbData.sentimenthq,
                 texttags: dbData.texttags,
