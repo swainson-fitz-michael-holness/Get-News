@@ -6,7 +6,30 @@ import { generateKeyPairSync } from "crypto";
 import { promisify } from "util";
 const db = fire.database();
 
+function DataCollectError(props) {
+    return (
+        <div
+            style={{
+                color: "red",
+                textAlign: "center",
+            }}
+        >
+            Can not analyze {props.content} of article.
+            <hr />
+        </div>
+    );
 
+};
+
+function allFalse(obj) {
+    for (var o in obj) {
+        if (obj[o]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 
 //=============================================================
 //This component gathers information based on url to analyze from news article
@@ -18,6 +41,7 @@ class Analysis extends Component {
             dataViral: null,
             dataSentiment: null,
             dataLoaded: false,
+            checkData: false,
             load: <div>Loading... </div>,
             horChart: (
                 <canvas style={{ display: "none" }} id={this.props.chartID} />
@@ -333,7 +357,7 @@ class Analysis extends Component {
                     data: this.props.dataURL,
                     top_n: 5
                 })
-            }),
+            }).catch(err => alert("something went wrong")),
             fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/texttags', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -361,7 +385,7 @@ class Analysis extends Component {
 
         ]).then(responses => {
             Promise.all(responses.map(val => val.json())).then(response => {
-                //emotion data 
+                //object collection of the response 
                 apiObj.emotion = response[0].results;
                 apiObj.political = response[1].results;
                 apiObj.texttags = response[2].results;
@@ -371,24 +395,24 @@ class Analysis extends Component {
                 //----- emo stats
                 let emoNameArr = [];
                 let emoDataArr = [];
-                for (var keyName in response[0].results) {
+                for (var keyName in apiObj.emotion) {
                     emoNameArr.push(keyName);
                 }
-                for (var keyData in response[0].results) {
+                for (var keyData in apiObj.emotion) {
                     emoDataArr.push(
-                        response[0].results[keyData]
+                        apiObj.emotion[keyData]
                     );
                 }
 
                 //----- pol stats
                 let polNameArr = [];
                 let polDataArr = [];
-                for (var keyPolName in response[1].results) {
+                for (var keyPolName in apiObj.political) {
                     polNameArr.push(keyPolName);
                 }
-                for (var keyPolData in response[1].results) {
+                for (var keyPolData in apiObj.political) {
                     polDataArr.push(
-                        response[1].results[keyPolData]
+                        apiObj.political[keyPolData]
                     );
                 }
                 //end
@@ -396,45 +420,115 @@ class Analysis extends Component {
                 //----- Text stats
                 let TxtNameArr = [];
                 let TxtDataArr = [];
-                for (var keyTxtName in response[2].results) {
+                for (var keyTxtName in apiObj.texttags) {
                     TxtNameArr.push(keyTxtName);
                 }
-                for (var keyTxtData in response[2].results) {
+                for (var keyTxtData in apiObj.texttags) {
                     TxtDataArr.push(
-                        response[2].results[keyTxtData]
+                        apiObj.texttags[keyTxtData]
                     );
                 }
                 //end
 
+                let failTest = allFalse(apiObj);
+                let info = this.state;
 
                 this.setState({
                     apiData: apiObj,
-                    dataLoaded: true,
+                    dataLoaded: failTest,
+                    checkData: true,
                     load: "",
-                    horChart: (
+                    horChart: apiObj.emotion ? (
                         <canvas style={{ display: "block" }}>
                             {this.handleHorChart(emoNameArr, emoDataArr)}
                         </canvas>
-                    ),
-                    polChart: (
+                    ) : <DataCollectError content="emotional content" />,
+                    polChart: apiObj.political ? (
                         <canvas style={{ display: "block" }}>
                             {this.handlePolChart(polNameArr, polDataArr)}
                         </canvas>
-                    ),
-                    txtChart: (
+                    ) : <DataCollectError content="political content" />,
+                    txtChart: apiObj.texttags ? (
                         <canvas style={{ display: "block" }}>
                             {this.handleTxtChart(TxtNameArr, TxtDataArr)}
                         </canvas>
-                    ),
+                    ) : <DataCollectError content="contextual content" />,
                     dataSentiment: Math.round(
-                        response[3].results * 100
+                        apiObj.sentimenthq * 100
                     ),
                     dataViral: Math.round(
-                        response[4].results * 100
+                        apiObj.twitterengagement * 100
                     ),
+                    sentiment: apiObj.sentimenthq ? (<div>
+                        <h5>Positivity:</h5>
+                        <div className="progress" style={{ height: "25px" }}>
+                            <div
+                                className="progress-bar bg-warning"
+                                role="progressbar"
+                                style={{
+                                    width: Math.round(
+                                        apiObj.sentimenthq * 100
+                                    ) + "%"
+                                }}
+                                aria-valuenow={Math.round(
+                                    apiObj.sentimenthq * 100)}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                {Math.round(
+                                    apiObj.sentimenthq * 100)}%
+                        </div>
+
+                        </div>
+                        <hr />
+                    </div>) : <DataCollectError content="sentimental" />,
+                    twitter: apiObj.twitterengagement ? (<div>
+                        <h5 style={{ marginTop: "20px" }}>Engagement:</h5>
+                        <div className="progress" style={{ height: "25px" }}>
+                            <div
+                                className="progress-bar"
+                                role="progressbar"
+                                style={{
+                                    width: Math.round(
+                                        apiObj.twitterengagement * 100
+                                    ) + "%"
+                                }}
+                                aria-valuenow={Math.round(
+                                    apiObj.twitterengagement * 100
+                                )}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                {Math.round(
+                                    apiObj.twitterengagement * 100
+                                )}%
+        </div>
+                        </div>
+
+                    </div>) : <DataCollectError content="virality index" />
                 });
+
+
+
+                console.log(failTest);
                 console.log(apiObj);
-            });
+            })
+                .catch(error => {
+                    this.setState({
+                        load: (
+                            <div
+                                style={{
+                                    color: "red",
+                                    textAlign: "center",
+                                    display: "none"
+                                }}
+                            >
+                                Sorry, can not collect data at this moment. Please
+                                refresh the page and try again.
+                        </div>
+                        )
+                    });
+                });
         })
 
         //////////////////////////////////////////////////
@@ -536,22 +630,22 @@ class Analysis extends Component {
         //                 });
         //             }
         //         })
-        //         .catch(error => {
-        //             this.setState({
-        //                 load: (
-        //                     <div
-        //                         style={{
-        //                             color: "red",
-        //                             textAlign: "center",
-        //                             display: "none"
-        //                         }}
-        //                     >
-        //                         Sorry, can not collect data at this moment. Please
-        //                         refresh the page and try again.
-        //                     </div>
-        //                 )
-        //             });
-        //         });
+        // .catch(error => {
+        //     this.setState({
+        //         load: (
+        //             <div
+        //                 style={{
+        //                     color: "red",
+        //                     textAlign: "center",
+        //                     display: "none"
+        //                 }}
+        //             >
+        //                 Sorry, can not collect data at this moment. Please
+        //                 refresh the page and try again.
+        //             </div>
+        //         )
+        //     });
+        // });
         // }
         // --- END
     }
@@ -618,7 +712,9 @@ class Analysis extends Component {
     //update the DOM accordingly
     render() {
         const info = this.state;
-        if (info.dataLoaded) {
+
+        if (info.dataLoaded && info.checkData) {
+            console.log(info.twitterengagement)
             return (
                 <div>
                     {info.load}
@@ -628,32 +724,41 @@ class Analysis extends Component {
                     <hr style={{ marginTop: "10px", display: "block" }} />
                     {info.txtChart}
                     <hr />
-                    <h5>Positivity:</h5>
-                    <div className="progress" style={{ height: "25px" }}>
-                        <div
-                            className="progress-bar bg-warning"
-                            role="progressbar"
-                            style={{ width: info.dataSentiment + "%" }}
-                            aria-valuenow={info.dataSentiment}
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        >
-                            {info.dataSentiment}%
+                    {/* {info.sentimenthq ? (<div>
+                        <h5>Positivity:</h5>
+                        <div className="progress" style={{ height: "25px" }}>
+                            <div
+                                className="progress-bar bg-warning"
+                                role="progressbar"
+                                style={{ width: info.dataSentiment + "%" }}
+                                aria-valuenow={info.dataSentiment}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                {info.dataSentiment}%
                         </div>
-                    </div>
-                    <h5 style={{ marginTop: "20px" }}>Engagement:</h5>
-                    <div className="progress" style={{ height: "25px" }}>
-                        <div
-                            className="progress-bar"
-                            role="progressbar"
-                            style={{ width: info.dataViral + "%" }}
-                            aria-valuenow={info.dataViral}
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        >
-                            {info.dataViral}%
                         </div>
-                    </div>
+                    </div>) : <DataCollectError content="sentimental" />} */}
+                    {info.sentiment}
+                    {info.twitter}
+
+                    {/* {info.twitterengagement ? (<div>
+                        <h5 style={{ marginTop: "20px" }}>Engagement:</h5>
+                        <div className="progress" style={{ height: "25px" }}>
+                            <div
+                                className="progress-bar"
+                                role="progressbar"
+                                style={{ width: info.dataViral + "%" }}
+                                aria-valuenow={info.dataViral}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                {info.dataViral}%
+        </div>
+                        </div>
+
+                    </div>) : <DataCollectError content="virality index" />} */}
+
 
                     <div className="row">
                         <div className="col-6">
@@ -701,6 +806,19 @@ class Analysis extends Component {
                         </div>
                     </div>
                 </div>
+            );
+        } else if (!info.dataLoaded && info.checkData) {
+            return (
+                <div
+                    style={{
+                        color: "red",
+                        textAlign: "center",
+
+                    }}
+                >
+                    Sorry, can not collect data at this moment. Please
+                    refresh the page and try again.
+                        </div>
             );
         } else {
             return (
