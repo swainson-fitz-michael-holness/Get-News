@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Analysis from "./Analysis.js";
-
+import $ from "jquery";
 let freezeVp = function (e) {
     e.preventDefault();
 };
@@ -63,6 +63,14 @@ class ArticleCard extends Component {
     handleClose(e) {
         e.preventDefault();
         stopBodyScrolling(false);
+
+        //resets the modal so data does not persist. 
+        //has the potential to increase apiCalls 
+        //so it is turned off by default
+
+        // this.setState({
+        //     init: <div>closed</div>
+        // });
     }
 
     componentDidMount() {
@@ -72,6 +80,11 @@ class ArticleCard extends Component {
             this.style.display = "none";
         }
     }
+    componentWillUnmount() {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    }
+
 
     render() {
         return (
@@ -116,7 +129,7 @@ class ArticleCard extends Component {
                         </button>
 
                         <div
-                            className="modal fade"
+                            className="modal "
                             id={"Z" + this.props.ID}
                             tabIndex="-1"
                             role="dialog"

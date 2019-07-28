@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 //import Chart from "chart.js";
+import $ from "jquery";
 import fire from "../config/Access.js";
 import DbAnalysis from "./DbAnalysis.js";
 
@@ -92,6 +93,11 @@ class Dashboard extends Component {
                 />
             ),
         });
+    }
+
+    componentWillUnmount() {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
     }
 
     render() {

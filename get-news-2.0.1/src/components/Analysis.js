@@ -176,163 +176,6 @@ class Analysis extends Component {
         });
     }
 
-    getAnalysis = () => {
-
-
-        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/emotion', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-        //         data: this.props.dataURL,
-        //         top_n: 5
-        //         // queries: ['team sports', 'royalty']
-        //     })
-        // })
-        //     .then(r => r.json())
-        //     .then(response => {
-        //         apiObj.emotion = response.results;
-
-        //         //----- emo stats
-        //         let emoNameArr = [];
-        //         let emoDataArr = [];
-        //         for (var keyName in response.results) {
-        //             emoNameArr.push(keyName);
-        //         }
-        //         for (var keyData in response.results) {
-        //             emoDataArr.push(
-        //                 response.results[keyData]
-        //             );
-        //         }
-
-
-        //         this.setState({
-        //             apiData: apiObj,
-        //             horChart: (
-        //                 <canvas style={{ display: "block" }}>
-        //                     {this.handleHorChart(emoNameArr, emoDataArr)}
-        //                 </canvas>
-        //             )
-        //         });
-
-        //     })
-        //     .catch(err => console.log(err));
-
-        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/political', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-        //         data: this.props.dataURL,
-        //         top_n: 5
-        //     })
-        // })
-        //     .then(r => r.json())
-        //     .then(response => {
-        //         apiObj.political = response.results
-
-        //         //----- pol stats
-        //         let polNameArr = [];
-        //         let polDataArr = [];
-        //         for (var keyPolName in response.results) {
-        //             polNameArr.push(keyPolName);
-        //         }
-        //         for (var keyPolData in response.results) {
-        //             polDataArr.push(
-        //                 response.results[keyPolData]
-        //             );
-        //         }
-        //         //end
-
-        //         this.setState({
-        //             apiData: apiObj,
-        //             polChart: (
-        //                 <canvas style={{ display: "block" }}>
-        //                     {this.handlePolChart(polNameArr, polDataArr)}
-        //                 </canvas>
-        //             ),
-        //         });
-        //     })
-        //     .catch(err => console.log(err));
-
-        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/texttags', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-        //         data: this.props.dataURL,
-        //         top_n: 5
-        //     })
-        // })
-        //     .then(r => r.json())
-        //     .then(response => {
-        //         apiObj.texttags = response.results;
-
-        //         //----- Text stats
-        //         let TxtNameArr = [];
-        //         let TxtDataArr = [];
-        //         for (var keyTxtName in response.results) {
-        //             TxtNameArr.push(keyTxtName);
-        //         }
-        //         for (var keyTxtData in response.results) {
-        //             TxtDataArr.push(
-        //                 response.results[keyTxtData]
-        //             );
-        //         }
-        //         //end
-
-        //         this.setState({
-        //             apiData: apiObj,
-        //             txtChart: (
-        //                 <canvas style={{ display: "block" }}>
-        //                     {this.handleTxtChart(TxtNameArr, TxtDataArr)}
-        //                 </canvas>
-        //             )
-        //         });
-        //     })
-        //     .catch(err => console.log(err));
-
-        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/sentimenthq', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-        //         data: this.props.dataURL,
-        //         top_n: 5
-        //     })
-        // })
-        //     .then(r => r.json())
-        //     .then(response => {
-        //         apiObj.sentimenthq = response.results;
-        //         this.setState({
-        //             apiData: apiObj,
-        // dataSentiment: Math.round(
-        //     response.results * 100
-        // ),
-        //             // dataLoaded: true
-        //         });
-        //     })
-        //     .catch(err => console.log(err));
-
-        // fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/twitterengagement', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         api_key: 'bc4cac0bc7ae9435444f865229516cd2',
-        //         data: this.props.dataURL,
-        //         top_n: 5
-        //     })
-        // })
-        //     .then(r => r.json())
-        //     .then(response => {
-        //         apiObj.twitterengagement = response.results;
-        //         this.setState({
-        //             apiData: apiObj,
-        // dataViral: Math.round(
-        //     response.results * 100
-        // ),
-        //             // dataLoaded: true
-        //         });
-        //     })
-        //     .catch(err => console.log(err));
-
-    }
-
     //=============================================================
     //when the modal loads gather data from api AI then parse them into arrays to use in charts wherever needed
     //=============================================================
@@ -431,7 +274,6 @@ class Analysis extends Component {
                 //end
 
                 let failTest = allFalse(apiObj);
-                let info = this.state;
 
                 this.setState({
                     apiData: apiObj,
@@ -529,126 +371,9 @@ class Analysis extends Component {
                         )
                     });
                 });
-        })
-
-        //////////////////////////////////////////////////
-        //     LEGACY AJAX CALL - fails due to cors
-        /////////////////////////////////////////////////
-
-        //Its being kept around as reference for now. Will be deleted.
-
-        //     $.post(
-        //         "https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/apis/multiapi/batch?apis=sentimenthq,texttags,political,people,emotion",
-        //         JSON.stringify({
-        //             "api_key": "bc4cac0bc7ae9435444f865229516cd2",
-        //             "data": this.props.dataURL,
-        //             "top_n": 5
-        //         })
-        //     )
-        //         .then(res => {
-        //             let holder = JSON.parse(res);
-        //             this.setState({
-        //                 apiData: holder
-        //             });
-        //             console.log(holder);
-
-        //             if (this.state.apiData.results.emotion.status === 400) {
-        //                 this.setState({
-        //                     load: (
-        //                         <div style={{ color: "red", textAlign: "center" }}>
-        //                             Sorry, can not collect data at this moment.{" "}
-        //                         </div>
-        //                     )
-        //                 });
-        //             } else {
-        //                 //----- emo stats
-        //                 let emoNameArr = [];
-        //                 let emoDataArr = [];
-        //                 for (var keyName in holder.results.emotion.results[0]) {
-        //                     emoNameArr.push(keyName);
-        //                 }
-        //                 for (var keyData in holder.results.emotion.results[0]) {
-        //                     emoDataArr.push(
-        //                         holder.results.emotion.results[0][keyData]
-        //                     );
-        //                 }
-        //                 //end
-
-        //                 //----- pol stats
-        //                 let polNameArr = [];
-        //                 let polDataArr = [];
-        //                 for (var keyPolName in holder.results.political
-        //                     .results[0]) {
-        //                     polNameArr.push(keyPolName);
-        //                 }
-        //                 for (var keyPolData in holder.results.political
-        //                     .results[0]) {
-        //                     polDataArr.push(
-        //                         holder.results.political.results[0][keyPolData]
-        //                     );
-        //                 }
-        //                 //end
-
-        //                 //----- Text stats
-        //                 let TxtNameArr = [];
-        //                 let TxtDataArr = [];
-        //                 for (var keyTxtName in holder.results.texttags.results[0]) {
-        //                     TxtNameArr.push(keyTxtName);
-        //                 }
-        //                 for (var keyTxtData in holder.results.texttags.results[0]) {
-        //                     TxtDataArr.push(
-        //                         holder.results.texttags.results[0][keyTxtData]
-        //                     );
-        //                 }
-        //                 //end
-
-        //                 //updates the state of the 3 charts used with chartjs
-        //                 this.setState({
-        //                     dataViral: Math.round(
-        //                         holder.results.twitterengagement.results[0] * 100
-        //                     ),
-        //                     dataSentiment: Math.round(
-        //                         holder.results.sentimenthq.results[0] * 100
-        //                     ),
-        //                     dataLoaded: true,
-        //                     load: <div style={{ display: "none" }} />,
-        //                     horChart: (
-        //                         <canvas style={{ display: "block" }}>
-        //                             {this.handleHorChart(emoNameArr, emoDataArr)}
-        //                         </canvas>
-        //                     ),
-        //                     polChart: (
-        //                         <canvas style={{ display: "block" }}>
-        //                             {this.handlePolChart(polNameArr, polDataArr)}
-        //                         </canvas>
-        //                     ),
-        //                     txtChart: (
-        //                         <canvas style={{ display: "block" }}>
-        //                             {this.handleTxtChart(TxtNameArr, TxtDataArr)}
-        //                         </canvas>
-        //                     )
-        //                 });
-        //             }
-        //         })
-        // .catch(error => {
-        //     this.setState({
-        //         load: (
-        //             <div
-        //                 style={{
-        //                     color: "red",
-        //                     textAlign: "center",
-        //                     display: "none"
-        //                 }}
-        //             >
-        //                 Sorry, can not collect data at this moment. Please
-        //                 refresh the page and try again.
-        //             </div>
-        //         )
-        //     });
-        // });
-        // }
-        // --- END
+        });
     }
+
 
 
     //=============================================================
@@ -681,7 +406,6 @@ class Analysis extends Component {
                 this.setState({
                     visible: "visible"
                 });
-                //            document.getElementById("save-alert").style.visability = "visible";
             }
         );
     }
@@ -724,42 +448,8 @@ class Analysis extends Component {
                     <hr style={{ marginTop: "10px", display: "block" }} />
                     {info.txtChart}
                     <hr />
-                    {/* {info.sentimenthq ? (<div>
-                        <h5>Positivity:</h5>
-                        <div className="progress" style={{ height: "25px" }}>
-                            <div
-                                className="progress-bar bg-warning"
-                                role="progressbar"
-                                style={{ width: info.dataSentiment + "%" }}
-                                aria-valuenow={info.dataSentiment}
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            >
-                                {info.dataSentiment}%
-                        </div>
-                        </div>
-                    </div>) : <DataCollectError content="sentimental" />} */}
                     {info.sentiment}
                     {info.twitter}
-
-                    {/* {info.twitterengagement ? (<div>
-                        <h5 style={{ marginTop: "20px" }}>Engagement:</h5>
-                        <div className="progress" style={{ height: "25px" }}>
-                            <div
-                                className="progress-bar"
-                                role="progressbar"
-                                style={{ width: info.dataViral + "%" }}
-                                aria-valuenow={info.dataViral}
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            >
-                                {info.dataViral}%
-        </div>
-                        </div>
-
-                    </div>) : <DataCollectError content="virality index" />} */}
-
-
                     <div className="row">
                         <div className="col-6">
                             <button
