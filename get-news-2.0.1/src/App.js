@@ -5,6 +5,7 @@ import Login from './user/Login.js';
 import fire from './config/Access.js';
 import Load from './components/Load.js';
 import NavigationLogIn from "./components/NavigationLogIn.js";
+import NavigationLogOut from './components/NavigationLogOut';
 
 
 
@@ -55,7 +56,7 @@ class App extends Component {
         if (this.state.userIsLoaded === "logged in") {
             return <NavigationLogIn />
         } else if (this.state.userIsLoaded === "logged out") {
-            return <Login />
+            return <NavigationLogOut />
         } else if (this.state.userIsLoaded === "init") {
             return <Load />
         }

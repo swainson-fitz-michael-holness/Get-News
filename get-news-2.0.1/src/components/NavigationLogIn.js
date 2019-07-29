@@ -77,7 +77,7 @@ class NavigationLogIn extends Component {
                                 style={{ border: "none", outline: "none", }}
                                 onClick={this.checkSaved}
                             >
-                                <span id=" h-icon " className="" style={{ width: "30px", height: "35px", }}><i className={news.bars}></i></span>
+                                <span id="h-icon " style={{ width: "30px", height: "35px", }}><i className={news.bars}></i></span>
                             </button>
 
                             <span className="navbar-brand mb-0 h1">

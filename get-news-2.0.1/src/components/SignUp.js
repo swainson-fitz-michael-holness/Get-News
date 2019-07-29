@@ -5,7 +5,7 @@ class SignUp extends Component {
         super(props);
 
         this.state = {
-            init: "loaded"
+            init: <div style={{ marginTop: "400px" }}>this is it</div>
         }
     }
 
