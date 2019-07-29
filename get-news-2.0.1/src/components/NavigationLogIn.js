@@ -50,15 +50,7 @@ class NavigationLogIn extends Component {
     }
 
     componentDidMount() {
-        //        console.log(document.querySelector("#test"))
-        //
-        //        $('#test>li>div>a').on('click', function(){
-        //            $("#navbarSupportedContent").toggle("hide");
-        //        });
-        //        $('#hamburger').on('click', function(){
-        //            console.log($("#navbarSupportedContent").toggle("show"));
-        //        });
-
+        // console.log(this.state.user.email)
     }
 
     //    load Navbar
