@@ -1,46 +1,67 @@
 import React, { Component } from "react";
+import fire from "../config/Access.js";
+import { HashRouter } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
+import SignUp from "./SignUp.js";
+
 // import logoAlt from "../img/reportralt.png";
 //import $ from "jquery";
 
 class NavigationLogOut extends Component {
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light">
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon" />
-                </button>
+            <HashRouter baseName="/apps/reportra/">
+                <div>
+                    <nav className="navbar navbar-expand-lg navbar-light">
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon" />
+                        </button>
 
-                <div
-                    className="collapse navbar-collapse "
-                    id="navbarSupportedContent"
-                >
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href={null}>
-                                Login <span className="sr-only">(current)</span>
+                        <div
+                            className="collapse navbar-collapse "
+                            id="navbarSupportedContent"
+                        >
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <a className="nav-link" href={null}>
+                                        Login <span className="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href={null}>
+                                        About
                             </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href={null}>
-                                About
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href={null}>
+                                        Sign Up
                             </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href={null}>
-                                Sign Up
-                            </a>
-                        </li>
-                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <Switch>
+                        {/* <Route
+                            path="//"
+                            render={(props => <Home {...props} term={news.valSubmit} />)}
+                            exact
+                        /> */}
+                        <Route path="/signup" component={SignUp} />
+                        {/* <Route path="/lab" component={Lab} /> */}
+                    </Switch>
                 </div>
-            </nav>
+            </HashRouter>
+
+
         );
     }
 }
