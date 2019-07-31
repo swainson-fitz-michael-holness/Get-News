@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import firebase from 'firebase';
 import logoHD from "../img/reportralt.png";
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import {
+    withRouter
+} from 'react-router-dom'
+import { userInfo } from "os";
 
 
 // firebase.start('#firebaseui-auth-container', {
@@ -20,6 +25,7 @@ class SignUp extends Component {
             init: <div style={{ marginTop: "400px" }}>this is it</div>,
             email: '',
             password: '',
+            redirect: false
         }
     }
 
@@ -28,10 +34,17 @@ class SignUp extends Component {
     }
 
     signup = (e) => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+            console.log(user);
+            this.setState({
+                redirect: true
+            });
+
+        }).catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
+
 
             alert(errorCode + ' :: ' + errorMessage);
             // ...
@@ -39,9 +52,9 @@ class SignUp extends Component {
     }
 
     render() {
-        // if (this.state.toDashboard === true) {
-        //     return <Redirect to='/dashboard' />
-        //   }
+        if (this.state.redirect === true) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="container">
                 <img src={logoHD} alt="" style={{ width: "180px", height: "auto", display: "block", margin: "auto", marginTop: "100px" }} />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logoHD from "../img/reportralt.png"
+import logoHD from "../img/reportralt.png";
 import '../App.css';
 import firebase from 'firebase';
 import NavigationLogOut from '../components/NavigationLogOut.js'
