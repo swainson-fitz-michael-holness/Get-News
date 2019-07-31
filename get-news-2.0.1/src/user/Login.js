@@ -51,7 +51,7 @@ class Login extends Component {
                         <div className="login-btn">
 
                             <button onClick={this.login} type="button" className="btn btn-block btn-primary">
-                                Submit
+                                Log in
                             </button>
                         </div>
 

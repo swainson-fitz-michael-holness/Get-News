@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import fire from "../config/Access.js";
 import SignUp from "./SignUp.js";
-import Login from "../user/Login.js"
+import Login from "../user/Login.js";
 import logo from "../img/reportra.png";
 import { Route, Switch, Link } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';

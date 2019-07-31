@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import firebase from 'firebase';
 import logoHD from "../img/reportralt.png";
+import Login from "../user/Login.js";
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+
 import {
     withRouter
 } from 'react-router-dom'
@@ -56,30 +59,43 @@ class SignUp extends Component {
             return <Redirect to="/" />
         }
         return (
-            <div className="container">
-                <img src={logoHD} alt="" style={{ width: "180px", height: "auto", display: "block", margin: "auto", marginTop: "100px" }} />
-                <form>
-                    <div className="form-group login-box border-primary rounded shadow-lg" style={{ marginTop: "20px" }}>
-                        <div>
-                            <p style={{ marginBottom: "0px" }}>E-mail:</p>
-                            <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email address..." className="form-control label" />
-                        </div>
+            <HashRouter baseName="/apps/reportra/">
 
-                        <div>
-                            <p style={{ marginBottom: "0px", marginTop: "25px" }}>Password:</p>
-                            <input style={{ marginTop: "0px" }} value={this.state.password} onChange={this.handleChange} name="password" type="password" id="password" placeholder="password..." className="form-control label" />
-                        </div>
+                <div className="container">
+                    <img src={logoHD} alt="" style={{ width: "180px", height: "auto", display: "block", margin: "auto", marginTop: "100px" }} />
+                    <form>
 
-                        <div className="login-btn">
+                        <div className="form-group login-box border-primary rounded shadow-lg" style={{ marginTop: "20px" }}>
 
-                            <button onClick={this.signup} type="button" className="btn btn-block btn-primary">
-                                Sign up
+                            <h1 style={{ textAlign: "center", margin: "0px", fontSize: "1.1rem", fontWeight: "600" }}>Use Ai to analyze the news</h1>
+                            <p style={{ textAlign: "center", margin: "2px 0px 20px 0px", fontSize: "0.8rem", opacity: 0.5 }}>Sign up today</p>
+                            <div>
+                                {/* <p style={{ marginBottom: "0px", fontSize: "0.9rem", opacity: 0.8 }}>E-mail</p> */}
+                                <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email " className="form-control label" />
+                            </div>
+
+                            <div>
+                                {/* <p style={{ marginBottom: "0px", marginTop: "25px", fontSize: "0.9rem", opacity: 0.8 }}>Password*</p> */}
+                                <input value={this.state.password} onChange={this.handleChange} name="password" type="password" id="password" placeholder="password" className="form-control label" />
+                            </div>
+
+                            <div className="login-btn">
+
+                                <button onClick={this.signup} type="button" className="btn btn-block btn-primary">
+                                    Sign up
                             </button>
-                        </div>
+                            </div>
 
-                    </div>
-                </form>
-            </div>
+                            <h1 style={{ textAlign: "center", margin: "10px 0px 0px 0px", fontSize: "0.8rem", fontWeight: "600" }}>Already signed up? <span><Link to="/">Log in</Link></span></h1>
+
+                        </div>
+                    </form>
+                    <Switch>
+                        <Route path="//" component={Login} />
+                    </Switch>
+                </div>
+
+            </HashRouter >
         )
     }
 }
