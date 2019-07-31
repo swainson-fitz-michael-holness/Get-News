@@ -20,6 +20,19 @@ import { userInfo } from "os";
 //     ]
 // });
 
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        // User is signed in.
+        user.sendEmailVerification().then(function () {
+            alert("working")
+        }).catch(function (error) {
+            // An error happened.
+        });
+    } else {
+        // No user is signed in.
+    }
+});
+
 class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +41,8 @@ class SignUp extends Component {
             init: <div style={{ marginTop: "400px" }}>this is it</div>,
             email: '',
             password: '',
-            redirect: false
+            redirect: false,
+            errorMessage: ''
         }
     }
 
@@ -37,19 +51,47 @@ class SignUp extends Component {
     }
 
     signup = (e) => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
-            console.log(user);
-            this.setState({
-                redirect: true
-            });
+        e.preventDefault();
 
-        }).catch(function (error) {
+        var actionCodeSettings = {
+            // URL you want to redirect back to. The domain (www.example.com) for this
+            // URL must be whitelisted in the Firebase Console.
+            url: 'https://www.exogenist.tech/app/reportra',
+            // This must be true.
+            handleCodeInApp: true,
+            // iOS: {
+            //   bundleId: 'com.exogenist.ios'
+            // },
+            // android: {
+            //   packageName: 'com.exogenist.android',
+            //   installApp: true,
+            //   minimumVersion: '12'
+            // },
+            // dynamicLinkDomain: 'example.page.link'
+        };
+
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+            console.log(firebase.auth().currentUser);
+            // user.sendEmailVerification().then(function () {
+            //     alert("!!!!")
+            // }).catch(function (error) {
+            //     console.log(error)
+            //     alert(error)
+            // });
+            // this.setState({
+            //     redirect: true
+            // });
+
+
+
+        }).catch((error) => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
 
-
-            alert(errorCode + ' :: ' + errorMessage);
+            this.setState({
+                errorMessage: error.message
+            });
             // ...
         });
     }
@@ -69,6 +111,7 @@ class SignUp extends Component {
 
                             <h1 style={{ textAlign: "center", margin: "0px", fontSize: "1.1rem", fontWeight: "600" }}>Use Ai to analyze the news</h1>
                             <p style={{ textAlign: "center", margin: "2px 0px 20px 0px", fontSize: "0.8rem", opacity: 0.5 }}>Sign up today</p>
+
                             <div>
                                 {/* <p style={{ marginBottom: "0px", fontSize: "0.9rem", opacity: 0.8 }}>E-mail</p> */}
                                 <input value={this.state.email} onChange={this.handleChange} name="email" type="email" id="user" placeholder="Email " className="form-control label" />
@@ -78,6 +121,7 @@ class SignUp extends Component {
                                 {/* <p style={{ marginBottom: "0px", marginTop: "25px", fontSize: "0.9rem", opacity: 0.8 }}>Password*</p> */}
                                 <input value={this.state.password} onChange={this.handleChange} name="password" type="password" id="password" placeholder="password" className="form-control label" />
                             </div>
+                            <p style={{ textAlign: "center", margin: "0px 0px 0px 0px", fontSize: "0.8rem", color: "red" }}>{this.state.errorMessage}</p>
 
                             <div className="login-btn">
 
