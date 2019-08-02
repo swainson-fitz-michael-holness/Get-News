@@ -23,11 +23,12 @@ import { userInfo } from "os";
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
-        user.sendEmailVerification().then(function () {
-            alert("working")
-        }).catch(function (error) {
-            // An error happened.
-        });
+        // user.sendEmailVerification().then(function () {
+        //     alert("working")
+        // }).catch(function (error) {
+        //     // An error happened.
+        // });
+        console.log(user);
     } else {
         // No user is signed in.
     }
