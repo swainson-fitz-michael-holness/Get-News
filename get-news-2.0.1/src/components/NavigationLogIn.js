@@ -8,6 +8,7 @@ import RenderDashboard from './RenderDashboard.js';
 import Lab from './Lab.js';
 import logo from "../img/reportra.png";
 import { HashRouter } from 'react-router-dom'
+import Verify from "./Verify.js";
 
 
 class NavigationLogIn extends Component {
@@ -126,6 +127,7 @@ class NavigationLogIn extends Component {
                         />
                         <Route path="/dashboard" component={RenderDashboard} />
                         <Route path="/lab" component={Lab} />
+                        <Route path="/verify" component={Verify} />
                     </Switch>
                 </div>
             </HashRouter>

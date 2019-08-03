@@ -2,37 +2,29 @@ import React, { Component } from "react";
 import firebase from 'firebase';
 import logoHD from "../img/reportralt.png";
 import Login from "../user/Login.js";
+import Verify from "./Verify.js";
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 
-import {
-    withRouter
-} from 'react-router-dom'
-import { userInfo } from "os";
 
+const register = {};
 
-// firebase.start('#firebaseui-auth-container', {
-//     signInOptions: [
-//         {
-//             provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-//             requireDisplayName: false
-//         }
-//     ]
+// firebase.auth().onAuthStateChanged(function (user) {
+//     register.verified = user.emailVerified;
+//     if (user.emailVerified) {
+//         // User is signed in.
+//         // user.sendEmailVerification().then(function () {
+//         //     alert("working")
+//         // }).catch(function (error) {
+//         //     // An error happened.
+//         // });
+
+//     } else {
+//         console.log(user.emailVerified)
+//     }
 // });
 
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        // User is signed in.
-        // user.sendEmailVerification().then(function () {
-        //     alert("working")
-        // }).catch(function (error) {
-        //     // An error happened.
-        // });
-        console.log(user);
-    } else {
-        // No user is signed in.
-    }
-});
+
 
 class SignUp extends Component {
     constructor(props) {
@@ -43,6 +35,7 @@ class SignUp extends Component {
             email: '',
             password: '',
             redirect: false,
+            sendVerify: false,
             errorMessage: ''
         }
     }
@@ -54,25 +47,8 @@ class SignUp extends Component {
     signup = (e) => {
         e.preventDefault();
 
-        var actionCodeSettings = {
-            // URL you want to redirect back to. The domain (www.example.com) for this
-            // URL must be whitelisted in the Firebase Console.
-            url: 'https://www.exogenist.tech/app/reportra',
-            // This must be true.
-            handleCodeInApp: true,
-            // iOS: {
-            //   bundleId: 'com.exogenist.ios'
-            // },
-            // android: {
-            //   packageName: 'com.exogenist.android',
-            //   installApp: true,
-            //   minimumVersion: '12'
-            // },
-            // dynamicLinkDomain: 'example.page.link'
-        };
-
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
-            console.log(firebase.auth().currentUser);
+            console.log(user);
             // user.sendEmailVerification().then(function () {
             //     alert("!!!!")
             // }).catch(function (error) {
@@ -80,8 +56,18 @@ class SignUp extends Component {
             //     alert(error)
             // });
             // this.setState({
-            //     redirect: true
+            //     sendVerify: true
             // });
+
+            if (user.emailVerified) {
+                this.setState({
+                    redirect: true,
+                });
+            } else {
+                this.setState({
+                    sendVerify: true
+                });
+            }
 
 
 
@@ -89,7 +75,6 @@ class SignUp extends Component {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-
             this.setState({
                 errorMessage: error.message
             });
@@ -97,9 +82,39 @@ class SignUp extends Component {
         });
     }
 
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in.
+                // user.sendEmailVerification().then(function () {
+                //     alert("working")
+                // }).catch(function (error) {
+                //     // An error happened.
+                // });
+                // if (user.emailVerified) {
+                //     this.setState({
+                //         redirect: true,
+                //     });
+                // } else {
+                //     this.setState({
+                //         sendVerify: true
+                //     });
+                // }
+
+
+            } else {
+
+            }
+        });
+
+    }
+
     render() {
+        console.log(this.state.redirect)
         if (this.state.redirect === true) {
             return <Redirect to="/" />
+        } else if (this.state.sendVerify === true) {
+            return <Redirect to="/verify" />
         }
         return (
             <HashRouter baseName="/apps/reportra/">
@@ -137,6 +152,8 @@ class SignUp extends Component {
                     </form>
                     <Switch>
                         <Route path="//" component={Login} />
+                        <Route path="/verify" component={Verify} />
+                        {/* <Route path="/lab" component={Lab} /> */}
                     </Switch>
                 </div>
 
