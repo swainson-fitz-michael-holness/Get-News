@@ -9,23 +9,6 @@ import { HashRouter } from 'react-router-dom';
 
 const register = {};
 
-// firebase.auth().onAuthStateChanged(function (user) {
-//     register.verified = user.emailVerified;
-//     if (user.emailVerified) {
-//         // User is signed in.
-//         // user.sendEmailVerification().then(function () {
-//         //     alert("working")
-//         // }).catch(function (error) {
-//         //     // An error happened.
-//         // });
-
-//     } else {
-//         console.log(user.emailVerified)
-//     }
-// });
-
-
-
 class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -34,6 +17,7 @@ class SignUp extends Component {
             init: <div style={{ marginTop: "400px" }}>this is it</div>,
             email: '',
             password: '',
+            user: '',
             redirect: false,
             sendVerify: false,
             errorMessage: ''
@@ -46,30 +30,8 @@ class SignUp extends Component {
 
     signup = (e) => {
         e.preventDefault();
-
+        // console.log(this.state.user);
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
-            console.log(user);
-            // user.sendEmailVerification().then(function () {
-            //     alert("!!!!")
-            // }).catch(function (error) {
-            //     console.log(error)
-            //     alert(error)
-            // });
-            // this.setState({
-            //     sendVerify: true
-            // });
-
-            if (user.emailVerified) {
-                this.setState({
-                    redirect: true,
-                });
-            } else {
-                this.setState({
-                    sendVerify: true
-                });
-            }
-
-
 
         }).catch((error) => {
             // Handle Errors here.
@@ -80,40 +42,31 @@ class SignUp extends Component {
             });
             // ...
         });
-    }
 
-    componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // User is signed in.
-                // user.sendEmailVerification().then(function () {
-                //     alert("working")
-                // }).catch(function (error) {
-                //     // An error happened.
-                // });
-                // if (user.emailVerified) {
-                //     this.setState({
-                //         redirect: true,
-                //     });
-                // } else {
-                //     this.setState({
-                //         sendVerify: true
-                //     });
-                // }
+            if (user != null) {
+                if (!user.emailVerified) {
+                    user.sendEmailVerification().then(() => {
+                    }).catch(function (error) {
+                        console.log(error);
+                        alert(error);
+                    });
 
+                }
 
-            } else {
-
+                user.updateProfile({
+                    displayName: this.state.user,
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         });
-
     }
 
     render() {
-        console.log(this.state.redirect)
-        if (this.state.redirect === true) {
-            return <Redirect to="/" />
-        } else if (this.state.sendVerify === true) {
+        console.log(this.props.term)
+        const user = firebase.auth().currentUser;
+        if (this.props.userState === "loggedIn") {
             return <Redirect to="/verify" />
         }
         return (
@@ -125,8 +78,13 @@ class SignUp extends Component {
 
                         <div className="form-group login-box border-primary rounded shadow-lg" style={{ marginTop: "20px" }}>
 
-                            <h1 style={{ textAlign: "center", margin: "0px", fontSize: "1.1rem", fontWeight: "600" }}>Use Ai to analyze the news</h1>
-                            <p style={{ textAlign: "center", margin: "2px 0px 20px 0px", fontSize: "0.8rem", opacity: 0.5 }}>Sign up today</p>
+                            {/* <h1 style={{ textAlign: "center", margin: "0px", fontSize: "1.1rem", fontWeight: "600" }}>Use Ai to analyze the news</h1>
+                            <p style={{ textAlign: "center", margin: "2px 0px 20px 0px", fontSize: "0.8rem", opacity: 0.5 }}>Sign up today</p> */}
+
+                            <div>
+                                <input type="text" name="user" placeholder="User Name" id="userName" onChange={this.handleChange}
+                                    className="form-control label" />
+                            </div>
 
                             <div>
                                 {/* <p style={{ marginBottom: "0px", fontSize: "0.9rem", opacity: 0.8 }}>E-mail</p> */}

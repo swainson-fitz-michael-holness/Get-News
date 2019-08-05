@@ -9,6 +9,7 @@ import Lab from './Lab.js';
 import logo from "../img/reportra.png";
 import { HashRouter } from 'react-router-dom'
 import Verify from "./Verify.js";
+import SignUp from "./SignUp.js";
 
 
 class NavigationLogIn extends Component {
@@ -128,6 +129,11 @@ class NavigationLogIn extends Component {
                         <Route path="/dashboard" component={RenderDashboard} />
                         <Route path="/lab" component={Lab} />
                         <Route path="/verify" component={Verify} />
+                        <Route path="/signup" render={(props => <SignUp {...props} userState="loggedIn" />)} />
+                        <Route
+                            render={(props => <Home {...props} term={news.valSubmit} />)}
+                            exact
+                        />
                     </Switch>
                 </div>
             </HashRouter>

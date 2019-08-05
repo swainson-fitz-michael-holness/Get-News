@@ -9,23 +9,39 @@ class Verify extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            init: null
+            init: ""
         }
+        this.user = firebase.auth().currentUser;
+        // this.user.sendEmailVerification().then(function () {
+        // }).catch(function (error) {
+        //     console.log(error)
+        //     // alert(error)
+        // });
+
     }
     componentDidMount() {
         console.log(firebase.auth().currentUser);
-        const user = firebase.auth().currentUser;
-        if (user.emailVerified) {
+
+        if (this.user.emailVerified) {
             console.log("isVerified");
         } else {
             console.log("please validate");
+            this.setState({
+                init: (
+                    <div>
+                        <h1 style={{ marginTop: "178px", color: "rgb(60, 144, 223)" }}>Please Verify</h1>
+                        <p>Just one more step. Check your e-mail inbox and click the link to complete the sign up process. If you didn't get the link try sending again.</p>
+
+                        <button style={{ width: "80px" }} type="button" className="btn btn-block btn-primary">send</button>
+                    </div>
+                ),
+            });
         }
     }
     render() {
         return (
-            <div>
-                <h1 style={{ marginTop: "400px" }}>Hello</h1>
-                <p>test</p>
+            <div className="container">
+                {this.state.init}
             </div>
         );
     }

@@ -41,6 +41,7 @@ class App extends Component {
         fire.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in.
+                console.log(user.displayName)
                 this.setState({ user: user });
                 this.setState({ userIsLoaded: "logged in" });
             } else {
