@@ -6,6 +6,7 @@ import fire from './config/Access.js';
 import Load from './components/Load.js';
 import NavigationLogIn from "./components/NavigationLogIn.js";
 import NavigationLogOut from './components/NavigationLogOut';
+import Verify from './components/Verify';
 
 
 
@@ -29,7 +30,8 @@ class App extends Component {
 
         this.state = {
             user: null,
-            userIsLoaded: "init"
+            userIsLoaded: "init",
+            emailVerified: ""
         }
     }
 
@@ -42,8 +44,13 @@ class App extends Component {
             if (user) {
                 // User is signed in.
                 console.log(user.displayName)
-                this.setState({ user: user });
-                this.setState({ userIsLoaded: "logged in" });
+                this.setState({
+                    user: user,
+                    userIsLoaded: "logged in",
+                    emailVerified: user.emailVerified
+                });
+
+
             } else {
                 // No user is signed in.
                 this.setState({ user: null });
@@ -53,9 +60,11 @@ class App extends Component {
     }
 
     render() {
-
-        if (this.state.userIsLoaded === "logged in") {
+        console.log(this.state.emailVerified)
+        if (this.state.userIsLoaded === "logged in" && this.state.emailVerified) {
             return <NavigationLogIn />
+        } else if (this.state.userIsLoaded === "logged in" && !this.state.emailVerified) {
+            return <Verify />
         } else if (this.state.userIsLoaded === "logged out") {
             return <NavigationLogOut />
         } else if (this.state.userIsLoaded === "init") {

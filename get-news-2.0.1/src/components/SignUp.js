@@ -66,9 +66,9 @@ class SignUp extends Component {
     render() {
         console.log(this.props.term)
         const user = firebase.auth().currentUser;
-        if (this.props.userState === "loggedIn") {
-            return <Redirect to="/verify" />
-        }
+        // if (this.props.userState === "loggedIn") {
+        //     return <Redirect to="/verify" />
+        // }
         return (
             <HashRouter baseName="/apps/reportra/">
 

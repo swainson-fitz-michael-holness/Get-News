@@ -129,7 +129,7 @@ class NavigationLogIn extends Component {
                         <Route path="/dashboard" component={RenderDashboard} />
                         <Route path="/lab" component={Lab} />
                         <Route path="/verify" component={Verify} />
-                        <Route path="/signup" render={(props => <SignUp {...props} userState="loggedIn" />)} />
+                        {/* <Route path="/signup" render={(props => <SignUp {...props} userState="loggedIn" />)} /> */}
                         <Route
                             render={(props => <Home {...props} term={news.valSubmit} />)}
                             exact
