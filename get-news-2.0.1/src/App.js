@@ -59,6 +59,7 @@ class App extends Component {
     }
 
     render() {
+        // console.log(this.state.emailVerified)
         if (this.state.userIsLoaded === "logged in" && this.state.emailVerified) {
             return <NavigationLogIn />
         } else if (this.state.userIsLoaded === "logged in" && !this.state.emailVerified) {

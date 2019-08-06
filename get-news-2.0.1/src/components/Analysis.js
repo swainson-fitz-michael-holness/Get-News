@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import $ from "jquery";
+// import $ from "jquery";
 import Chart from "chart.js";
 import fire from "../config/Access.js";
-import { generateKeyPairSync } from "crypto";
-import { promisify } from "util";
+// import { generateKeyPairSync } from "crypto";
+// import { promisify } from "util";
 const db = fire.database();
 
 function DataCollectError(props) {

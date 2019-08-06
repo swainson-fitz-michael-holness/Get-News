@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logoHD from "../img/reportralt.png";
 import '../App.css';
 import firebase from 'firebase';
-import NavigationLogOut from '../components/NavigationLogOut.js'
+// import NavigationLogOut from '../components/NavigationLogOut.js'
 
 class Login extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class Login extends Component {
 
             // ...
         });
-        console.log(e.target.name);
+        // console.log(e.target.name);
     }
 
     handleChange(e) {

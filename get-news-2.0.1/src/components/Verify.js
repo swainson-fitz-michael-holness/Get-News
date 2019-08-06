@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 // import logoHD from "../img/reportralt.png";
 // import Login from "../user/Login.js";
-// import { Route, Switch, Link, Redirect } from 'react-router-dom';
-// import { HashRouter } from 'react-router-dom';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import firebase from 'firebase';
+import Home from "./Home.js"
 
 const actionCodeSettings = {
     url: "http://localhost:3000/"
@@ -14,7 +15,8 @@ class Verify extends Component {
         super(props);
         this.state = {
             init: "",
-            displayName: ""
+            displayName: "",
+            redirect: false
 
         }
         this.user = firebase.auth().currentUser;
@@ -23,16 +25,16 @@ class Verify extends Component {
     }
 
     handleSend = (e) => {
-        e.preventDefault;
+        e.preventDefault();
         if (!this.user.emailVerified) {
             this.user.sendEmailVerification(actionCodeSettings).then(() => {
-                alert("Success! please check your email.")
+                alert("Success! please check your email.");
             }).catch(function (error) {
                 console.log(error)
                 alert(error);
             });
         } else {
-            alert("You are already verified")
+            alert("You are already verified!")
         }
     }
 
@@ -40,11 +42,47 @@ class Verify extends Component {
         firebase.auth().signOut();
     }
 
+    reload = () => {
+        window.location.reload();
+    }
+
+    // onFocus = () => {
+    //     if (this.user.emailVerified) {
+    //         this.setState({
+    //             init: (
+    //                 <div style={{ maxWidth: "700px" }}>
+    //                     <h1 style={{ marginTop: "178px", color: "rgb(60, 144, 223)" }}>Welcome {firebase.auth().currentUser.displayName} </h1>
+    //                     <h3>Congrats you are verified!</h3>
+    //                     <p>Thanks for verifying your email address. All the features of Reportra are now at your grasp.</p>
+
+
+    //                     <button style={{ width: "100px", display: "inline" }} type="button" className="btn btn-block btn-primary" onClick={this.handleReload}>Go to Site</button>
+
+
+    //                 </div>)
+    //         });
+    //     }
+    // }
+
     componentDidMount() {
         // console.log(firebase.auth().currentUser.displayName);
+        window.addEventListener("focus", this.reload);
 
         if (this.user.emailVerified) {
             console.log("isVerified");
+            this.setState({
+                init: (
+                    <div style={{ maxWidth: "700px" }}>
+                        <h1 style={{ marginTop: "178px", color: "rgb(60, 144, 223)" }}>Welcome {firebase.auth().currentUser.displayName} </h1>
+                        <h3>Congrats you are verified!</h3>
+                        <p>Thanks for verifying your email address. All the features of Reportra are now at your grasp.</p>
+
+
+                        <button style={{ width: "100px", display: "inline" }} type="button" className="btn btn-block btn-primary" onClick={this.reload}>Go to Site</button>
+
+
+                    </div>)
+            })
         } else {
             // console.log(firebase.auth().currentUser.metadata);
             this.setState({
@@ -64,6 +102,11 @@ class Verify extends Component {
             });
         }
     }
+
+    componentWilUnmount() {
+        window.removeEventListener("focus", this.reload);
+    }
+
     render() {
         return (
             <div className="container">

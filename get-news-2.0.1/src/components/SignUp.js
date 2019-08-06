@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import logoHD from "../img/reportralt.png";
 import Login from "../user/Login.js";
 import Verify from "./Verify.js";
-import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 
 
@@ -14,6 +14,8 @@ const actionCodeSettings = {
 class SignUp extends Component {
     constructor(props) {
         super(props);
+
+        this.user = firebase.auth().currentUser;
 
         this.state = {
             init: <div style={{ marginTop: "400px" }}>this is it</div>,
@@ -35,19 +37,26 @@ class SignUp extends Component {
         // console.log(this.state.user);
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
             // console.log(firebase.auth().currentUser.emailVerified);
-            if (!firebase.auth().currentUser.emailVerified) {
-                firebase.auth().currentUser.sendEmailVerification(actionCodeSettings).then(() => {
-                    // console.log("it worked");
+            if (!this.user.emailVerified) {
+                this.user.sendEmailVerification(actionCodeSettings).then(() => {
+                    console.log("verification sent");
                 }).catch(function (error) {
-                    console.log(error);
+                    console.log(error)
                     alert(error);
                 });
             }
 
+            // if (!firebase.auth().currentUser.emailVerified) {
+            //     firebase.auth().currentUser.sendEmailVerification(actionCodeSettings).then(() => {
+            //         // console.log("it worked");
+            //     }).catch(function (error) {
+            //         console.log(error);
+            //         alert(error);
+            //     });
+            // }
+
         }).catch((error) => {
             // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
             this.setState({
                 errorMessage: error.message
             });
@@ -74,8 +83,10 @@ class SignUp extends Component {
         });
     }
 
+
+
     render() {
-        const user = firebase.auth().currentUser;
+        // const user = firebase.auth().currentUser;
         // if (this.props.userState === "loggedIn") {
         //     return <Redirect to="/verify" />
         // }

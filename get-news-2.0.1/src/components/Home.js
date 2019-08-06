@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import $ from 'jquery';
 import ArticleCard from "./Article.js";
 
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 
 
 //=============================================================
@@ -13,7 +13,7 @@ import {Animated} from "react-animated-css";
 
 const key = "apiKey=6c6b71cbab324fbd82b11f2c79e14456"; //6
 
-const url = function(endpoint, country, key) {
+const url = function (endpoint, country, key) {
     return endpoint + country + key;
 };
 
@@ -21,7 +21,7 @@ const req = new Request(
     url("https://newsapi.org/v2/top-headlines?", "country=us&", key)
 );
 
-const urlSearch = function(el) {
+const urlSearch = function (el) {
     return (
         "https://newsapi.org/v2/top-headlines?" +
         "q=" +
@@ -59,7 +59,7 @@ class Home extends Component {
     }
 
     //Everytime an input is made in the search field fire this change function and save results in this.state.val
-    handleChange(e){
+    handleChange(e) {
         e.preventDefault();
 
         this.setState({
@@ -68,7 +68,7 @@ class Home extends Component {
     }
 
     //When the submit button is clicked update the submitted state as the current state of this.state.val
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.val)
         this.setState({
@@ -81,7 +81,7 @@ class Home extends Component {
     componentDidMount() {
         //update state on succesful api Load else error check
         fetch(req)
-            .then(function(response) {
+            .then(function (response) {
                 return response.json();
             })
             .then(data => {
@@ -107,10 +107,10 @@ class Home extends Component {
 
     //if a search is inputted refetch data based on the search result. Note this bug. If the key isn't unique information fetched initially will continue to propagate. To fix this I used a random string generator to ensure uniqueness.
     componentDidUpdate(prevProps, prevState) {
-//        console.log(this.state.valSubmit+" :: "+ prevState.valSubmit)
-        if((this.state.valSubmit !== prevState.valSubmit) && (this.state.valSubmit !== "")){
+        //        console.log(this.state.valSubmit+" :: "+ prevState.valSubmit)
+        if ((this.state.valSubmit !== prevState.valSubmit) && (this.state.valSubmit !== "")) {
             fetch(urlSearch(this.state.valSubmit))
-                .then(function(response) {
+                .then(function (response) {
                     return response.json();
                 })
                 .then(data => {
@@ -140,42 +140,42 @@ class Home extends Component {
 
         //view displayed with dynamic information brought in by the api
         return (
-            <div className="container" style={{marginTop: "80px",}} >
+            <div className="container" style={{ marginTop: "80px", }} >
 
 
-            <div className="jumbotron " style={{backgroundColor: "rgba(255,255,255,0)", height: "17px"}}>
+                <div className="jumbotron " style={{ backgroundColor: "rgba(255,255,255,0)", height: "17px" }}>
 
 
-              <div id="home-search" style={{ display: "block", margin: "auto", }}>
+                    <div id="home-search" style={{ display: "block", margin: "auto", }}>
 
 
-                 <Animated animationIn="fadeIn" isVisible={true}>
-                     <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search top headlines.." aria-label="Search" value={this.state.val} onChange={this.handleChange}/>
+                        <Animated animationIn="fadeIn" isVisible={true}>
+                            <form className="form-inline input-group mb-3" onSubmit={this.handleSubmit}>
+                                <input className="form-control mr-sm-2" type="search" placeholder="Search top headlines.." aria-label="Search" value={this.state.val} onChange={this.handleChange} />
 
 
-                            <div className="input-group-prepend">
-                                <button className="btn btn-success " type="submit" data-toggle="tooltip" data-placement="top" title="search for article"><i className="fas fa-search"></i></button>
-                            </div>
+                                <div className="input-group-prepend">
+                                    <button className="btn btn-success " type="submit" data-toggle="tooltip" data-placement="top" title="search for article"><i className="fas fa-search"></i></button>
+                                </div>
 
 
 
-                        </form>
-                 </Animated>
+                            </form>
+                        </Animated>
 
-              </div>
-              </div>
+                    </div>
+                </div>
 
-              <div style={{marginBottom: "0px", opacity:"0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <div>Results: <span className="badge badge-pill badge-primary"> {getNews.articles.length}</span></div> : ""} </div>
+                <div style={{ marginBottom: "0px", opacity: "0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <div>Results: <span className="badge badge-pill badge-primary"> {getNews.articles.length}</span></div> : ""} </div>
 
-<hr/>
+                <hr />
                 <div className="row">
 
                     {this.state.isLoaded === true ? (
                         getNews.articles.map(val => (
 
                             <ArticleCard
-                                key={getNews.articles.indexOf(val)+Math.random().toString(36).substring(2, 15)}
+                                key={getNews.articles.indexOf(val) + Math.random().toString(36).substring(2, 15)}
                                 title={val.title}
                                 img={val.urlToImage}
                                 info={val.description}
@@ -186,31 +186,31 @@ class Home extends Component {
                             />
                         ))
                     ) : (
-                        <div
-                            className=""
-                            style={{ width: "50px", margin: "auto", marginTop: "100px", }}
-                        >
-                            {this.state.error ? (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        color: "red"
-                                    }}
-                                >
-                                    something went wrong <br /> Please try again
-                                    later{" "}
-                                </div>
-                            ) : (
-
+                            <div
+                                className=""
+                                style={{ width: "50px", margin: "auto", marginTop: "100px", }}
+                            >
+                                {this.state.error ? (
                                     <div
-                                        className="fa fa-spinner fa-spin"
-                                        style={{ fontSize: "50px", color:"#3c90df",}}
-                                    />
+                                        style={{
+                                            textAlign: "center",
+                                            color: "red"
+                                        }}
+                                    >
+                                        something went wrong <br /> Please try again
+                                    later{" "}
+                                    </div>
+                                ) : (
+
+                                        <div
+                                            className="fa fa-spinner fa-spin"
+                                            style={{ fontSize: "50px", color: "#3c90df", }}
+                                        />
 
 
-                            )}
-                        </div>
-                    )}
+                                    )}
+                            </div>
+                        )}
 
                 </div>
 

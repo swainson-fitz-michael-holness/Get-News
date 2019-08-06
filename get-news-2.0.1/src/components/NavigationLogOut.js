@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import fire from "../config/Access.js";
+// import fire from "../config/Access.js";
 import SignUp from "./SignUp.js";
 import Login from "../user/Login.js";
 import logo from "../img/reportra.png";
