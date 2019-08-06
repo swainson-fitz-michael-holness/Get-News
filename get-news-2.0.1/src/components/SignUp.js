@@ -7,7 +7,9 @@ import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 
 
-const register = {};
+const actionCodeSettings = {
+    url: "http://localhost:3000/"
+};
 
 class SignUp extends Component {
     constructor(props) {
@@ -32,6 +34,15 @@ class SignUp extends Component {
         e.preventDefault();
         // console.log(this.state.user);
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+            // console.log(firebase.auth().currentUser.emailVerified);
+            if (!firebase.auth().currentUser.emailVerified) {
+                firebase.auth().currentUser.sendEmailVerification(actionCodeSettings).then(() => {
+                    // console.log("it worked");
+                }).catch(function (error) {
+                    console.log(error);
+                    alert(error);
+                });
+            }
 
         }).catch((error) => {
             // Handle Errors here.
@@ -45,14 +56,14 @@ class SignUp extends Component {
 
         firebase.auth().onAuthStateChanged((user) => {
             if (user != null) {
-                if (!user.emailVerified) {
-                    user.sendEmailVerification().then(() => {
-                    }).catch(function (error) {
-                        console.log(error);
-                        alert(error);
-                    });
+                // if (!user.emailVerified) {
+                //     user.sendEmailVerification().then(() => {
+                //     }).catch(function (error) {
+                //         console.log(error);
+                //         alert(error);
+                //     });
 
-                }
+                // }
 
                 user.updateProfile({
                     displayName: this.state.user,
@@ -64,7 +75,6 @@ class SignUp extends Component {
     }
 
     render() {
-        console.log(this.props.term)
         const user = firebase.auth().currentUser;
         // if (this.props.userState === "loggedIn") {
         //     return <Redirect to="/verify" />

@@ -43,7 +43,6 @@ class App extends Component {
         fire.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in.
-                console.log(user.displayName)
                 this.setState({
                     user: user,
                     userIsLoaded: "logged in",
@@ -60,7 +59,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state.emailVerified)
         if (this.state.userIsLoaded === "logged in" && this.state.emailVerified) {
             return <NavigationLogIn />
         } else if (this.state.userIsLoaded === "logged in" && !this.state.emailVerified) {

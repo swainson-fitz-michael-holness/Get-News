@@ -5,34 +5,60 @@ import React, { Component } from "react";
 // import { HashRouter } from 'react-router-dom';
 import firebase from 'firebase';
 
+const actionCodeSettings = {
+    url: "http://localhost:3000/"
+};
+
 class Verify extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            init: ""
+            init: "",
+            displayName: ""
+
         }
         this.user = firebase.auth().currentUser;
-        // this.user.sendEmailVerification().then(function () {
-        // }).catch(function (error) {
-        //     console.log(error)
-        //     // alert(error)
-        // });
+
 
     }
+
+    handleSend = (e) => {
+        e.preventDefault;
+        if (!this.user.emailVerified) {
+            this.user.sendEmailVerification(actionCodeSettings).then(() => {
+                alert("Success! please check your email.")
+            }).catch(function (error) {
+                console.log(error)
+                alert(error);
+            });
+        } else {
+            alert("You are already verified")
+        }
+    }
+
+    logOut = () => {
+        firebase.auth().signOut();
+    }
+
     componentDidMount() {
-        console.log(firebase.auth().currentUser);
+        // console.log(firebase.auth().currentUser.displayName);
 
         if (this.user.emailVerified) {
             console.log("isVerified");
         } else {
-            console.log("please validate");
+            // console.log(firebase.auth().currentUser.metadata);
             this.setState({
                 init: (
-                    <div>
-                        <h1 style={{ marginTop: "178px", color: "rgb(60, 144, 223)" }}>Please Verify</h1>
+                    <div style={{ maxWidth: "700px" }}>
+                        <h1 style={{ marginTop: "178px", color: "rgb(60, 144, 223)" }}>Welcome {firebase.auth().currentUser.displayName} </h1>
+                        <h3>Please Verify</h3>
                         <p>Just one more step. Check your e-mail inbox and click the link to complete the sign up process. If you didn't get the link try sending again.</p>
 
-                        <button style={{ width: "80px" }} type="button" className="btn btn-block btn-primary">send</button>
+
+                        <button style={{ width: "80px", display: "inline" }} type="button" className="btn btn-block btn-primary" onClick={this.handleSend}>Send</button>
+                        <button style={{ width: "100px", display: "inline", margin: "0px 0px 0px 20px" }} type="button" className="btn btn-block btn-primary" onClick={this.logOut}>Log Out</button>
+
+
                     </div>
                 ),
             });

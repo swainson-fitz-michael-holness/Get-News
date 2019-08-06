@@ -51,10 +51,6 @@ class NavigationLogIn extends Component {
 
     }
 
-    componentDidMount() {
-        // console.log(this.state.user.email)
-    }
-
     //    load Navbar
     render() {
         const news = this.state;
