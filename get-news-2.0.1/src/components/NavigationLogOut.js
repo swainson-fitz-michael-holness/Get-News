@@ -99,6 +99,7 @@ class NavigationLogOut extends Component {
                         /> */}
                         <Route path="//" component={Login} />
                         <Route path="/signup" component={SignUp} />
+                        <Route component={Login} />
 
                     </Switch>
                 </div>
