@@ -116,16 +116,17 @@ class ArticleCard extends Component {
 
                         <button
                             type="button"
-                            className="card-link btn btn-primary rounded-circle"
+                            className="card-link btn btn-primary "
                             data-toggle="modal"
                             data-target={"#Z" + this.props.ID}
                             style={{ marginRight: "20px" }}
                             onClick={this.handleClick}
                         >
-                            <i
-                                className="fas fa-chart-bar "
+                            {/* <i
+                                className="fas fa-robot "
                                 style={{ fontSize: "0.9rem" }}
-                            />{" "}
+                            /> */}
+                            {" analyze "}
                         </button>
 
                         <div
@@ -180,17 +181,17 @@ class ArticleCard extends Component {
                         >
                             {this.props.sourceName}
                         </a>
-                        {//<i
-                            //className="fab fa-twitter"
-                            //style={{
-                            //float: "right",
-                            //marginTop: "10px",
-                            //fontSize: "1.1rem",
-                            //color: "#007bff",
-                            // cursor: "pointer"
-                            //}}
-                            //>
-                        }
+                        {/* <i
+                            className="fab fa-twitter"
+                            style={{
+                                float: "right",
+                                marginTop: "10px",
+                                fontSize: "1.1rem",
+                                color: "#007bff",
+                                cursor: "pointer"
+                            }}
+                        ></i> */}
+
                     </div>
                     <div
                         className="card-footer text-muted"
