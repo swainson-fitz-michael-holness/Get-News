@@ -7,7 +7,7 @@ import firebase from 'firebase';
 import Home from "./Home.js"
 
 const actionCodeSettings = {
-    url: "http://localhost:3000/"
+    url: "https://exogenist.tech/apps/reportra/"
 };
 
 class Verify extends Component {

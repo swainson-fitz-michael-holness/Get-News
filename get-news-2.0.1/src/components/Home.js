@@ -23,7 +23,7 @@ const req = new Request(
 
 const urlSearch = function (el) {
     return (
-        "https://newsapi.org/v2/top-headlines?" +
+        "https://newsapi.org/v2/everything?" +
         "q=" +
         el +
         "&" +
@@ -70,7 +70,6 @@ class Home extends Component {
     //When the submit button is clicked update the submitted state as the current state of this.state.val
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state.val)
         this.setState({
             valSubmit: this.state.val
         });
@@ -99,6 +98,7 @@ class Home extends Component {
 
             })
             .catch(err => {
+                console.log(err)
                 this.setState({
                     error: err
                 });
@@ -161,12 +161,25 @@ class Home extends Component {
 
 
                             </form>
+
                         </Animated>
 
                     </div>
                 </div>
 
-                <div style={{ marginBottom: "0px", opacity: "0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <div>Results: <span className="badge badge-pill badge-primary"> {getNews.articles.length}</span></div> : ""} </div>
+                {/* <div style={{ marginBottom: "0px", opacity: "0.5", marginTop: "10px", marginLeft: "0px", }}>{this.state.isLoaded === true ? <div>Results: <span className="badge badge-pill badge-primary"> {getNews.articles.length}</span></div> : ""} </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Sory by</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>publishedAt</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div> */}
+
 
                 <hr />
                 <div className="row">

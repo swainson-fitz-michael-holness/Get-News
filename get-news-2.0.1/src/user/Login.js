@@ -17,7 +17,7 @@ class Login extends Component {
             email: '',
             password: '',
             errorMessage: '',
-            backPass: 'forgot password?',
+            backPass: <button type="button" className="btn btn-link">Forgot Password?</button>,
             forgotMessage: "We will send you an email to reset your password.",
             forgotTitle: "Forgot password"
         }

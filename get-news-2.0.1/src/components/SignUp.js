@@ -8,7 +8,7 @@ import { HashRouter } from 'react-router-dom';
 
 
 const actionCodeSettings = {
-    url: "http://localhost:3000/"
+    url: "https://exogenist.tech/apps/reportra/"
 };
 
 class SignUp extends Component {
