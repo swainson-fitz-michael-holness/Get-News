@@ -5,7 +5,7 @@ import firebase from 'firebase';
 // import NavigationLogOut from '../components/NavigationLogOut.js'
 
 const actionCodeSettings = {
-    url: "http://localhost:3000/"
+    url: "https://rxogenist.tech/reportra"
 };
 
 class Login extends Component {
