@@ -1,4 +1,22 @@
 
+body.modal-open {
+    /* // block scroll for mobile;
+    // causes underlying page to jump to top;
+    // prevents scrolling on all screens */
+    overflow: hidden;
+    position: fixed;
+}
+body.viewport-lg {
+    /* // block scroll for desktop;
+    // will not jump to top;
+    // will not prevent scroll on mobile */
+    position: absolute; 
+}
+
+.modal {
+    background: #9ccdd9;
+}
+
 .login-box {
     display: block;
     width: 280px;
@@ -29,3 +47,4 @@
         width: 100%
     }
 }
+

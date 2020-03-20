@@ -43,6 +43,8 @@ class Analysis extends Component {
             dataLoaded: false,
             checkData: false,
             load: <div>Loading... </div>,
+            summary: "",
+            people: "",
             horChart: (
                 <canvas style={{ display: "none" }} id={this.props.chartID} />
             ),
@@ -182,7 +184,6 @@ class Analysis extends Component {
     componentDidMount() {
 
         let apiObj = {};
-
         Promise.all([
             fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/emotion', {
                 method: 'POST',
@@ -224,16 +225,36 @@ class Analysis extends Component {
                     data: this.props.dataURL,
                     top_n: 5
                 })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/summarization', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    top_n: 3
+                })
+            }),
+            fetch('https://cors-anywhere.herokuapp.com/https://apiv2.indico.io/people', {
+                method: 'POST',
+                body: JSON.stringify({
+                    api_key: 'bc4cac0bc7ae9435444f865229516cd2',
+                    data: this.props.dataURL,
+                    threshold: 0.5
+                })
             })
 
         ]).then(responses => {
             Promise.all(responses.map(val => val.json())).then(response => {
+                console.log(response[6])
+
                 //object collection of the response 
                 apiObj.emotion = response[0].results;
                 apiObj.political = response[1].results;
                 apiObj.texttags = response[2].results;
                 apiObj.sentimenthq = response[3].results;
                 apiObj.twitterengagement = response[4].results;
+                apiObj.summary = response[5].results;
+
 
                 //----- emo stats
                 let emoNameArr = [];
@@ -280,6 +301,13 @@ class Analysis extends Component {
                     dataLoaded: failTest,
                     checkData: true,
                     load: "",
+                    summary: <div style={{ marginTop: "20px" }}>
+                        <ul>
+                            <li>{apiObj.summary[0]}</li>
+                            <li>{apiObj.summary[1]}</li>
+                            <li>{apiObj.summary[2]}</li>
+                        </ul>
+                    </div>,
                     horChart: apiObj.emotion ? (
                         <canvas style={{ display: "block" }}>
                             {this.handleHorChart(emoNameArr, emoDataArr)}
@@ -400,7 +428,8 @@ class Analysis extends Component {
                 political: dbData.political,
                 sentimenthq: dbData.sentimenthq,
                 texttags: dbData.texttags,
-                twitterengagement: dbData.twitterengagement
+                twitterengagement: dbData.twitterengagement,
+                summary: dbData.summary
             },
             el => {
                 this.setState({
@@ -450,6 +479,7 @@ class Analysis extends Component {
                     <hr />
                     {info.sentiment}
                     {info.twitter}
+                    {info.summary}
                     <div className="row">
                         <div className="col-6">
                             <button

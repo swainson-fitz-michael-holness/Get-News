@@ -45,6 +45,7 @@ class ArticleCard extends Component {
     handleClick(e) {
         e.preventDefault();
         stopBodyScrolling(true);
+
         this.setState({
             init: (
                 <Analysis
@@ -56,7 +57,7 @@ class ArticleCard extends Component {
                     dataSource={this.props.sourceName}
                     dataImg={this.props.img}
                 />
-            )
+            ),
         });
     }
 
@@ -79,6 +80,7 @@ class ArticleCard extends Component {
         pic.onerror = function () {
             this.style.display = "none";
         }
+
     }
     componentWillUnmount() {
         $('body').removeClass('modal-open');
@@ -89,13 +91,14 @@ class ArticleCard extends Component {
     render() {
         return (
             <div className="col-md-6" style={{ marginBottom: "50px" }}>
+
                 <div
                     className="card shadow-sm"
                     style={{
                         width: "auto",
                         padding: "0px",
                         borderRadius: "5px",
-                        border: "none"
+                        border: "none",
                     }}
                 >
                     <img
