@@ -11,7 +11,7 @@
     "firebaseui": "^4.1.0",
     "google-charts": "^1.5.0",
     "indico.io": "^0.10.5",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "moment": "^2.22.2",
     "react": "^16.8.0",
     "react-animated-css": "^1.0.4",
