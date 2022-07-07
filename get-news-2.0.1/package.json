@@ -12,7 +12,7 @@
     "google-charts": "^1.5.0",
     "indico.io": "^0.10.5",
     "jquery": "^3.3.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "react": "^16.8.0",
     "react-animated-css": "^1.0.4",
     "react-dom": "^16.8.0",
